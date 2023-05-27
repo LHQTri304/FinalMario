@@ -5,11 +5,9 @@ VisualStudioVersion = 17.6.33717.318
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "FinalMario", "FinalMario\FinalMario.vcxproj", "{EDB6A816-E134-48B1-AF98-250D9B018145}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "03-Keyboard-States", "03-Keyboard-States\03-Keyboard-States.vcxproj", "{5BB3DC44-D6AF-494B-9841-43B9AE3C6588}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "05-SceneManager", "05-SceneManager\05-SceneManager.vcxproj", "{30B52332-21EE-43B1-91BF-B2494C04C34F}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "04-Collision", "04-Collision\04-Collision.vcxproj", "{0CEDCE73-9775-46A9-9D9D-B8424E7D599D}"
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "05-SceneManager", "05-SceneManager\05-SceneManager.vcxproj", "{30B52332-21EE-43B1-91BF-B2494C04C34F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,22 +25,6 @@ Global
 		{EDB6A816-E134-48B1-AF98-250D9B018145}.Release|x64.Build.0 = Release|x64
 		{EDB6A816-E134-48B1-AF98-250D9B018145}.Release|x86.ActiveCfg = Release|Win32
 		{EDB6A816-E134-48B1-AF98-250D9B018145}.Release|x86.Build.0 = Release|Win32
-		{5BB3DC44-D6AF-494B-9841-43B9AE3C6588}.Debug|x64.ActiveCfg = Debug|x64
-		{5BB3DC44-D6AF-494B-9841-43B9AE3C6588}.Debug|x64.Build.0 = Debug|x64
-		{5BB3DC44-D6AF-494B-9841-43B9AE3C6588}.Debug|x86.ActiveCfg = Debug|Win32
-		{5BB3DC44-D6AF-494B-9841-43B9AE3C6588}.Debug|x86.Build.0 = Debug|Win32
-		{5BB3DC44-D6AF-494B-9841-43B9AE3C6588}.Release|x64.ActiveCfg = Release|x64
-		{5BB3DC44-D6AF-494B-9841-43B9AE3C6588}.Release|x64.Build.0 = Release|x64
-		{5BB3DC44-D6AF-494B-9841-43B9AE3C6588}.Release|x86.ActiveCfg = Release|Win32
-		{5BB3DC44-D6AF-494B-9841-43B9AE3C6588}.Release|x86.Build.0 = Release|Win32
-		{0CEDCE73-9775-46A9-9D9D-B8424E7D599D}.Debug|x64.ActiveCfg = Debug|x64
-		{0CEDCE73-9775-46A9-9D9D-B8424E7D599D}.Debug|x64.Build.0 = Debug|x64
-		{0CEDCE73-9775-46A9-9D9D-B8424E7D599D}.Debug|x86.ActiveCfg = Debug|Win32
-		{0CEDCE73-9775-46A9-9D9D-B8424E7D599D}.Debug|x86.Build.0 = Debug|Win32
-		{0CEDCE73-9775-46A9-9D9D-B8424E7D599D}.Release|x64.ActiveCfg = Release|x64
-		{0CEDCE73-9775-46A9-9D9D-B8424E7D599D}.Release|x64.Build.0 = Release|x64
-		{0CEDCE73-9775-46A9-9D9D-B8424E7D599D}.Release|x86.ActiveCfg = Release|Win32
-		{0CEDCE73-9775-46A9-9D9D-B8424E7D599D}.Release|x86.Build.0 = Release|Win32
 		{30B52332-21EE-43B1-91BF-B2494C04C34F}.Debug|x64.ActiveCfg = Debug|x64
 		{30B52332-21EE-43B1-91BF-B2494C04C34F}.Debug|x64.Build.0 = Debug|x64
 		{30B52332-21EE-43B1-91BF-B2494C04C34F}.Debug|x86.ActiveCfg = Debug|Win32
@@ -51,6 +33,14 @@ Global
 		{30B52332-21EE-43B1-91BF-B2494C04C34F}.Release|x64.Build.0 = Release|x64
 		{30B52332-21EE-43B1-91BF-B2494C04C34F}.Release|x86.ActiveCfg = Release|Win32
 		{30B52332-21EE-43B1-91BF-B2494C04C34F}.Release|x86.Build.0 = Release|Win32
+		{0CEDCE73-9775-46A9-9D9D-B8424E7D599D}.Debug|x64.ActiveCfg = Debug|x64
+		{0CEDCE73-9775-46A9-9D9D-B8424E7D599D}.Debug|x64.Build.0 = Debug|x64
+		{0CEDCE73-9775-46A9-9D9D-B8424E7D599D}.Debug|x86.ActiveCfg = Debug|Win32
+		{0CEDCE73-9775-46A9-9D9D-B8424E7D599D}.Debug|x86.Build.0 = Debug|Win32
+		{0CEDCE73-9775-46A9-9D9D-B8424E7D599D}.Release|x64.ActiveCfg = Release|x64
+		{0CEDCE73-9775-46A9-9D9D-B8424E7D599D}.Release|x64.Build.0 = Release|x64
+		{0CEDCE73-9775-46A9-9D9D-B8424E7D599D}.Release|x86.ActiveCfg = Release|Win32
+		{0CEDCE73-9775-46A9-9D9D-B8424E7D599D}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
