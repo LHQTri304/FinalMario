@@ -14,6 +14,10 @@ using namespace std;
 #define ID_TEX_BBOX -100		// special texture to draw object bounding box
 #define BBOX_ALPHA 0.25f		// Bounding box transparency
 
+//ADD
+class CGameObject;
+typedef CGameObject* LPGAMEOBJECT;
+
 class CGameObject
 {
 protected:
@@ -64,6 +68,9 @@ public:
 	
 	// Is this object blocking other object? If YES, collision framework will automatically push the other object
 	virtual int IsBlocking() { return 1; }
+
+	// Is this object collide with other object at certain direction ( like ColorBox ) | ADD
+	virtual int IsDirectionColliable(float nx, float ny) { return 1; }
 
 	~CGameObject();
 
