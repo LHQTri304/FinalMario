@@ -107,18 +107,51 @@ void CColorBox::Render()
 		s->Get(this->spriteIdEnd)->Draw(xx, y);
 	*/
 
-	//Draw the top of the box...
-	s->Get(this->spriteIdTopLeft)->Draw(xx, y);
+	//#1:	Draw the top of the box...
+	s->Get(this->spriteIdTopLeft)->Draw(xx, yy);
 	xx += this->cellWidth;
 	for (int i = 1; i < this->lengthWidth - 1; i++)
 	{
-		s->Get(this->spriteIdTopMid)->Draw(xx, y);
+		s->Get(this->spriteIdTopMid)->Draw(xx, yy);
 		xx += this->cellWidth;
 	}
 	if (lengthWidth > 1)
-		s->Get(this->spriteIdTopRight)->Draw(xx, y);
+		s->Get(this->spriteIdTopRight)->Draw(xx, yy);
 
-	RenderBoundingBox();
+	//#2:	Draw the middle of the box...
+	for (int i = 0; i < this->lengthHeight - 2; i++)	//	-2 = - begin & end
+	{
+		xx = x;
+		yy += this->cellHeight;
+
+		s->Get(this->spriteIdMidLeft)->Draw(xx, yy);
+		xx += this->cellWidth;
+
+		for (int i = 1; i < this->lengthWidth - 1; i++)
+		{
+			s->Get(this->spriteIdMidMid)->Draw(xx, yy);
+			xx += this->cellWidth;
+		}
+		if (lengthWidth > 1)
+			s->Get(this->spriteIdMidRight)->Draw(xx, yy);
+	}
+
+	//#3:	Draw the bottom of the box...
+	xx = x;
+	yy += this->cellHeight;
+
+	s->Get(this->spriteIdBotLeft)->Draw(xx, yy);
+	xx += this->cellWidth;
+
+	for (int i = 1; i < this->lengthWidth - 1; i++)
+	{
+		s->Get(this->spriteIdBotMid)->Draw(xx, yy);
+		xx += this->cellWidth;
+	}
+	if (lengthWidth > 1)
+		s->Get(this->spriteIdBotRight)->Draw(xx, yy);
+
+	//RenderBoundingBox();
 }
 
 void CColorBox::GetBoundingBox(float& l, float& t, float& r, float& b)

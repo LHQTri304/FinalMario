@@ -15,6 +15,7 @@
 #define ID_TEX_MARIO 0
 #define ID_TEX_ENEMY 10
 #define ID_TEX_MISC 20
+#define ID_TEX_MISC_2 21
 
 //Moving >10
 #define OBJECT_TYPE_MARIO	10
