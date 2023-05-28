@@ -118,11 +118,13 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 		break;
 	case OBJECT_TYPE_GOOMBA: obj = new CGoomba(x,y); break;
 	case OBJECT_TYPE_BRICK: obj = new CBrick(x,y); break;
+	case OBJECT_TYPE_DIRT_BRICK: obj = new CDirtBrick(x, y); break;
+	case OBJECT_TYPE_GLASS_BRICK: obj = new CGlassBrick(x, y); break;
+	case OBJECT_TYPE_QUEST_BRICK: obj = new CQuestBrick(x, y); break;
 	case OBJECT_TYPE_COIN: obj = new CCoin(x, y); break;
 
-	case OBJECT_TYPE_PLATFORM:
+	case OBJECT_TYPE_PLATFORM: //40 -->> CLOUD 42 & DIRT 41
 	{
-
 		float cell_width = (float)atof(tokens[3].c_str());
 		float cell_height = (float)atof(tokens[4].c_str());
 		int length = atoi(tokens[5].c_str());
@@ -134,6 +136,36 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 			x, y,
 			cell_width, cell_height, length,
 			sprite_begin, sprite_middle, sprite_end
+		);
+
+		break;
+	}
+
+	case OBJECT_TYPE_COLOR_BOX: //43
+	{
+		float cell_width = (float)atof(tokens[3].c_str());
+		float cell_height = (float)atof(tokens[4].c_str());
+		int length_width = atoi(tokens[5].c_str());
+		int length_height = atoi(tokens[6].c_str());
+
+		int sprite_top_left = atoi(tokens[7].c_str());
+		int sprite_top_mid = atoi(tokens[8].c_str());
+		int sprite_top_right = atoi(tokens[9].c_str());
+
+		int sprite_mid_left = atoi(tokens[10].c_str());
+		int sprite_mid_mid = atoi(tokens[11].c_str());
+		int sprite_mid_right = atoi(tokens[12].c_str());
+
+		int sprite_bot_left = atoi(tokens[13].c_str());
+		int sprite_bot_mid = atoi(tokens[14].c_str());
+		int sprite_bot_right = atoi(tokens[15].c_str());
+
+		obj = new CColorBox(
+			x, y,
+			cell_width, cell_height, length_width, length_height,
+			sprite_top_left, sprite_top_mid, sprite_top_right,
+			sprite_mid_left, sprite_mid_mid, sprite_mid_right,
+			sprite_bot_left, sprite_bot_mid, sprite_bot_right
 		);
 
 		break;
