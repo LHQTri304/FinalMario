@@ -44,7 +44,7 @@ void CPlatform::Render()
 	if (length>1)
 		s->Get(this->spriteIdEnd)->Draw(xx, y);
 
-	RenderBoundingBox();
+	//RenderBoundingBox();
 }
 
 void CPlatform::GetBoundingBox(float& l, float& t, float& r, float& b)
@@ -93,19 +93,7 @@ void CColorBox::Render()
 	if (this->lengthWidth <= 0 || this->lengthHeight <= 0) return;
 	float xx = x;
 	float yy = y;
-	CSprites* s = CSprites::GetInstance();
-
-	/*
-	s->Get(this->spriteIdBegin)->Draw(xx, y);
-	xx += this->cellWidth;
-	for (int i = 1; i < this->length - 1; i++)
-	{
-		s->Get(this->spriteIdMiddle)->Draw(xx, y);
-		xx += this->cellWidth;
-	}
-	if (length > 1)
-		s->Get(this->spriteIdEnd)->Draw(xx, y);
-	*/
+	CSprites* s = CSprites::GetInstance();	
 
 	//#1:	Draw the top of the box...
 	s->Get(this->spriteIdTopLeft)->Draw(xx, yy);
@@ -151,7 +139,7 @@ void CColorBox::Render()
 	if (lengthWidth > 1)
 		s->Get(this->spriteIdBotRight)->Draw(xx, yy);
 
-	//RenderBoundingBox();
+	RenderBoundingBox();
 }
 
 void CColorBox::GetBoundingBox(float& l, float& t, float& r, float& b)
