@@ -103,6 +103,9 @@ CParaGoomba::CParaGoomba(float x, float y) :CGameObject(x, y)
 	this->ay = GOOMBA_GRAVITY;
 	die_start = -1;
 	SetState(GOOMBA_STATE_WALKING);
+	SetState(GOOMBA_STATE_FLYING);
+	isGetHit = false;
+	isFlying = false;
 }
 
 void CParaGoomba::GetBoundingBox(float& left, float& top, float& right, float& bottom)
@@ -157,12 +160,12 @@ void CParaGoomba::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	}
 
 	
-	if (isFlying)
+	if (isFlying && !isGetHit)
 	{
 		SetState(GOOMBA_STATE_FLYING);
 		flightTime--;
 	}
-	if (!isFlying)
+	if (!isFlying && !isGetHit)
 	{
 		SetState(GOOMBA_STATE_DROPING);
 		flightTime++;
@@ -180,14 +183,18 @@ void CParaGoomba::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 void CParaGoomba::Render()
 {
-	int aniId = ID_ANI_GOOMBA_WALKING;
+	int aniId = ID_ANI_GOOMBA_FLYING;
+	if (state == GOOMBA_STATE_WALKING)
+	{
+		aniId = ID_ANI_GOOMBA_WALKING;
+	}
 	if (state == GOOMBA_STATE_DIE)
 	{
 		aniId = ID_ANI_GOOMBA_DIE;
 	}
 
 	CAnimations::GetInstance()->Get(aniId)->Render(x, y);
-	//RenderBoundingBox();
+	RenderBoundingBox();
 }
 
 void CParaGoomba::SetState(int state)
@@ -204,6 +211,7 @@ void CParaGoomba::SetState(int state)
 		break;
 	case GOOMBA_STATE_WALKING:
 		vx = -GOOMBA_WALKING_SPEED;
+		isGetHit = true;
 		break;
 
 	case GOOMBA_STATE_FLYING:

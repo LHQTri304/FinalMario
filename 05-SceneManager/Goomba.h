@@ -44,8 +44,8 @@ public:
 
 //**************************//
 #pragma region ParaGoomba
-#define GOOMBA_FLIGHT_TIME	30.0f
-#define GOOMBA_FLYING_SPEED	0.05f
+#define GOOMBA_FLIGHT_TIME	33.0f
+#define GOOMBA_FLYING_SPEED	0.1f
 
 #define GOOMBA_STATE_FLYING 300
 #define GOOMBA_STATE_DROPING 301
@@ -58,7 +58,8 @@ protected:
 	float ax;
 	float ay;
 	float flightTime = 0;
-	BOOLEAN isFlying = false;
+	BOOLEAN isGetHit;
+	BOOLEAN isFlying;
 	BOOLEAN isOnPlatform;
 
 	ULONGLONG die_start;
