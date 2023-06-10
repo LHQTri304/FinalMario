@@ -506,8 +506,7 @@ CFirePlant::CFirePlant(float x, float y) :CGameObject(x, y)
 	this->ax = 0;
 	this->ay = 0;
 	isMoving = true;
-	UpOrDown = -1;
-	MoveTime = 0;
+	MoveTime = FIREPLANT_MOVE_TIME;
 	FireTime = FIREPLANT_FIRE_TIME;
 	SetState(FIREPLANT_STATE_MOVING_UP);
 }
@@ -546,29 +545,37 @@ void CFirePlant::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	vy += ay * dt;
 	vx += ax * dt;
 
-	if (FireTime <= 0)
+	if (GetState() == FIREPLANT_STATE_MOVING_UP)
 	{
-		SetState(FIREPLANT_STATE_MOVING_DOWN);
-		isMoving = true;
-		MoveTime = 0;
+		if (MoveTime <= 0)
+		{
+			SetState(FIREPLANT_STATE_FIRING);
+			MoveTime = FIREPLANT_MOVE_TIME;
+		}
+		MoveTime--;
 	}
 
-	if (MoveTime >= FIREPLANT_MOVE_TIME)
+	if (GetState() == FIREPLANT_STATE_MOVING_DOWN)
 	{
-		SetState(FIREPLANT_STATE_FIRING);
-		isMoving = false;
+		if (MoveTime <= 0)
+		{
+			SetState(FIREPLANT_STATE_MOVING_UP);
+			MoveTime = FIREPLANT_MOVE_TIME;
+		}
+		MoveTime--;
+	}
+
+	if (GetState() == FIREPLANT_STATE_FIRING)
+	{
+		if (FireTime <= 0)
+		{
+			SetState(FIREPLANT_STATE_MOVING_DOWN);
+			FireTime = FIREPLANT_FIRE_TIME;
+		}
 		FireTime--;
 	}
 	
-	if (MoveTime < 0)
-	{
-		SetState(FIREPLANT_STATE_MOVING_UP);
-		isMoving = true;
-		MoveTime = 0;
-	}
 	
-	if (isMoving)
-		MoveTime++;
 
 	CGameObject::Update(dt, coObjects);
 	CCollision::GetInstance()->Process(this, dt, coObjects);
@@ -599,6 +606,7 @@ void CFirePlant::SetState(int state)
 		vy = FIREPLANT_MOVING_SPEED;
 		break;
 	case FIREPLANT_STATE_FIRING:
+	case FIREPLANT_STATE_PAUSE:
 		vy = 0;
 		break;
 	}

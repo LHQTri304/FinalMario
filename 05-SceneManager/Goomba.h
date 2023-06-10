@@ -172,15 +172,15 @@ public:
 #define FIREPLANT_MOVING_SPEED 0.05f
 
 #define FIREPLANT_BBOX_WIDTH 16
-#define FIREPLANT_BBOX_HEIGHT 14
-#define FIREPLANT_BBOX_HEIGHT_DIE 7
+#define FIREPLANT_BBOX_HEIGHT 24
 
 #define FIREPLANT_MOVE_TIME 100
-#define FIREPLANT_FIRE_TIME 20
+#define FIREPLANT_FIRE_TIME 50	//Pause time
 
 #define FIREPLANT_STATE_MOVING_UP 100
 #define FIREPLANT_STATE_MOVING_DOWN 101
 #define FIREPLANT_STATE_FIRING 200
+#define FIREPLANT_STATE_PAUSE 201
 
 #define ID_ANI_FIREPLANT_MOVING 5009
 #define ID_ANI_FIREPLANT_FIRING 5010
@@ -192,7 +192,6 @@ protected:
 	float ay;
 	float MoveTime;
 	float FireTime;
-	float UpOrDown; // up = 1 | down = -1
 	BOOLEAN isMoving;
 
 	virtual void GetBoundingBox(float& left, float& top, float& right, float& bottom);
