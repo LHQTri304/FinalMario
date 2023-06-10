@@ -119,6 +119,9 @@ class CMario : public CGameObject
 	void OnCollisionWithKoopa(LPCOLLISIONEVENT e);
 	void OnCollisionWithParaKoopa(LPCOLLISIONEVENT e);
 
+	void OnCollisionWithFirePlant(LPCOLLISIONEVENT e);
+	void OnCollisionWithBulletFire(LPCOLLISIONEVENT e);
+
 
 	void OnCollisionWithCoin(LPCOLLISIONEVENT e);
 	void OnCollisionWithPortal(LPCOLLISIONEVENT e);

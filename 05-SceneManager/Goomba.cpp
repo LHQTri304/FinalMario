@@ -322,7 +322,6 @@ void CKoopa::SetState(int state)
 		y += (KOOPA_BBOX_HEIGHT - KOOPA_BBOX_HEIGHT_STUNNED) / 2;
 		vx = 0;
 		vy = 0;
-		ay = 0;
 		break;
 	case KOOPA_STATE_WALKING:
 		vx = -KOOPA_WALKING_SPEED;
@@ -470,7 +469,6 @@ void CParaKoopa::SetState(int state)
 		y += (KOOPA_BBOX_HEIGHT - KOOPA_BBOX_HEIGHT_STUNNED) / 2;
 		vx = 0;
 		vy = 0;
-		ay = 0;
 		break;
 	case KOOPA_STATE_WALKING:
 		vx = -KOOPA_WALKING_SPEED;
@@ -479,7 +477,6 @@ void CParaKoopa::SetState(int state)
 	case KOOPA_STATE_REVIVE:
 		y -= KOOPA_BBOX_HEIGHT_STUNNED / 2;
 		ax = 0;
-		ay = KOOPA_GRAVITY;
 		die_start = -1;
 		SetState(KOOPA_STATE_WALKING);
 		break;
@@ -505,10 +502,10 @@ CFirePlant::CFirePlant(float x, float y) :CGameObject(x, y)
 {
 	this->ax = 0;
 	this->ay = 0;
+	this->highestHeight = this->y;
+	this->fireTime = FIREPLANT_FIRE_TIME;
 	isMoving = true;
-	MoveTime = FIREPLANT_MOVE_TIME;
-	FireTime = FIREPLANT_FIRE_TIME;
-	SetState(FIREPLANT_STATE_MOVING_UP);
+	SetState(FIREPLANT_STATE_MOVING_DOWN);
 }
 
 void CFirePlant::GetBoundingBox(float& left, float& top, float& right, float& bottom)
@@ -527,17 +524,7 @@ void CFirePlant::OnNoCollision(DWORD dt)
 
 void CFirePlant::OnCollisionWith(LPCOLLISIONEVENT e)
 {
-	if (!e->obj->IsBlocking()) return;
-	if (dynamic_cast<CFirePlant*>(e->obj)) return;
-
-	if (e->ny != 0)
-	{
-		vy = 0;
-	}
-	else if (e->nx != 0)
-	{
-		vx = -vx;
-	}
+	return;
 }
 
 void CFirePlant::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
@@ -545,37 +532,27 @@ void CFirePlant::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	vy += ay * dt;
 	vx += ax * dt;
 
-	if (GetState() == FIREPLANT_STATE_MOVING_UP)
+	if (GetState() == FIREPLANT_STATE_MOVING_UP && y < highestHeight)
 	{
-		if (MoveTime <= 0)
-		{
-			SetState(FIREPLANT_STATE_FIRING);
-			MoveTime = FIREPLANT_MOVE_TIME;
-		}
-		MoveTime--;
+		y = highestHeight;
+		SetState(FIREPLANT_STATE_FIRING);
 	}
 
-	if (GetState() == FIREPLANT_STATE_MOVING_DOWN)
+	if (GetState() == FIREPLANT_STATE_MOVING_DOWN && y >= FIREPLANT_LOWEST_HEIGHT)
 	{
-		if (MoveTime <= 0)
-		{
-			SetState(FIREPLANT_STATE_MOVING_UP);
-			MoveTime = FIREPLANT_MOVE_TIME;
-		}
-		MoveTime--;
+		SetState(FIREPLANT_STATE_MOVING_UP);
 	}
 
 	if (GetState() == FIREPLANT_STATE_FIRING)
 	{
-		if (FireTime <= 0)
+		if (fireTime <= 0)
 		{
 			SetState(FIREPLANT_STATE_MOVING_DOWN);
-			FireTime = FIREPLANT_FIRE_TIME;
+			fireTime = FIREPLANT_FIRE_TIME;
 		}
-		FireTime--;
+		else
+			fireTime--;
 	}
-	
-	
 
 	CGameObject::Update(dt, coObjects);
 	CCollision::GetInstance()->Process(this, dt, coObjects);
@@ -591,7 +568,7 @@ void CFirePlant::Render()
 	}
 
 	CAnimations::GetInstance()->Get(aniId)->Render(x, y);
-	RenderBoundingBox();
+	//RenderBoundingBox();
 }
 
 void CFirePlant::SetState(int state)
@@ -606,8 +583,105 @@ void CFirePlant::SetState(int state)
 		vy = FIREPLANT_MOVING_SPEED;
 		break;
 	case FIREPLANT_STATE_FIRING:
-	case FIREPLANT_STATE_PAUSE:
 		vy = 0;
+		break;
+	}
+}
+#pragma endregion
+
+//*********************//
+#pragma region BulletFire
+CBulletFire::CBulletFire(float x, float y) :CGameObject(x, y)
+{
+	this->ax = 0;
+	this->ay = 0;
+	this->ix = x;
+	this->iy = y;
+	moveTime = BULLETFIRE_MOVE_TIME;
+	delayTime = BULLETFIRE_DELAY_TIME;
+	SetState(BULLETFIRE_STATE_INSIDE_PLANT);
+}
+
+void CBulletFire::GetBoundingBox(float& left, float& top, float& right, float& bottom)
+{
+	left = x - BULLETFIRE_BBOX_WIDTH / 2;
+	top = y - BULLETFIRE_BBOX_HEIGHT / 2;
+	right = left + BULLETFIRE_BBOX_WIDTH;
+	bottom = top + BULLETFIRE_BBOX_HEIGHT;
+}
+
+void CBulletFire::OnNoCollision(DWORD dt)
+{
+	x += vx * dt;
+	y += vy * dt;
+};
+
+void CBulletFire::OnCollisionWith(LPCOLLISIONEVENT e)
+{
+	if (dynamic_cast<CFirePlant*>(e->obj))
+		SetState(BULLETFIRE_STATE_DELAY);
+}
+
+void CBulletFire::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
+{
+	vy += ay * dt;
+	vx += ax * dt;
+
+	if (GetState() == BULLETFIRE_STATE_DELAY)
+	{
+		if (delayTime <= 0)
+		{
+			SetState(BULLETFIRE_STATE_FIRING);
+			delayTime = BULLETFIRE_DELAY_TIME;
+		}
+		else
+			delayTime--;
+	}
+	
+	else if (GetState() == BULLETFIRE_STATE_FIRING)
+	{
+		if (moveTime <= 0)
+		{
+			SetState(BULLETFIRE_STATE_INSIDE_PLANT);
+			moveTime = BULLETFIRE_MOVE_TIME;
+		}
+		else
+			moveTime--;
+	}
+
+	CGameObject::Update(dt, coObjects);
+	CCollision::GetInstance()->Process(this, dt, coObjects);
+}
+
+
+void CBulletFire::Render()
+{
+	int aniId = ID_ANI_BULLETFIRE_STAY;
+	if (state == BULLETFIRE_STATE_FIRING)
+	{
+		aniId = ID_ANI_BULLETFIRE_MOVE;
+	}
+
+	CAnimations::GetInstance()->Get(aniId)->Render(x, y);
+	//RenderBoundingBox();
+}
+
+void CBulletFire::SetState(int state)
+{
+	CGameObject::SetState(state);
+	switch (state)
+	{
+	case BULLETFIRE_STATE_INSIDE_PLANT:
+		x = ix;
+		y = iy;	//So the bullet will begin at the center of the plant's head
+		vx = 0;
+		vy = 0;
+		break;
+	case BULLETFIRE_STATE_FIRING:
+		vx = -BULLETFIRE_MOVING_SPEED;
+		vy = BULLETFIRE_MOVING_SPEED;
+		break;
+	case BULLETFIRE_STATE_DELAY:
 		break;
 	}
 }

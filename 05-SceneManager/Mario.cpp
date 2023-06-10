@@ -57,6 +57,10 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 		OnCollisionWithKoopa(e);
 	else if (dynamic_cast<CParaKoopa*>(e->obj))
 		OnCollisionWithParaKoopa(e);
+	else if (dynamic_cast<CFirePlant*>(e->obj))
+		OnCollisionWithFirePlant(e);
+	else if (dynamic_cast<CBulletFire*>(e->obj))
+		OnCollisionWithBulletFire(e);
 
 	//Others
 	else if (dynamic_cast<CCoin*>(e->obj))
@@ -224,6 +228,44 @@ void CMario::OnCollisionWithParaKoopa(LPCOLLISIONEVENT e)
 					SetState(MARIO_STATE_DIE);
 				}
 			}
+		}
+	}
+}
+
+void CMario::OnCollisionWithFirePlant(LPCOLLISIONEVENT e)
+{
+	//CFirePlant* fPlant = dynamic_cast<CFirePlant*>(e->obj);
+
+	if (untouchable == 0)
+	{
+		if (level > MARIO_LEVEL_SMALL)
+		{
+			level = MARIO_LEVEL_SMALL;
+			StartUntouchable();
+		}
+		else
+		{
+			DebugOut(L">>> Mario DIE >>> \n");
+			SetState(MARIO_STATE_DIE);
+		}
+	}
+}
+
+void CMario::OnCollisionWithBulletFire(LPCOLLISIONEVENT e)
+{
+	//CBulletFire* bullet = dynamic_cast<CBulletFire*>(e->obj);
+
+	if (untouchable == 0)
+	{
+		if (level > MARIO_LEVEL_SMALL)
+		{
+			level = MARIO_LEVEL_SMALL;
+			StartUntouchable();
+		}
+		else
+		{
+			DebugOut(L">>> Mario DIE >>> \n");
+			SetState(MARIO_STATE_DIE);
 		}
 	}
 }
