@@ -55,8 +55,8 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 		OnCollisionWithParaGoomba(e);
 	else if (dynamic_cast<CKoopa*>(e->obj))
 		OnCollisionWithKoopa(e);
-	//else if (dynamic_cast<CParaKoopa*>(e->obj))
-		//OnCollisionWithParaKoopa(e);
+	else if (dynamic_cast<CParaKoopa*>(e->obj))
+		OnCollisionWithParaKoopa(e);
 
 	//Others
 	else if (dynamic_cast<CCoin*>(e->obj))
@@ -148,7 +148,11 @@ void CMario::OnCollisionWithKoopa(LPCOLLISIONEVENT e)
 	// jump on top >> stun Koopa and deflect a bit >> kick Koopa
 	if (e->ny < 0)
 	{
-		if (koopa->GetState() != KOOPA_STATE_STUNNED)
+		if (koopa->GetState() == KOOPA_STATE_KICKED)
+		{ 
+			//skip
+		}
+		else if (koopa->GetState() != KOOPA_STATE_STUNNED)
 		{
 			koopa->SetState(KOOPA_STATE_STUNNED);
 			vy = -MARIO_JUMP_DEFLECT_SPEED;
@@ -180,32 +184,34 @@ void CMario::OnCollisionWithKoopa(LPCOLLISIONEVENT e)
 	}
 }
 
-/*void CMario::OnCollisionWithParaKoopa(LPCOLLISIONEVENT e)
+void CMario::OnCollisionWithParaKoopa(LPCOLLISIONEVENT e)
 {
 	CParaKoopa* koopa = dynamic_cast<CParaKoopa*>(e->obj);
 
 	// jump on top >> remove the wings >> kill Koopa and deflect a bit 
 	if (e->ny < 0)
 	{
-		if (koopa->GetState() != KOOPA_STATE_DIE)
+		if (koopa->GetState() == KOOPA_STATE_FLYING || koopa->GetState() == KOOPA_STATE_DROPING)
 		{
-			if (koopa->GetState() != KOOPA_STATE_WALKING)
-			{
-				koopa->SetState(KOOPA_STATE_WALKING);
-				vy = -MARIO_JUMP_DEFLECT_SPEED;
-			}
-			else
-			{
-				koopa->SetState(KOOPA_STATE_DIE);
-				vy = -MARIO_JUMP_DEFLECT_SPEED;
-			}
+			koopa->SetState(KOOPA_STATE_WALKING);
+			vy = -MARIO_JUMP_DEFLECT_SPEED;
+		}
+		else if (koopa->GetState() == KOOPA_STATE_WALKING)
+		{
+			koopa->SetState(KOOPA_STATE_STUNNED);
+			vy = -MARIO_JUMP_DEFLECT_SPEED;
+		}
+		else if (koopa->GetState() == KOOPA_STATE_STUNNED)
+		{
+			koopa->SetState(KOOPA_STATE_KICKED);
+			vy = -MARIO_JUMP_DEFLECT_SPEED;
 		}
 	}
 	else // hit by Koopa
 	{
 		if (untouchable == 0)
 		{
-			if (koopa->GetState() != KOOPA_STATE_DIE)
+			if (koopa->GetState() != KOOPA_STATE_STUNNED)
 			{
 				if (level > MARIO_LEVEL_SMALL)
 				{
@@ -220,7 +226,7 @@ void CMario::OnCollisionWithKoopa(LPCOLLISIONEVENT e)
 			}
 		}
 	}
-}*/
+}
 
 void CMario::OnCollisionWithCoin(LPCOLLISIONEVENT e)
 {

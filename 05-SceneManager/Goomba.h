@@ -128,18 +128,18 @@ public:
 };
 #pragma endregion
 
-//**************************/
-/*
-#pragma region ParaGoomba
+//**************************//
+#pragma region ParaKoopa
 #define KOOPA_FLIGHT_TIME	33.0f
 #define KOOPA_FLYING_SPEED	0.1f
 
 #define KOOPA_STATE_FLYING 300
 #define KOOPA_STATE_DROPING 301
 
-#define ID_ANI_KOOPA_FLYING 5002
+#define ID_ANI_KOOPA_FLYING_LEFT 5007
+#define ID_ANI_KOOPA_FLYING_RIGHT 5008
 
-class CParaGoomba : public CGameObject
+class CParaKoopa : public CGameObject
 {
 protected:
 	float ax;
@@ -162,7 +162,51 @@ protected:
 	virtual void OnCollisionWith(LPCOLLISIONEVENT e);
 
 public:
-	CParaGoomba(float x, float y);
+	CParaKoopa(float x, float y);
 	virtual void SetState(int state);
 };
-#pragma endregion*/
+#pragma endregion
+
+//*********************//
+#pragma region FirePlant
+#define FIREPLANT_MOVING_SPEED 0.05f
+
+#define FIREPLANT_BBOX_WIDTH 16
+#define FIREPLANT_BBOX_HEIGHT 14
+#define FIREPLANT_BBOX_HEIGHT_DIE 7
+
+#define FIREPLANT_MOVE_TIME 100
+#define FIREPLANT_FIRE_TIME 20
+
+#define FIREPLANT_STATE_MOVING_UP 100
+#define FIREPLANT_STATE_MOVING_DOWN 101
+#define FIREPLANT_STATE_FIRING 200
+
+#define ID_ANI_FIREPLANT_MOVING 5009
+#define ID_ANI_FIREPLANT_FIRING 5010
+
+class CFirePlant : public CGameObject
+{
+protected:
+	float ax;
+	float ay;
+	float MoveTime;
+	float FireTime;
+	float UpOrDown; // up = 1 | down = -1
+	BOOLEAN isMoving;
+
+	virtual void GetBoundingBox(float& left, float& top, float& right, float& bottom);
+	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
+	virtual void Render();
+
+	virtual int IsCollidable() { return 1; };
+	virtual int IsBlocking() { return 0; }
+	virtual void OnNoCollision(DWORD dt);
+
+	virtual void OnCollisionWith(LPCOLLISIONEVENT e);
+
+public:
+	CFirePlant(float x, float y);
+	virtual void SetState(int state);
+};
+#pragma endregion

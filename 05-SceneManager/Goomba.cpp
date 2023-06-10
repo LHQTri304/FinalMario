@@ -341,10 +341,9 @@ void CKoopa::SetState(int state)
 }
 #pragma endregion
 
-//*********************/
-/*
-#pragma region ParaGoomba
-CParaGoomba::CParaGoomba(float x, float y) :CGameObject(x, y)
+//*********************//
+#pragma region ParaKoopa
+CParaKoopa::CParaKoopa(float x, float y) :CGameObject(x, y)
 {
 	this->ax = 0;
 	this->ay = KOOPA_GRAVITY;
@@ -355,14 +354,14 @@ CParaGoomba::CParaGoomba(float x, float y) :CGameObject(x, y)
 	isFlying = false;
 }
 
-void CParaGoomba::GetBoundingBox(float& left, float& top, float& right, float& bottom)
+void CParaKoopa::GetBoundingBox(float& left, float& top, float& right, float& bottom)
 {
-	if (state == KOOPA_STATE_DIE)
+	if (state == KOOPA_STATE_STUNNED)
 	{
 		left = x - KOOPA_BBOX_WIDTH / 2;
-		top = y - KOOPA_BBOX_HEIGHT_DIE / 2;
+		top = y - KOOPA_BBOX_HEIGHT_STUNNED / 2;
 		right = left + KOOPA_BBOX_WIDTH;
-		bottom = top + KOOPA_BBOX_HEIGHT_DIE;
+		bottom = top + KOOPA_BBOX_HEIGHT_STUNNED;
 	}
 	else
 	{
@@ -373,16 +372,16 @@ void CParaGoomba::GetBoundingBox(float& left, float& top, float& right, float& b
 	}
 }
 
-void CParaGoomba::OnNoCollision(DWORD dt)
+void CParaKoopa::OnNoCollision(DWORD dt)
 {
 	x += vx * dt;
 	y += vy * dt;
 };
 
-void CParaGoomba::OnCollisionWith(LPCOLLISIONEVENT e)
+void CParaKoopa::OnCollisionWith(LPCOLLISIONEVENT e)
 {
 	if (!e->obj->IsBlocking()) return;
-	if (dynamic_cast<CParaGoomba*>(e->obj)) return;
+	if (dynamic_cast<CParaKoopa*>(e->obj)) return;
 
 	if (e->ny != 0)
 	{
@@ -395,14 +394,14 @@ void CParaGoomba::OnCollisionWith(LPCOLLISIONEVENT e)
 	}
 }
 
-void CParaGoomba::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
+void CParaKoopa::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	vy += ay * dt;
 	vx += ax * dt;
 
-	if ((state == KOOPA_STATE_DIE) && (GetTickCount64() - die_start > KOOPA_DIE_TIMEOUT))
+	if ((state == KOOPA_STATE_STUNNED) && (GetTickCount64() - die_start > KOOPA_STUNNED_TIMEOUT))
 	{
-		isDeleted = true;
+		SetState(KOOPA_STATE_REVIVE);
 		return;
 	}
 
@@ -428,30 +427,47 @@ void CParaGoomba::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 }
 
 
-void CParaGoomba::Render()
+void CParaKoopa::Render()
 {
-	int aniId = ID_ANI_KOOPA_FLYING;
-	if (state == KOOPA_STATE_WALKING)
+	int aniId; 
+	if (state == KOOPA_STATE_KICKED)
+		aniId = ID_ANI_KOOPA_STUNNED;
+	
+	else if (state == KOOPA_STATE_STUNNED)
 	{
-		aniId = ID_ANI_KOOPA_WALKING;
+		if (GetTickCount64() - die_start > KOOPA_STUNNED_TIMEOUT - KOOPA_REVIVING_TIMEOUT)
+			aniId = ID_ANI_KOOPA_REVIVE;
+		else
+			aniId = ID_ANI_KOOPA_STUNNED;
 	}
-	if (state == KOOPA_STATE_DIE)
+
+	else if (vx > 0 && state)
 	{
-		aniId = ID_ANI_KOOPA_DIE;
+		if (isGetHit == false)
+			aniId = ID_ANI_KOOPA_FLYING_RIGHT;
+		else
+			aniId = ID_ANI_KOOPA_WALKING_RIGHT;
+	}
+	else if (vx < 0 && state)
+	{
+		if (isGetHit == false)
+			aniId = ID_ANI_KOOPA_FLYING_LEFT;
+		else
+			aniId = ID_ANI_KOOPA_WALKING_LEFT;
 	}
 
 	CAnimations::GetInstance()->Get(aniId)->Render(x, y);
 	RenderBoundingBox();
 }
 
-void CParaGoomba::SetState(int state)
+void CParaKoopa::SetState(int state)
 {
 	CGameObject::SetState(state);
 	switch (state)
 	{
-	case KOOPA_STATE_DIE:
+	case KOOPA_STATE_STUNNED:
 		die_start = GetTickCount64();
-		y += (KOOPA_BBOX_HEIGHT - KOOPA_BBOX_HEIGHT_DIE) / 2;
+		y += (KOOPA_BBOX_HEIGHT - KOOPA_BBOX_HEIGHT_STUNNED) / 2;
 		vx = 0;
 		vy = 0;
 		ay = 0;
@@ -459,6 +475,16 @@ void CParaGoomba::SetState(int state)
 	case KOOPA_STATE_WALKING:
 		vx = -KOOPA_WALKING_SPEED;
 		isGetHit = true;
+		break;
+	case KOOPA_STATE_REVIVE:
+		y -= KOOPA_BBOX_HEIGHT_STUNNED / 2;
+		ax = 0;
+		ay = KOOPA_GRAVITY;
+		die_start = -1;
+		SetState(KOOPA_STATE_WALKING);
+		break;
+	case KOOPA_STATE_KICKED:
+		vx = -KOOPA_KICKED_SPEED;
 		break;
 
 	case KOOPA_STATE_FLYING:
@@ -470,5 +496,111 @@ void CParaGoomba::SetState(int state)
 		break;
 
 	}
-}*/
+}
+#pragma endregion
+
+//*********************//
+#pragma region FirePlant
+CFirePlant::CFirePlant(float x, float y) :CGameObject(x, y)
+{
+	this->ax = 0;
+	this->ay = 0;
+	isMoving = true;
+	UpOrDown = -1;
+	MoveTime = 0;
+	FireTime = FIREPLANT_FIRE_TIME;
+	SetState(FIREPLANT_STATE_MOVING_UP);
+}
+
+void CFirePlant::GetBoundingBox(float& left, float& top, float& right, float& bottom)
+{
+		left = x - FIREPLANT_BBOX_WIDTH / 2;
+		top = y - FIREPLANT_BBOX_HEIGHT / 2;
+		right = left + FIREPLANT_BBOX_WIDTH;
+		bottom = top + FIREPLANT_BBOX_HEIGHT;
+}
+
+void CFirePlant::OnNoCollision(DWORD dt)
+{
+	x += vx * dt;
+	y += vy * dt;
+};
+
+void CFirePlant::OnCollisionWith(LPCOLLISIONEVENT e)
+{
+	if (!e->obj->IsBlocking()) return;
+	if (dynamic_cast<CFirePlant*>(e->obj)) return;
+
+	if (e->ny != 0)
+	{
+		vy = 0;
+	}
+	else if (e->nx != 0)
+	{
+		vx = -vx;
+	}
+}
+
+void CFirePlant::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
+{
+	vy += ay * dt;
+	vx += ax * dt;
+
+	if (FireTime <= 0)
+	{
+		SetState(FIREPLANT_STATE_MOVING_DOWN);
+		isMoving = true;
+		MoveTime = 0;
+	}
+
+	if (MoveTime >= FIREPLANT_MOVE_TIME)
+	{
+		SetState(FIREPLANT_STATE_FIRING);
+		isMoving = false;
+		FireTime--;
+	}
+	
+	if (MoveTime < 0)
+	{
+		SetState(FIREPLANT_STATE_MOVING_UP);
+		isMoving = true;
+		MoveTime = 0;
+	}
+	
+	if (isMoving)
+		MoveTime++;
+
+	CGameObject::Update(dt, coObjects);
+	CCollision::GetInstance()->Process(this, dt, coObjects);
+}
+
+
+void CFirePlant::Render()
+{
+	int aniId = ID_ANI_FIREPLANT_MOVING;
+	if (state == FIREPLANT_STATE_FIRING)
+	{
+		aniId = ID_ANI_FIREPLANT_FIRING;
+	}
+
+	CAnimations::GetInstance()->Get(aniId)->Render(x, y);
+	RenderBoundingBox();
+}
+
+void CFirePlant::SetState(int state)
+{
+	CGameObject::SetState(state);
+	switch (state)
+	{
+	case FIREPLANT_STATE_MOVING_UP:
+		vy = -FIREPLANT_MOVING_SPEED;
+		break;
+	case FIREPLANT_STATE_MOVING_DOWN:
+		vy = FIREPLANT_MOVING_SPEED;
+		break;
+	case FIREPLANT_STATE_FIRING:
+		vy = 0;
+		break;
+	}
+}
 #pragma endregion

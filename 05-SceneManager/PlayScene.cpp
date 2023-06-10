@@ -120,7 +120,9 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 	case OBJECT_TYPE_GOOMBA: obj = new CGoomba(x,y); break;
 	case OBJECT_TYPE_PARAGOOMBA: obj = new CParaGoomba(x, y); break;
 	case OBJECT_TYPE_KOOPA: obj = new CKoopa(x, y); break;
-	//case OBJECT_TYPE_PARAKOOPA: obj = new CParaKoopa(x, y); break;
+	case OBJECT_TYPE_PARAKOOPA: obj = new CParaKoopa(x, y); break;
+	case OBJECT_TYPE_FIREPLANT: obj = new CFirePlant(x, y); break;
+	//case OBJECT_TYPE_BITEPLANT: obj = new CBitePlant(x, y); break;
 
 	//Blocks
 	case OBJECT_TYPE_BRICK: obj = new CBrick(x,y); break;
