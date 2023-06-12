@@ -62,9 +62,17 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 	else if (dynamic_cast<CBulletFire*>(e->obj))
 		OnCollisionWithBulletFire(e);
 
-	//Others
+	//Disappear-able
 	else if (dynamic_cast<CCoin*>(e->obj))
 		OnCollisionWithCoin(e);
+	else if (dynamic_cast<CMushroom*>(e->obj))
+		OnCollisionWithMushroom(e);
+	else if (dynamic_cast<CLeaf*>(e->obj))
+		OnCollisionWithLeaf(e);
+	//else if (dynamic_cast<CStar*>(e->obj))
+		//OnCollisionWithStar(e);
+
+	//Others
 	else if (dynamic_cast<CPortal*>(e->obj))
 		OnCollisionWithPortal(e);
 }
@@ -279,6 +287,50 @@ void CMario::OnCollisionWithCoin(LPCOLLISIONEVENT e)
 	coin++;
 }
 
+void CMario::OnCollisionWithMushroom(LPCOLLISIONEVENT e)
+{
+	CMushroom* mushroom = dynamic_cast<CMushroom*>(e->obj);
+
+	// jump and hit the bottom >> Active Mushroom 
+	if (e->ny > 0 && mushroom->GetState() == MUSHROOM_STATE_WAIT)
+	{
+		mushroom->SetState(MUSHROOM_STATE_ACTIVATED);
+	}
+
+	// touch Mushroom
+	if (mushroom->GetState() == MUSHROOM_STATE_MOVING)
+	{
+		if (level == MARIO_LEVEL_SMALL)
+		{
+			level = MARIO_LEVEL_BIG;
+			vy = -MARIO_JUMP_DEFLECT_SPEED;
+		}
+		mushroom->Delete();
+	}
+}
+
+void CMario::OnCollisionWithLeaf(LPCOLLISIONEVENT e)
+{
+	CLeaf* leaf = dynamic_cast<CLeaf*>(e->obj);
+
+	// jump and hit the bottom >> Active Leaf 
+	if (e->ny > 0 && leaf->GetState() == LEAF_STATE_WAIT)
+	{
+		leaf->SetState(LEAF_STATE_ACTIVATED);
+	}
+
+	// touch Leaf
+	if (leaf->GetState() == LEAF_STATE_MOVING_LEFT || leaf->GetState() == LEAF_STATE_MOVING_RIGHT)
+	{
+		if (level != MARIO_LEVEL_RACCOON)
+		{
+			level = MARIO_LEVEL_RACCOON;
+			vy = -MARIO_JUMP_DEFLECT_SPEED;
+		}
+		leaf->Delete();
+	}
+}
+
 void CMario::OnCollisionWithPortal(LPCOLLISIONEVENT e)
 {
 	CPortal* p = (CPortal*)e->obj;
@@ -408,6 +460,68 @@ int CMario::GetAniIdBig()
 	return aniId;
 }
 
+
+//
+// Get animdation ID for raccoon Mario
+//
+int CMario::GetAniIdRaccoon()
+{
+	int aniId = -1;
+	if (!isOnPlatform)
+	{
+		if (abs(ax) == MARIO_ACCEL_RUN_X)
+		{
+			if (nx >= 0)
+				aniId = ID_ANI_MARIO_RACCOON_JUMP_RUN_RIGHT;
+			else
+				aniId = ID_ANI_MARIO_RACCOON_JUMP_RUN_LEFT;
+		}
+		else
+		{
+			if (nx >= 0)
+				aniId = ID_ANI_MARIO_RACCOON_JUMP_WALK_RIGHT;
+			else
+				aniId = ID_ANI_MARIO_RACCOON_JUMP_WALK_LEFT;
+		}
+	}
+	else
+		if (isSitting)
+		{
+			if (nx > 0)
+				aniId = ID_ANI_MARIO_RACCOON_SIT_RIGHT;
+			else
+				aniId = ID_ANI_MARIO_RACCOON_SIT_LEFT;
+		}
+		else
+			if (vx == 0)
+			{
+				if (nx > 0) aniId = ID_ANI_MARIO_RACCOON_IDLE_RIGHT;
+				else aniId = ID_ANI_MARIO_RACCOON_IDLE_LEFT;
+			}
+			else if (vx > 0)
+			{
+				if (ax < 0)
+					aniId = ID_ANI_MARIO_RACCOON_BRACE_RIGHT;
+				else if (ax == MARIO_ACCEL_RUN_X)
+					aniId = ID_ANI_MARIO_RACCOON_RUNNING_RIGHT;
+				else if (ax == MARIO_ACCEL_WALK_X)
+					aniId = ID_ANI_MARIO_RACCOON_WALKING_RIGHT;
+			}
+			else // vx < 0
+			{
+				if (ax > 0)
+					aniId = ID_ANI_MARIO_RACCOON_BRACE_LEFT;
+				else if (ax == -MARIO_ACCEL_RUN_X)
+					aniId = ID_ANI_MARIO_RACCOON_RUNNING_LEFT;
+				else if (ax == -MARIO_ACCEL_WALK_X)
+					aniId = ID_ANI_MARIO_RACCOON_WALKING_LEFT;
+			}
+
+	if (aniId == -1) aniId = ID_ANI_MARIO_RACCOON_IDLE_RIGHT;
+
+	return aniId;
+}
+
 void CMario::Render()
 {
 	CAnimations* animations = CAnimations::GetInstance();
@@ -419,6 +533,8 @@ void CMario::Render()
 		aniId = GetAniIdBig();
 	else if (level == MARIO_LEVEL_SMALL)
 		aniId = GetAniIdSmall();
+	else if (level == MARIO_LEVEL_RACCOON)
+		aniId = GetAniIdRaccoon();
 
 	animations->Get(aniId)->Render(x, y);
 
@@ -524,6 +640,23 @@ void CMario::GetBoundingBox(float &left, float &top, float &right, float &bottom
 			top = y - MARIO_BIG_BBOX_HEIGHT/2;
 			right = left + MARIO_BIG_BBOX_WIDTH;
 			bottom = top + MARIO_BIG_BBOX_HEIGHT;
+		}
+	}
+	else if (level == MARIO_LEVEL_RACCOON)
+	{
+		if (isSitting)
+		{
+			left = x - MARIO_RACCOON_SITTING_BBOX_WIDTH / 2;
+			top = y - MARIO_RACCOON_SITTING_BBOX_HEIGHT / 2;
+			right = left + MARIO_RACCOON_SITTING_BBOX_WIDTH;
+			bottom = top + MARIO_RACCOON_SITTING_BBOX_HEIGHT;
+		}
+		else
+		{
+			left = x - MARIO_RACCOON_BBOX_WIDTH / 2;
+			top = y - MARIO_RACCOON_BBOX_HEIGHT / 2;
+			right = left + MARIO_RACCOON_BBOX_WIDTH;
+			bottom = top + MARIO_RACCOON_BBOX_HEIGHT;
 		}
 	}
 	else

@@ -78,6 +78,29 @@
 #define ID_ANI_MARIO_SMALL_JUMP_RUN_RIGHT 1600
 #define ID_ANI_MARIO_SMALL_JUMP_RUN_LEFT 1601
 
+// RACCOON MARIO
+
+#define ID_ANI_MARIO_RACCOON_IDLE_RIGHT 1103
+#define ID_ANI_MARIO_RACCOON_IDLE_LEFT 1104
+
+#define ID_ANI_MARIO_RACCOON_WALKING_RIGHT 1203
+#define ID_ANI_MARIO_RACCOON_WALKING_LEFT 1204
+
+#define ID_ANI_MARIO_RACCOON_RUNNING_RIGHT 1303
+#define ID_ANI_MARIO_RACCOON_RUNNING_LEFT 1304
+
+#define ID_ANI_MARIO_RACCOON_BRACE_RIGHT 1403
+#define ID_ANI_MARIO_RACCOON_BRACE_LEFT 1404
+
+#define ID_ANI_MARIO_RACCOON_JUMP_WALK_RIGHT 1503
+#define ID_ANI_MARIO_RACCOON_JUMP_WALK_LEFT 1504
+
+#define ID_ANI_MARIO_RACCOON_JUMP_RUN_RIGHT 1603
+#define ID_ANI_MARIO_RACCOON_JUMP_RUN_LEFT 1604
+
+#define ID_ANI_MARIO_RACCOON_SIT_RIGHT 1703
+#define ID_ANI_MARIO_RACCOON_SIT_LEFT 1704
+
 #pragma endregion
 
 #define GROUND_Y 160.0f
@@ -87,6 +110,7 @@
 
 #define	MARIO_LEVEL_SMALL	1
 #define	MARIO_LEVEL_BIG		2
+#define	MARIO_LEVEL_RACCOON		3
 
 #define MARIO_BIG_BBOX_WIDTH  14
 #define MARIO_BIG_BBOX_HEIGHT 24
@@ -97,6 +121,11 @@
 
 #define MARIO_SMALL_BBOX_WIDTH  13
 #define MARIO_SMALL_BBOX_HEIGHT 12
+
+#define MARIO_RACCOON_BBOX_WIDTH  14
+#define MARIO_RACCOON_BBOX_HEIGHT 24
+#define MARIO_RACCOON_SITTING_BBOX_WIDTH  14
+#define MARIO_RACCOON_SITTING_BBOX_HEIGHT 16
 
 
 #define MARIO_UNTOUCHABLE_TIME 2500
@@ -114,6 +143,7 @@ class CMario : public CGameObject
 	BOOLEAN isOnPlatform;
 	int coin; 
 
+	//Enemies
 	void OnCollisionWithGoomba(LPCOLLISIONEVENT e);
 	void OnCollisionWithParaGoomba(LPCOLLISIONEVENT e);
 	void OnCollisionWithKoopa(LPCOLLISIONEVENT e);
@@ -122,12 +152,18 @@ class CMario : public CGameObject
 	void OnCollisionWithFirePlant(LPCOLLISIONEVENT e);
 	void OnCollisionWithBulletFire(LPCOLLISIONEVENT e);
 
-
+	//Disappear-able
 	void OnCollisionWithCoin(LPCOLLISIONEVENT e);
+	void OnCollisionWithMushroom(LPCOLLISIONEVENT e);
+	void OnCollisionWithLeaf(LPCOLLISIONEVENT e);
+	void OnCollisionWithStar(LPCOLLISIONEVENT e);
+
+	//Others
 	void OnCollisionWithPortal(LPCOLLISIONEVENT e);
 
 	int GetAniIdBig();
 	int GetAniIdSmall();
+	int GetAniIdRaccoon();
 
 public:
 	CMario(float x, float y) : CGameObject(x, y)
@@ -137,7 +173,7 @@ public:
 		ax = 0.0f;
 		ay = MARIO_GRAVITY; 
 
-		level = MARIO_LEVEL_BIG;
+		level = MARIO_LEVEL_RACCOON;
 		untouchable = 0;
 		untouchable_start = -1;
 		isOnPlatform = false;

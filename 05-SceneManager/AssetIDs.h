@@ -29,6 +29,9 @@
 
 //Disappear-able >20
 #define OBJECT_TYPE_COIN 20
+#define OBJECT_TYPE_MUSHROOM 21
+#define OBJECT_TYPE_LEAF 22
+#define OBJECT_TYPE_STAR 23
 
 //Stable >30
 #define OBJECT_TYPE_BRICK	30
