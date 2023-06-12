@@ -253,7 +253,10 @@ void CMario::OnCollisionWithFirePlant(LPCOLLISIONEVENT e)
 
 void CMario::OnCollisionWithBulletFire(LPCOLLISIONEVENT e)
 {
-	//CBulletFire* bullet = dynamic_cast<CBulletFire*>(e->obj);
+	CBulletFire* bullet = dynamic_cast<CBulletFire*>(e->obj);
+
+	if (bullet->GetState() == BULLETFIRE_STATE_INSIDE_PLANT || bullet->GetState() == BULLETFIRE_STATE_DELAY)
+		return;	//Only when being fired will hit.
 
 	if (untouchable == 0)
 	{

@@ -181,8 +181,12 @@ public:
 #define FIREPLANT_STATE_MOVING_DOWN 101
 #define FIREPLANT_STATE_FIRING 200
 
-#define ID_ANI_FIREPLANT_MOVING 5009
-#define ID_ANI_FIREPLANT_FIRING 5010
+#define ID_ANI_FIREPLANT_MOVING_LEFT 5009
+#define ID_ANI_FIREPLANT_MOVING_RIGHT 5109
+#define ID_ANI_FIREPLANT_FIRING_UPLEFT 5010
+#define ID_ANI_FIREPLANT_FIRING_DOWNLEFT 5110
+#define ID_ANI_FIREPLANT_FIRING_UPRIGHT 5210
+#define ID_ANI_FIREPLANT_FIRING_DOWNRIGHT 5310
 
 class CFirePlant : public CGameObject
 {
@@ -192,6 +196,9 @@ protected:
 	float highestHeight;
 	float fireTime;
 	BOOLEAN isMoving;
+
+	int faceFire;	// 0 = UpLeft | 1 = DownLeft | 2 = UpRight | 3 = DownRight
+	int faceMove;	// 0 = Left | 1 = Right
 
 	virtual void GetBoundingBox(float& left, float& top, float& right, float& bottom);
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
@@ -208,17 +215,21 @@ public:
 	virtual void SetState(int state);
 };
 
-#define BULLETFIRE_MOVING_SPEED 0.05f
+#define BULLETFIRE_MOVING_SPEED_X 0.05f
+#define BULLETFIRE_MOVING_SPEED_Y 0.02f
 
 #define BULLETFIRE_BBOX_WIDTH 9
 #define BULLETFIRE_BBOX_HEIGHT 9
 
-#define BULLETFIRE_MOVE_TIME 200
+#define BULLETFIRE_MOVE_TIME 150
 #define BULLETFIRE_DELAY_TIME 25
 
 #define BULLETFIRE_STATE_INSIDE_PLANT 100
 #define BULLETFIRE_STATE_DELAY 101
-#define BULLETFIRE_STATE_FIRING 200
+#define BULLETFIRE_STATE_FIRING_UPLEFT 200
+#define BULLETFIRE_STATE_FIRING_DOWNLEFT 201
+#define BULLETFIRE_STATE_FIRING_UPRIGHT 202
+#define BULLETFIRE_STATE_FIRING_DOWNRIGHT 203
 
 #define ID_ANI_BULLETFIRE_MOVE 5011
 #define ID_ANI_BULLETFIRE_STAY 5012
@@ -232,9 +243,7 @@ protected:
 	float iy;
 	float moveTime;
 	float delayTime;
-
-	int bb = 50;
-	int aa = bb;
+	BOOLEAN isMoving;
 
 	virtual void GetBoundingBox(float& left, float& top, float& right, float& bottom);
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
