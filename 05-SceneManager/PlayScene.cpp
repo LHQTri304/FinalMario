@@ -135,7 +135,7 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 	case OBJECT_TYPE_COIN: obj = new CCoin(x, y); break;
 	case OBJECT_TYPE_MUSHROOM: obj = new CMushroom(x, y); break;
 	case OBJECT_TYPE_LEAF: obj = new CLeaf(x, y); break;
-	//case OBJECT_TYPE_STAR: obj = new CStar(x, y); break;
+	case OBJECT_TYPE_STAR: obj = new CStar(x, y); break;
 
 	case OBJECT_TYPE_PLATFORM: //40 -->> CLOUD 42 & DIRT 41
 	{
@@ -175,6 +175,66 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 		int sprite_bot_right = atoi(tokens[15].c_str());
 
 		obj = new CColorBox(
+			x, y,
+			cell_width, cell_height, length_width, length_height,
+			sprite_top_left, sprite_top_mid, sprite_top_right,
+			sprite_mid_left, sprite_mid_mid, sprite_mid_right,
+			sprite_bot_left, sprite_bot_mid, sprite_bot_right
+		);
+
+		break;
+	}
+
+	case  OBJECT_TYPE_GREEN_PIPE: //44
+	{
+		float cell_width = (float)atof(tokens[3].c_str());
+		float cell_height = (float)atof(tokens[4].c_str());
+		int length_width = atoi(tokens[5].c_str());
+		int length_height = atoi(tokens[6].c_str());
+
+		int sprite_top_left = atoi(tokens[7].c_str());
+		int sprite_top_mid = atoi(tokens[8].c_str());
+		int sprite_top_right = atoi(tokens[9].c_str());
+
+		int sprite_mid_left = atoi(tokens[10].c_str());
+		int sprite_mid_mid = atoi(tokens[11].c_str());
+		int sprite_mid_right = atoi(tokens[12].c_str());
+
+		int sprite_bot_left = atoi(tokens[13].c_str());
+		int sprite_bot_mid = atoi(tokens[14].c_str());
+		int sprite_bot_right = atoi(tokens[15].c_str());
+
+		obj = new CBigDirt_Pipe(
+			x, y,
+			cell_width, cell_height, length_width, length_height,
+			sprite_top_left, sprite_top_mid, sprite_top_right,
+			sprite_mid_left, sprite_mid_mid, sprite_mid_right,
+			sprite_bot_left, sprite_bot_mid, sprite_bot_right
+		);
+
+		break;
+	}
+
+	case  OBJECT_TYPE_BIG_DIRT: //45
+	{
+		float cell_width = (float)atof(tokens[3].c_str());
+		float cell_height = (float)atof(tokens[4].c_str());
+		int length_width = atoi(tokens[5].c_str());
+		int length_height = atoi(tokens[6].c_str());
+
+		int sprite_top_left = atoi(tokens[7].c_str());
+		int sprite_top_mid = atoi(tokens[8].c_str());
+		int sprite_top_right = atoi(tokens[9].c_str());
+
+		int sprite_mid_left = atoi(tokens[10].c_str());
+		int sprite_mid_mid = atoi(tokens[11].c_str());
+		int sprite_mid_right = atoi(tokens[12].c_str());
+
+		int sprite_bot_left = atoi(tokens[13].c_str());
+		int sprite_bot_mid = atoi(tokens[14].c_str());
+		int sprite_bot_right = atoi(tokens[15].c_str());
+
+		obj = new CBigDirt_Pipe(
 			x, y,
 			cell_width, cell_height, length_width, length_height,
 			sprite_top_left, sprite_top_mid, sprite_top_right,

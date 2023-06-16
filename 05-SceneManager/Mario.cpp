@@ -6,6 +6,7 @@
 
 #include "Goomba.h"
 #include "Coin.h"
+#include "Brick.h"
 #include "Portal.h"
 
 #include "Collision.h"
@@ -69,8 +70,14 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 		OnCollisionWithMushroom(e);
 	else if (dynamic_cast<CLeaf*>(e->obj))
 		OnCollisionWithLeaf(e);
-	//else if (dynamic_cast<CStar*>(e->obj))
-		//OnCollisionWithStar(e);
+	else if (dynamic_cast<CStar*>(e->obj))
+		OnCollisionWithStar(e);
+
+	//Special blocks
+	else if (dynamic_cast<CQuestBrick*>(e->obj))
+		OnCollisionWithQuestBrick(e);
+	else if (dynamic_cast<CGlassBrick*>(e->obj))
+		OnCollisionWithGlassBrick(e);
 
 	//Others
 	else if (dynamic_cast<CPortal*>(e->obj))
@@ -291,7 +298,7 @@ void CMario::OnCollisionWithMushroom(LPCOLLISIONEVENT e)
 {
 	CMushroom* mushroom = dynamic_cast<CMushroom*>(e->obj);
 
-	// jump and hit the bottom >> Active Mushroom 
+	// jump and hit the bottom >> Activate Mushroom 
 	if (e->ny > 0 && mushroom->GetState() == MUSHROOM_STATE_WAIT)
 	{
 		mushroom->SetState(MUSHROOM_STATE_ACTIVATED);
@@ -313,14 +320,15 @@ void CMario::OnCollisionWithLeaf(LPCOLLISIONEVENT e)
 {
 	CLeaf* leaf = dynamic_cast<CLeaf*>(e->obj);
 
-	// jump and hit the bottom >> Active Leaf 
-	if (e->ny > 0 && leaf->GetState() == LEAF_STATE_WAIT)
+	// jump and hit the bottom >> Activate Leaf 
+	if (leaf->GetState() == LEAF_STATE_WAIT)
 	{
-		leaf->SetState(LEAF_STATE_ACTIVATED);
+		if(e->ny > 0)
+			leaf->SetState(LEAF_STATE_ACTIVATED);
 	}
 
 	// touch Leaf
-	if (leaf->GetState() == LEAF_STATE_MOVING_LEFT || leaf->GetState() == LEAF_STATE_MOVING_RIGHT)
+	else
 	{
 		if (level != MARIO_LEVEL_RACCOON)
 		{
@@ -329,6 +337,33 @@ void CMario::OnCollisionWithLeaf(LPCOLLISIONEVENT e)
 		}
 		leaf->Delete();
 	}
+}
+
+void CMario::OnCollisionWithQuestBrick(LPCOLLISIONEVENT e)
+{
+	CQuestBrick* questBrick = dynamic_cast<CQuestBrick*>(e->obj);
+
+	// jump and hit the bottom >> Activate the QuestBrick 
+	if (e->ny > 0)
+		questBrick->SetState(QUESTBRICK_STATE_ACTIVATED);
+}
+
+void CMario::OnCollisionWithGlassBrick(LPCOLLISIONEVENT e)
+{
+	CGlassBrick* leaf = dynamic_cast<CGlassBrick*>(e->obj);
+
+	// jump and hit the bottom >> Break the GlassBrick
+	if (e->ny > 0)
+		leaf->Delete();
+}
+
+void CMario::OnCollisionWithStar(LPCOLLISIONEVENT e)
+{
+	CStar* star = dynamic_cast<CStar*>(e->obj);
+
+	// jump and hit >> Activate Star 
+	if (star->GetState() == STAR_STATE_WAIT)
+		star->SetState(STAR_STATE_ACTIVATED);
 }
 
 void CMario::OnCollisionWithPortal(LPCOLLISIONEVENT e)

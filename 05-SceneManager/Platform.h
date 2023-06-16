@@ -79,4 +79,46 @@ public:
 	void RenderBoundingBox();
 };
 
-typedef CPlatform* LPPLATFORM;
+//add... BigDirt_Pipe
+class CBigDirt_Pipe : public CGameObject
+{
+protected:
+	int lengthWidth;				// Unit: cell 
+	int lengthHeight;				// Unit: cell 
+	float cellWidth;
+	float cellHeight;
+	int spriteIdTopLeft, spriteIdTopMid, spriteIdTopRight;
+	int spriteIdMidLeft, spriteIdMidMid, spriteIdMidRight;
+	int spriteIdBotLeft, spriteIdBotMid, spriteIdBotRight;
+
+public:
+	CBigDirt_Pipe(float x, float y,
+		float cell_width, float cell_height, int length_width, int length_height,
+		int sprite_id_top_left, int sprite_id_top_mid, int sprite_id_top_right,
+		int sprite_id_mid_left, int sprite_id_mid_mid, int sprite_id_mid_right,
+		int sprite_id_bot_left, int sprite_id_bot_mid, int sprite_id_bot_right) :CGameObject(x, y)
+	{
+		this->lengthWidth = length_width;
+		this->lengthHeight = length_height;
+		this->cellWidth = cell_width;
+		this->cellHeight = cell_height;
+
+		this->spriteIdTopLeft = sprite_id_top_left;
+		this->spriteIdTopMid = sprite_id_top_mid;
+		this->spriteIdTopRight = sprite_id_top_right;
+
+		this->spriteIdMidLeft = sprite_id_mid_left;
+		this->spriteIdMidMid = sprite_id_mid_mid;
+		this->spriteIdMidRight = sprite_id_mid_right;
+
+		this->spriteIdBotLeft = sprite_id_bot_left;
+		this->spriteIdBotMid = sprite_id_bot_mid;
+		this->spriteIdBotRight = sprite_id_bot_right;
+	}
+
+	void Render();
+	void Update(DWORD dt) {}
+	void GetBoundingBox(float& l, float& t, float& r, float& b);
+	int IsDirectionColliable(float nx, float ny);	//ADD
+	void RenderBoundingBox();
+};

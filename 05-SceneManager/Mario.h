@@ -158,6 +158,10 @@ class CMario : public CGameObject
 	void OnCollisionWithLeaf(LPCOLLISIONEVENT e);
 	void OnCollisionWithStar(LPCOLLISIONEVENT e);
 
+	//Special blocks
+	void OnCollisionWithQuestBrick(LPCOLLISIONEVENT e);
+	void OnCollisionWithGlassBrick(LPCOLLISIONEVENT e);
+
 	//Others
 	void OnCollisionWithPortal(LPCOLLISIONEVENT e);
 
