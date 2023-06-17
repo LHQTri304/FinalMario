@@ -82,6 +82,37 @@ public:
 };
 #pragma endregion
 
+//*********************//
+#pragma region FakeHead
+#define FAKEHEAD_GRAVITY 0.2f
+
+#define FAKEHEAD_BBOX_WIDTH 16
+#define FAKEHEAD_BBOX_HEIGHT 24
+
+#define ID_ANI_FAKEHEAD ID_ANI_BULLETFIRE_STAY
+
+class CFakeHead : public CGameObject
+{
+protected:
+	float ay;
+
+	virtual void GetBoundingBox(float& left, float& top, float& right, float& bottom);
+
+	virtual int IsCollidable() { return 1; }
+	virtual int IsBlocking() { return 0; }
+	virtual void OnNoCollision(DWORD dt);
+
+	virtual void OnCollisionWith(LPCOLLISIONEVENT e);
+
+public:
+	CFakeHead(float x, float y);
+	virtual void SetState(int state);
+
+	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
+	virtual void Render();
+};
+#pragma endregion
+
 //**************************//
 #pragma region Koopa
 #define KOOPA_GRAVITY 0.0008f
@@ -115,6 +146,8 @@ protected:
 	float iy;
 	int respawnCountdown;
 
+	CFakeHead* fakeHead;
+
 	ULONGLONG die_start;
 
 	virtual void GetBoundingBox(float& left, float& top, float& right, float& bottom);
@@ -126,6 +159,12 @@ protected:
 	virtual void OnNoCollision(DWORD dt);
 
 	virtual void OnCollisionWith(LPCOLLISIONEVENT e);
+	
+	void OnCollisionWithMushroom(LPCOLLISIONEVENT e);
+	void OnCollisionWithLeaf(LPCOLLISIONEVENT e);
+	void OnCollisionWithQuestBrick(LPCOLLISIONEVENT e);
+	void OnCollisionWithGlassBrick(LPCOLLISIONEVENT e);
+	
 
 public:
 	CKoopa(float x, float y);
@@ -168,6 +207,11 @@ protected:
 	virtual void OnNoCollision(DWORD dt);
 
 	virtual void OnCollisionWith(LPCOLLISIONEVENT e);
+
+	void OnCollisionWithMushroom(LPCOLLISIONEVENT e);
+	void OnCollisionWithLeaf(LPCOLLISIONEVENT e);
+	void OnCollisionWithQuestBrick(LPCOLLISIONEVENT e);
+	void OnCollisionWithGlassBrick(LPCOLLISIONEVENT e);
 
 public:
 	CParaKoopa(float x, float y);

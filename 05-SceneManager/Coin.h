@@ -23,7 +23,7 @@ public:
 #pragma endregion
 
 //*********************//
-#pragma region Mushroom
+#pragma region Mushroom (& Leaf)
 #define ID_ANI_MUSHROOM 11001
 
 #define MUSHROOM_GRAVITY 0.002f

@@ -192,6 +192,8 @@ public:
 	void Render();
 	void SetState(int state);
 
+	int GetLevel() { return level; }
+
 	int IsCollidable()
 	{ 
 		return (state != MARIO_STATE_DIE); 

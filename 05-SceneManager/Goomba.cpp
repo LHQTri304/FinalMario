@@ -239,6 +239,9 @@ CKoopa::CKoopa(float x, float y) :CGameObject(x, y)
 	this->ay = KOOPA_GRAVITY;
 	this->ix = x;
 	this->iy = y;
+
+	fakeHead = new CFakeHead(x, y);
+
 	respawnCountdown = RESPAWN_COUNTDOWN;
 	die_start = -1;
 	SetState(KOOPA_STATE_WALKING);
@@ -276,8 +279,12 @@ void CKoopa::OnCollisionWith(LPCOLLISIONEVENT e)
 		return;
 	}
 
-	if (!e->obj->IsBlocking()) return;
 	if (dynamic_cast<CKoopa*>(e->obj)) return;
+	if (dynamic_cast<CGoomba*>(e->obj))
+	{
+		CGoomba* goomba = dynamic_cast<CGoomba*>(e->obj);
+		goomba->SetState(GOOMBA_STATE_DIE);
+	}
 
 	if (e->ny != 0)
 	{
@@ -289,30 +296,54 @@ void CKoopa::OnCollisionWith(LPCOLLISIONEVENT e)
 	}
 
 
-	if (state == KOOPA_STATE_KICKED)
-	{
-		if (dynamic_cast<CMushroom*>(e->obj))
-		{
-			CMushroom* mushroom = dynamic_cast<CMushroom*>(e->obj);
-			mushroom->SetState(MUSHROOM_STATE_ACTIVATED);
-		}
-		else if (dynamic_cast<CLeaf*>(e->obj))
-		{
-			CLeaf* leaf = dynamic_cast<CLeaf*>(e->obj);
-			leaf->SetState(LEAF_STATE_ACTIVATED);
-		}
-		else if (dynamic_cast<CGlassBrick*>(e->obj))
-		{
-			CGlassBrick* glassBrick = dynamic_cast<CGlassBrick*>(e->obj);
-			glassBrick->Delete();
-		}
-		else if (dynamic_cast<CQuestBrick*>(e->obj))
-		{
-			CQuestBrick* questBrick = dynamic_cast<CQuestBrick*>(e->obj);
-			questBrick->SetState(QUESTBRICK_STATE_ACTIVATED);
-		}
-	}
+	if (dynamic_cast<CMushroom*>(e->obj))
+		OnCollisionWithMushroom(e);
+	else if (dynamic_cast<CLeaf*>(e->obj))
+		OnCollisionWithLeaf(e);
+	else if (dynamic_cast<CQuestBrick*>(e->obj))
+		OnCollisionWithQuestBrick(e);
+	else if (dynamic_cast<CGlassBrick*>(e->obj))
+		OnCollisionWithGlassBrick(e);
 }
+
+void CKoopa::OnCollisionWithMushroom(LPCOLLISIONEVENT e)
+{
+	CMushroom* mushroom = dynamic_cast<CMushroom*>(e->obj);
+	CMario* mario = (CMario*)((LPPLAYSCENE)CGame::GetInstance()->GetCurrentScene())->GetPlayer();
+
+	// Hit when being kicked >> Activate Mushroom 
+		if (mushroom->GetState() == MUSHROOM_STATE_WAIT && GetState() == KOOPA_STATE_KICKED
+			&& mario->GetLevel() == MARIO_LEVEL_SMALL)
+			mushroom->SetState(MUSHROOM_STATE_ACTIVATED);
+}
+
+void CKoopa::OnCollisionWithLeaf(LPCOLLISIONEVENT e)
+{
+	CLeaf* leaf = dynamic_cast<CLeaf*>(e->obj);
+	CMario* mario = (CMario*)((LPPLAYSCENE)CGame::GetInstance()->GetCurrentScene())->GetPlayer();
+
+	// Hit when being kicked >> Activate Leaf 
+		if (leaf->GetState() == LEAF_STATE_WAIT && GetState() == KOOPA_STATE_KICKED
+			&& mario->GetLevel() != MARIO_LEVEL_SMALL)
+			leaf->SetState(LEAF_STATE_ACTIVATED);
+}
+
+void CKoopa::OnCollisionWithQuestBrick(LPCOLLISIONEVENT e)
+{
+	CQuestBrick* questBrick = dynamic_cast<CQuestBrick*>(e->obj);
+
+	// Hit when being kicked >> Activate the QuestBrick 
+		questBrick->SetState(QUESTBRICK_STATE_ACTIVATED);
+}
+
+void CKoopa::OnCollisionWithGlassBrick(LPCOLLISIONEVENT e)
+{
+	CGlassBrick* glassBrick = dynamic_cast<CGlassBrick*>(e->obj);
+
+	// Hit when being kicked >> Break the GlassBrick
+		glassBrick->Delete();
+}
+
 
 void CKoopa::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
@@ -325,6 +356,7 @@ void CKoopa::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		return;
 	}
 
+	/*
 	if (respawnCountdown <=0)
 	{
 		x = ix;
@@ -332,9 +364,32 @@ void CKoopa::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		SetState(KOOPA_STATE_WALKING);
 		respawnCountdown = RESPAWN_COUNTDOWN;
 	}
-	else		
+	else
 		respawnCountdown--;
+	*/
 
+	//fake head:..
+	float fHeadX, fHeadY;
+	if (GetState() == KOOPA_STATE_WALKING)
+	{
+		fakeHead->GetPosition(fHeadX, fHeadY);
+
+		if (fHeadY > this->y)	//Ready to fall
+		{
+			vx = -vx;
+		}
+
+		if (vx>0)
+		{
+			fakeHead->SetPosition(x + KOOPA_BBOX_WIDTH/2, y - KOOPA_BBOX_HEIGHT);
+		}
+		else
+		{
+			fakeHead->SetPosition(x - KOOPA_BBOX_WIDTH/2, y - KOOPA_BBOX_HEIGHT);
+		}
+	}
+
+	fakeHead->Update(dt, coObjects);
 	CGameObject::Update(dt, coObjects);
 	CCollision::GetInstance()->Process(this, dt, coObjects);
 }
@@ -358,6 +413,7 @@ void CKoopa::Render()
 		aniId = ID_ANI_KOOPA_STUNNED;
 
 	CAnimations::GetInstance()->Get(aniId)->Render(x, y);
+	//fakeHead->RenderBoundingBox();
 	//RenderBoundingBox();
 }
 
@@ -431,18 +487,75 @@ void CParaKoopa::OnNoCollision(DWORD dt)
 
 void CParaKoopa::OnCollisionWith(LPCOLLISIONEVENT e)
 {
-	if (!e->obj->IsBlocking()) return;
+	if (state != KOOPA_STATE_KICKED && dynamic_cast<CKoopaSupportBlock*>(e->obj))
+	{
+		vx = -vx;
+		return;
+	}
+
 	if (dynamic_cast<CParaKoopa*>(e->obj)) return;
+	if (dynamic_cast<CGoomba*>(e->obj))
+	{
+		CGoomba* goomba = dynamic_cast<CGoomba*>(e->obj);
+		goomba->SetState(GOOMBA_STATE_DIE);
+	}
 
 	if (e->ny != 0)
 	{
 		vy = 0;
-		if (e->ny < 0) isOnPlatform = true;
 	}
 	else if (e->nx != 0)
 	{
 		vx = -vx;
 	}
+
+
+	if (dynamic_cast<CMushroom*>(e->obj))
+		OnCollisionWithMushroom(e);
+	else if (dynamic_cast<CLeaf*>(e->obj))
+		OnCollisionWithLeaf(e);
+	else if (dynamic_cast<CQuestBrick*>(e->obj))
+		OnCollisionWithQuestBrick(e);
+	else if (dynamic_cast<CGlassBrick*>(e->obj))
+		OnCollisionWithGlassBrick(e);
+}
+
+void CParaKoopa::OnCollisionWithMushroom(LPCOLLISIONEVENT e)
+{
+	CMushroom* mushroom = dynamic_cast<CMushroom*>(e->obj);
+	CMario* mario = (CMario*)((LPPLAYSCENE)CGame::GetInstance()->GetCurrentScene())->GetPlayer();
+
+	// Hit when being kicked >> Activate Mushroom 
+	if (mushroom->GetState() == MUSHROOM_STATE_WAIT && GetState() == KOOPA_STATE_KICKED
+		&& mario->GetLevel() == MARIO_LEVEL_SMALL)
+		mushroom->SetState(MUSHROOM_STATE_ACTIVATED);
+}
+
+void CParaKoopa::OnCollisionWithLeaf(LPCOLLISIONEVENT e)
+{
+	CLeaf* leaf = dynamic_cast<CLeaf*>(e->obj);
+	CMario* mario = (CMario*)((LPPLAYSCENE)CGame::GetInstance()->GetCurrentScene())->GetPlayer();
+
+	// Hit when being kicked >> Activate Leaf 
+	if (leaf->GetState() == LEAF_STATE_WAIT && GetState() == KOOPA_STATE_KICKED
+		&& mario->GetLevel() != MARIO_LEVEL_SMALL)
+		leaf->SetState(LEAF_STATE_ACTIVATED);
+}
+
+void CParaKoopa::OnCollisionWithQuestBrick(LPCOLLISIONEVENT e)
+{
+	CQuestBrick* questBrick = dynamic_cast<CQuestBrick*>(e->obj);
+
+	// Hit when being kicked >> Activate the QuestBrick 
+	questBrick->SetState(QUESTBRICK_STATE_ACTIVATED);
+}
+
+void CParaKoopa::OnCollisionWithGlassBrick(LPCOLLISIONEVENT e)
+{
+	CGlassBrick* glassBrick = dynamic_cast<CGlassBrick*>(e->obj);
+
+	// Hit when being kicked >> Break the GlassBrick
+	glassBrick->Delete();
 }
 
 void CParaKoopa::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
@@ -884,5 +997,55 @@ void CBitePlant::SetState(int state)
 		vy = 0;
 		break;
 	}
+}
+#pragma endregion
+
+//*********************//
+#pragma region FakeHead
+CFakeHead::CFakeHead(float x, float y) :CGameObject(x, y)
+{
+	this->ay = FAKEHEAD_GRAVITY;
+}
+
+void CFakeHead::GetBoundingBox(float& left, float& top, float& right, float& bottom)
+{
+	left = x - FAKEHEAD_BBOX_WIDTH / 2;
+	top = y - FAKEHEAD_BBOX_HEIGHT / 2;
+	right = left + FAKEHEAD_BBOX_WIDTH;
+	bottom = top + FAKEHEAD_BBOX_HEIGHT;
+}
+
+void CFakeHead::OnNoCollision(DWORD dt)
+{
+	x += vx * dt;
+	y += vy * dt;
+};
+
+void CFakeHead::OnCollisionWith(LPCOLLISIONEVENT e)
+{
+	return;
+}
+
+void CFakeHead::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
+{
+	vy += ay * dt;
+
+	CGameObject::Update(dt, coObjects);
+	CCollision::GetInstance()->Process(this, dt, coObjects);
+}
+
+
+void CFakeHead::Render()
+{
+	//int aniId = ID_ANI_FAKEHEAD;
+
+	//CAnimations::GetInstance()->Get(aniId)->Render(x, y);
+	RenderBoundingBox();
+}
+
+void CFakeHead::SetState(int state)
+{
+	CGameObject::SetState(state);
+	return;
 }
 #pragma endregion

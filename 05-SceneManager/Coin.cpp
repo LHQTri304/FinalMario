@@ -45,8 +45,8 @@ void CMushroom::OnNoCollision(DWORD dt)
 
 void CMushroom::OnCollisionWith(LPCOLLISIONEVENT e)
 {
-	if (!e->obj->IsBlocking()) return;
-	if (dynamic_cast<CMushroom*>(e->obj)) return;
+	//if (!e->obj->IsBlocking()) return;
+	//if (dynamic_cast<CMushroom*>(e->obj)) return;
 
 	if (e->ny != 0)
 	{
@@ -137,8 +137,8 @@ void CLeaf::OnNoCollision(DWORD dt)
 
 void CLeaf::OnCollisionWith(LPCOLLISIONEVENT e)
 {
-	if (!e->obj->IsBlocking()) return;
-	if (dynamic_cast<CLeaf*>(e->obj)) return;
+	//if (!e->obj->IsBlocking()) return;
+	//if (dynamic_cast<CLeaf*>(e->obj)) return;
 
 	if (e->ny != 0)
 	{
