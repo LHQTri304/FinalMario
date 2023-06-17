@@ -126,16 +126,18 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 	case OBJECT_TYPE_BITEPLANT: obj = new CBitePlant(x, y); break;
 
 	//Blocks
-	case OBJECT_TYPE_BRICK: obj = new CBrick(x,y); break;
+	case OBJECT_TYPE_INVISIBLE_BLOCK: obj = new CBrick(x,y); break;
 	case OBJECT_TYPE_DIRT_BRICK: obj = new CDirtBrick(x, y); break;
 	case OBJECT_TYPE_GLASS_BRICK: obj = new CGlassBrick(x, y); break;
 	case OBJECT_TYPE_QUEST_BRICK: obj = new CQuestBrick(x, y); break;
+	case OBJECT_TYPE_KOOPA_SUPPORT_BLOCK: obj = new CKoopaSupportBlock(x, y); break;
 
 	//Disappear-able
 	case OBJECT_TYPE_COIN: obj = new CCoin(x, y); break;
 	case OBJECT_TYPE_MUSHROOM: obj = new CMushroom(x, y); break;
 	case OBJECT_TYPE_LEAF: obj = new CLeaf(x, y); break;
 	case OBJECT_TYPE_STAR: obj = new CStar(x, y); break;
+	case OBJECT_TYPE_HIDEDCOIN: obj = new CHidedCoin(x, y); break;
 
 	case OBJECT_TYPE_PLATFORM: //40 -->> CLOUD 42 & DIRT 41
 	{
@@ -245,14 +247,22 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 		break;
 	}
 
+	//Else...
 	case OBJECT_TYPE_PORTAL:
 	{
 		float r = (float)atof(tokens[3].c_str());
 		float b = (float)atof(tokens[4].c_str());
 		int scene_id = atoi(tokens[5].c_str());
 		obj = new CPortal(x, y, r, b, scene_id);
+
+		break;
 	}
-	break;
+	case OBJECT_TYPE_TREES: obj = new CTrees(x, y); break;
+	case OBJECT_TYPE_BUSH: obj = new CBush(x, y); break;
+	case OBJECT_TYPE_CLOUD1: obj = new CCloud1(x, y); break;
+	case OBJECT_TYPE_CLOUD2: obj = new CCloud2(x, y); break;
+	case OBJECT_TYPE_CLOUD3: obj = new CCloud3(x, y); break;
+	case OBJECT_TYPE_BLACK_END: obj = new CBlackEnd(x, y); break;
 
 
 	default:

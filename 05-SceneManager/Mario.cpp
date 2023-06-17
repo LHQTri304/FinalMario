@@ -27,6 +27,14 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 
 	isOnPlatform = false;
 
+	if (y >= 240)	//Out of the world >> back to the start point
+	{
+		x = ix;
+		y = iy;
+		state = MARIO_STATE_IDLE;
+		level = MARIO_LEVEL_SMALL;
+	}
+
 	CCollision::GetInstance()->Process(this, dt, coObjects);
 }
 
@@ -62,6 +70,8 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 		OnCollisionWithFirePlant(e);
 	else if (dynamic_cast<CBulletFire*>(e->obj))
 		OnCollisionWithBulletFire(e);
+	else if (dynamic_cast<CBitePlant*>(e->obj))
+		OnCollisionWithFirePlant(e);
 
 	//Disappear-able
 	else if (dynamic_cast<CCoin*>(e->obj))
@@ -72,6 +82,8 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 		OnCollisionWithLeaf(e);
 	else if (dynamic_cast<CStar*>(e->obj))
 		OnCollisionWithStar(e);
+	else if (dynamic_cast<CHidedCoin*>(e->obj))
+		OnCollisionWithHidedCoin(e);
 
 	//Special blocks
 	else if (dynamic_cast<CQuestBrick*>(e->obj))
@@ -105,7 +117,7 @@ void CMario::OnCollisionWithGoomba(LPCOLLISIONEVENT e)
 			{
 				if (level > MARIO_LEVEL_SMALL)
 				{
-					level = MARIO_LEVEL_SMALL;
+					level--;
 					StartUntouchable();
 				}
 				else
@@ -147,7 +159,7 @@ void CMario::OnCollisionWithParaGoomba(LPCOLLISIONEVENT e)
 			{
 				if (level > MARIO_LEVEL_SMALL)
 				{
-					level = MARIO_LEVEL_SMALL;
+					level--;
 					StartUntouchable();
 				}
 				else
@@ -190,7 +202,7 @@ void CMario::OnCollisionWithKoopa(LPCOLLISIONEVENT e)
 			{
 				if (level > MARIO_LEVEL_SMALL)
 				{
-					level = MARIO_LEVEL_SMALL;
+					level--;
 					StartUntouchable();
 				}
 				else
@@ -234,7 +246,7 @@ void CMario::OnCollisionWithParaKoopa(LPCOLLISIONEVENT e)
 			{
 				if (level > MARIO_LEVEL_SMALL)
 				{
-					level = MARIO_LEVEL_SMALL;
+					level--;
 					StartUntouchable();
 				}
 				else
@@ -255,7 +267,7 @@ void CMario::OnCollisionWithFirePlant(LPCOLLISIONEVENT e)
 	{
 		if (level > MARIO_LEVEL_SMALL)
 		{
-			level = MARIO_LEVEL_SMALL;
+			level--;
 			StartUntouchable();
 		}
 		else
@@ -277,7 +289,25 @@ void CMario::OnCollisionWithBulletFire(LPCOLLISIONEVENT e)
 	{
 		if (level > MARIO_LEVEL_SMALL)
 		{
-			level = MARIO_LEVEL_SMALL;
+			level--;
+			StartUntouchable();
+		}
+		else
+		{
+			DebugOut(L">>> Mario DIE >>> \n");
+			SetState(MARIO_STATE_DIE);
+		}
+	}
+}
+
+void CMario::OnCollisionWithBitePlant(LPCOLLISIONEVENT e)
+{
+
+	if (untouchable == 0)
+	{
+		if (level > MARIO_LEVEL_SMALL)
+		{
+			level--;
 			StartUntouchable();
 		}
 		else
@@ -299,13 +329,14 @@ void CMario::OnCollisionWithMushroom(LPCOLLISIONEVENT e)
 	CMushroom* mushroom = dynamic_cast<CMushroom*>(e->obj);
 
 	// jump and hit the bottom >> Activate Mushroom 
-	if (e->ny > 0 && mushroom->GetState() == MUSHROOM_STATE_WAIT)
+	if (e->ny > 0)
 	{
-		mushroom->SetState(MUSHROOM_STATE_ACTIVATED);
+		if(mushroom->GetState() == MUSHROOM_STATE_WAIT && level == MARIO_LEVEL_SMALL)
+			mushroom->SetState(MUSHROOM_STATE_ACTIVATED);
 	}
 
 	// touch Mushroom
-	if (mushroom->GetState() == MUSHROOM_STATE_MOVING)
+	else if (mushroom->GetState() == MUSHROOM_STATE_MOVING)
 	{
 		if (level == MARIO_LEVEL_SMALL)
 		{
@@ -323,11 +354,13 @@ void CMario::OnCollisionWithLeaf(LPCOLLISIONEVENT e)
 	// jump and hit the bottom >> Activate Leaf 
 	if (leaf->GetState() == LEAF_STATE_WAIT)
 	{
-		if(e->ny > 0)
-			leaf->SetState(LEAF_STATE_ACTIVATED);
-	}
+		if (e->ny > 0 && level != MARIO_LEVEL_SMALL)
+		{
+				leaf->SetState(LEAF_STATE_ACTIVATED);
+		}
+	}	
 
-	// touch Leaf
+	// touch Leaf && != STATE_WAIT
 	else
 	{
 		if (level != MARIO_LEVEL_RACCOON)
@@ -350,11 +383,11 @@ void CMario::OnCollisionWithQuestBrick(LPCOLLISIONEVENT e)
 
 void CMario::OnCollisionWithGlassBrick(LPCOLLISIONEVENT e)
 {
-	CGlassBrick* leaf = dynamic_cast<CGlassBrick*>(e->obj);
+	CGlassBrick* glassBrick = dynamic_cast<CGlassBrick*>(e->obj);
 
 	// jump and hit the bottom >> Break the GlassBrick
 	if (e->ny > 0)
-		leaf->Delete();
+		glassBrick->Delete();
 }
 
 void CMario::OnCollisionWithStar(LPCOLLISIONEVENT e)
@@ -363,7 +396,22 @@ void CMario::OnCollisionWithStar(LPCOLLISIONEVENT e)
 
 	// jump and hit >> Activate Star 
 	if (star->GetState() == STAR_STATE_WAIT)
+	{
 		star->SetState(STAR_STATE_ACTIVATED);
+		coin = 999999999;
+	}
+}
+
+void CMario::OnCollisionWithHidedCoin(LPCOLLISIONEVENT e)
+{
+	CHidedCoin* hidedCoin = dynamic_cast<CHidedCoin*>(e->obj);
+
+	// jump and hit the bottom >> Activate HidedCoin 
+	if (e->ny > 0 && hidedCoin->GetState() == COIN_STATE_WAIT)
+	{
+		hidedCoin->SetState(COIN_STATE_ACTIVATED);
+		coin++;
+	}
 }
 
 void CMario::OnCollisionWithPortal(LPCOLLISIONEVENT e)

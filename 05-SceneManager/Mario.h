@@ -136,6 +136,8 @@ class CMario : public CGameObject
 	float maxVx;
 	float ax;				// acceleration on x 
 	float ay;				// acceleration on y 
+	float ix;				// start x (initial)
+	float iy;				// start y (initial)
 
 	int level; 
 	int untouchable; 
@@ -151,12 +153,14 @@ class CMario : public CGameObject
 
 	void OnCollisionWithFirePlant(LPCOLLISIONEVENT e);
 	void OnCollisionWithBulletFire(LPCOLLISIONEVENT e);
+	void OnCollisionWithBitePlant(LPCOLLISIONEVENT e);
 
 	//Disappear-able
 	void OnCollisionWithCoin(LPCOLLISIONEVENT e);
 	void OnCollisionWithMushroom(LPCOLLISIONEVENT e);
 	void OnCollisionWithLeaf(LPCOLLISIONEVENT e);
 	void OnCollisionWithStar(LPCOLLISIONEVENT e);
+	void OnCollisionWithHidedCoin(LPCOLLISIONEVENT e);
 
 	//Special blocks
 	void OnCollisionWithQuestBrick(LPCOLLISIONEVENT e);
@@ -176,8 +180,9 @@ public:
 		maxVx = 0.0f;
 		ax = 0.0f;
 		ay = MARIO_GRAVITY; 
+		ix = x; iy = y;
 
-		level = MARIO_LEVEL_RACCOON;
+		level = MARIO_LEVEL_SMALL;
 		untouchable = 0;
 		untouchable_start = -1;
 		isOnPlatform = false;

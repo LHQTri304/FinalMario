@@ -1,6 +1,8 @@
 #pragma once
 #include "GameObject.h"
 
+#define RESPAWN_COUNTDOWN 1000
+
 #pragma region Goomba
 #define GOOMBA_GRAVITY 0.002f
 #define GOOMBA_WALKING_SPEED 0.05f
@@ -82,14 +84,14 @@ public:
 
 //**************************//
 #pragma region Koopa
-#define KOOPA_GRAVITY 0.002f
+#define KOOPA_GRAVITY 0.0008f
 #define KOOPA_WALKING_SPEED 0.05f
 #define KOOPA_KICKED_SPEED 0.5f
 
 
 #define KOOPA_BBOX_WIDTH 16
 #define KOOPA_BBOX_HEIGHT 24
-#define KOOPA_BBOX_HEIGHT_STUNNED 16
+#define KOOPA_BBOX_HEIGHT_STUNNED 14
 
 #define KOOPA_STUNNED_TIMEOUT 1500
 #define KOOPA_REVIVING_TIMEOUT 500
@@ -109,6 +111,9 @@ class CKoopa : public CGameObject
 protected:
 	float ax;
 	float ay;
+	float ix;
+	float iy;
+	int respawnCountdown;
 
 	ULONGLONG die_start;
 
@@ -144,6 +149,9 @@ class CParaKoopa : public CGameObject
 protected:
 	float ax;
 	float ay;
+	float ix;
+	float iy;
+	int respawnCountdown;
 	float flightTime = 0;
 	BOOLEAN isGetHit;
 	BOOLEAN isFlying;
@@ -221,7 +229,7 @@ public:
 #define BULLETFIRE_BBOX_WIDTH 9
 #define BULLETFIRE_BBOX_HEIGHT 9
 
-#define BULLETFIRE_MOVE_TIME 150
+#define BULLETFIRE_MOVE_TIME 200
 #define BULLETFIRE_DELAY_TIME 25
 
 #define BULLETFIRE_STATE_INSIDE_PLANT 100
@@ -276,7 +284,7 @@ public:
 
 #define BITEPLANT_STATE_MOVING_UP 100
 #define BITEPLANT_STATE_MOVING_DOWN 101
-#define BITEPLANT_STATE_BITING 200
+#define BITEPLANT_STATE_BITING 150
 
 #define ID_ANI_BITEPLANT_BITING 5013
 

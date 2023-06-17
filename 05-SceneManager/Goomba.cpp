@@ -1,6 +1,8 @@
 #include "Goomba.h"
 
 #include "Mario.h"
+#include "Brick.h"
+#include "Coin.h"
 #include "PlayScene.h"
 
 #pragma region Goomba
@@ -76,7 +78,7 @@ void CGoomba::Render()
 	}
 
 	CAnimations::GetInstance()->Get(aniId)->Render(x,y);
-	RenderBoundingBox();
+	//RenderBoundingBox();
 }
 
 void CGoomba::SetState(int state)
@@ -197,7 +199,7 @@ void CParaGoomba::Render()
 	}
 
 	CAnimations::GetInstance()->Get(aniId)->Render(x, y);
-	RenderBoundingBox();
+	//RenderBoundingBox();
 }
 
 void CParaGoomba::SetState(int state)
@@ -235,6 +237,9 @@ CKoopa::CKoopa(float x, float y) :CGameObject(x, y)
 {
 	this->ax = 0;
 	this->ay = KOOPA_GRAVITY;
+	this->ix = x;
+	this->iy = y;
+	respawnCountdown = RESPAWN_COUNTDOWN;
 	die_start = -1;
 	SetState(KOOPA_STATE_WALKING);
 }
@@ -265,6 +270,12 @@ void CKoopa::OnNoCollision(DWORD dt)
 
 void CKoopa::OnCollisionWith(LPCOLLISIONEVENT e)
 {
+	if (state != KOOPA_STATE_KICKED && dynamic_cast<CKoopaSupportBlock*>(e->obj))
+	{
+		vx = -vx;
+		return;
+	}
+
 	if (!e->obj->IsBlocking()) return;
 	if (dynamic_cast<CKoopa*>(e->obj)) return;
 
@@ -275,6 +286,31 @@ void CKoopa::OnCollisionWith(LPCOLLISIONEVENT e)
 	else if (e->nx != 0)
 	{
 		vx = -vx;
+	}
+
+
+	if (state == KOOPA_STATE_KICKED)
+	{
+		if (dynamic_cast<CMushroom*>(e->obj))
+		{
+			CMushroom* mushroom = dynamic_cast<CMushroom*>(e->obj);
+			mushroom->SetState(MUSHROOM_STATE_ACTIVATED);
+		}
+		else if (dynamic_cast<CLeaf*>(e->obj))
+		{
+			CLeaf* leaf = dynamic_cast<CLeaf*>(e->obj);
+			leaf->SetState(LEAF_STATE_ACTIVATED);
+		}
+		else if (dynamic_cast<CGlassBrick*>(e->obj))
+		{
+			CGlassBrick* glassBrick = dynamic_cast<CGlassBrick*>(e->obj);
+			glassBrick->Delete();
+		}
+		else if (dynamic_cast<CQuestBrick*>(e->obj))
+		{
+			CQuestBrick* questBrick = dynamic_cast<CQuestBrick*>(e->obj);
+			questBrick->SetState(QUESTBRICK_STATE_ACTIVATED);
+		}
 	}
 }
 
@@ -288,6 +324,16 @@ void CKoopa::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		SetState(KOOPA_STATE_REVIVE);
 		return;
 	}
+
+	if (respawnCountdown <=0)
+	{
+		x = ix;
+		y = iy;
+		SetState(KOOPA_STATE_WALKING);
+		respawnCountdown = RESPAWN_COUNTDOWN;
+	}
+	else		
+		respawnCountdown--;
 
 	CGameObject::Update(dt, coObjects);
 	CCollision::GetInstance()->Process(this, dt, coObjects);
@@ -312,7 +358,7 @@ void CKoopa::Render()
 		aniId = ID_ANI_KOOPA_STUNNED;
 
 	CAnimations::GetInstance()->Get(aniId)->Render(x, y);
-	RenderBoundingBox();
+	//RenderBoundingBox();
 }
 
 void CKoopa::SetState(int state)
@@ -322,7 +368,7 @@ void CKoopa::SetState(int state)
 	{
 	case KOOPA_STATE_STUNNED:
 		die_start = GetTickCount64();
-		y += (KOOPA_BBOX_HEIGHT - KOOPA_BBOX_HEIGHT_STUNNED) / 2;
+		y -= (KOOPA_BBOX_HEIGHT - KOOPA_BBOX_HEIGHT_STUNNED) / 2;
 		vx = 0;
 		vy = 0;
 		break;
@@ -337,7 +383,7 @@ void CKoopa::SetState(int state)
 		SetState(KOOPA_STATE_WALKING);
 		break;
 	case KOOPA_STATE_KICKED:
-		vx = -KOOPA_KICKED_SPEED;
+		vx = KOOPA_KICKED_SPEED;
 		break;
 	}
 }
@@ -349,6 +395,9 @@ CParaKoopa::CParaKoopa(float x, float y) :CGameObject(x, y)
 {
 	this->ax = 0;
 	this->ay = KOOPA_GRAVITY;
+	this->ix = x;
+	this->iy = y;
+	respawnCountdown = RESPAWN_COUNTDOWN;
 	die_start = -1;
 	SetState(KOOPA_STATE_WALKING);
 	SetState(KOOPA_STATE_FLYING);
@@ -424,6 +473,17 @@ void CParaKoopa::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	if (flightTime >= KOOPA_FLIGHT_TIME)
 		isFlying = true;
 
+
+	if (respawnCountdown <= 0)
+	{
+		x = ix;
+		y = iy;
+		SetState(KOOPA_STATE_FLYING);
+		respawnCountdown = RESPAWN_COUNTDOWN;
+	}
+	else
+		respawnCountdown--;
+
 	CGameObject::Update(dt, coObjects);
 	CCollision::GetInstance()->Process(this, dt, coObjects);
 }
@@ -459,7 +519,7 @@ void CParaKoopa::Render()
 	}
 
 	CAnimations::GetInstance()->Get(aniId)->Render(x, y);
-	RenderBoundingBox();
+	//RenderBoundingBox();
 }
 
 void CParaKoopa::SetState(int state)

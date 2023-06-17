@@ -4,7 +4,7 @@ void CBrick::Render()
 {
 	CAnimations* animations = CAnimations::GetInstance();
 	animations->Get(ID_ANI_INVISIBLE_BLOCK)->Render(x, y);
-	RenderBoundingBox();
+	//RenderBoundingBox();
 }
 
 void CBrick::GetBoundingBox(float &l, float &t, float &r, float &b)
@@ -74,4 +74,59 @@ void CQuestBrick::SetState(int state)
 	case QUESTBRICK_STATE_ACTIVATED:
 		break;
 	}
+}
+
+
+
+//*********************//
+void CKoopaSupportBlock::Render()
+{
+	CAnimations* animations = CAnimations::GetInstance();
+	animations->Get(ID_ANI_INVISIBLE_BLOCK)->Render(x, y);
+	//RenderBoundingBox();
+}
+
+void CKoopaSupportBlock::GetBoundingBox(float& l, float& t, float& r, float& b)
+{
+	l = x - BRICK_BBOX_WIDTH / 2;
+	t = y - BRICK_BBOX_HEIGHT / 2;
+	r = l + BRICK_BBOX_WIDTH;
+	b = t + BRICK_BBOX_HEIGHT;
+}
+
+void CTrees::Render()
+{
+	CAnimations* animations = CAnimations::GetInstance();
+	animations->Get(ID_ANI_TREES)->Render(x, y);
+}
+
+void CBush::Render()
+{
+	CAnimations* animations = CAnimations::GetInstance();
+	animations->Get(ID_ANI_BUSH)->Render(x, y);
+}
+
+void CCloud1::Render()
+{
+	CAnimations* animations = CAnimations::GetInstance();
+	animations->Get(ID_ANI_CLOUD1)->Render(x, y);
+}
+
+void CCloud2::Render()
+{
+	CAnimations* animations = CAnimations::GetInstance();
+	animations->Get(ID_ANI_CLOUD2)->Render(x, y);
+}
+
+void CCloud3::Render()
+{
+	CAnimations* animations = CAnimations::GetInstance();
+	animations->Get(ID_ANI_CLOUD3)->Render(x, y);
+}
+
+void CBlackEnd::Render()
+{
+	CAnimations* animations = CAnimations::GetInstance();
+	animations->Get(ID_ANI_BLACK_END)->Render(x, y);
+	animations->Get(ID_ANI_BORDER_END)->Render(x, y);
 }
