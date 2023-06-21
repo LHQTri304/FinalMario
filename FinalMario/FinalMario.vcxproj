@@ -153,6 +153,7 @@
     <ClCompile Include="Collision.cpp" />
     <ClCompile Include="ColorBox.cpp" />
     <ClCompile Include="debug.cpp" />
+    <ClCompile Include="eFirePlant.cpp" />
     <ClCompile Include="eGoomba.cpp" />
     <ClCompile Include="eKoopa.cpp" />
     <ClCompile Include="Enemies.cpp" />
@@ -182,6 +183,7 @@
     <ClInclude Include="Collision.h" />
     <ClInclude Include="ColorBox.h" />
     <ClInclude Include="debug.h" />
+    <ClInclude Include="eFirePlant.h" />
     <ClInclude Include="eGoomba.h" />
     <ClInclude Include="eKoopa.h" />
     <ClInclude Include="Enemies.h" />
