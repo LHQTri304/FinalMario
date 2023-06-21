@@ -149,7 +149,6 @@
     <ClCompile Include="Animation.cpp" />
     <ClCompile Include="Animations.cpp" />
     <ClCompile Include="BackgroundStuff.cpp" />
-    <ClCompile Include="StationaryObject.cpp" />
     <ClCompile Include="BrickBlocking.cpp" />
     <ClCompile Include="BrickBreakable.cpp" />
     <ClCompile Include="BrickCoin.cpp" />

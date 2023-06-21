@@ -1,5 +1,0 @@
-#include "StationaryObject.h"
-
-
-//*********************//
-
