@@ -99,6 +99,9 @@
     <ClCompile Include="eBitePlant.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="eFakeHead.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animation.h">

@@ -154,6 +154,7 @@
     <ClCompile Include="ColorBox.cpp" />
     <ClCompile Include="debug.cpp" />
     <ClCompile Include="eBitePlant.cpp" />
+    <ClCompile Include="eFakeHead.cpp" />
     <ClCompile Include="eFirePlant.cpp" />
     <ClCompile Include="eGoomba.cpp" />
     <ClCompile Include="eKoopa.cpp" />
