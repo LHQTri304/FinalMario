@@ -157,6 +157,7 @@
     <ClCompile Include="eKoopa.cpp" />
     <ClCompile Include="Enemies.cpp" />
     <ClCompile Include="eParaGoomba.cpp" />
+    <ClCompile Include="eParaKoopa.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="Goomba.cpp" />
@@ -185,6 +186,7 @@
     <ClInclude Include="eKoopa.h" />
     <ClInclude Include="Enemies.h" />
     <ClInclude Include="eParaGoomba.h" />
+    <ClInclude Include="eParaKoopa.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="Goomba.h" />
