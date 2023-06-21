@@ -1,6 +1,5 @@
 #include "Enemies.h"
 
-#pragma region Goomba
 CGoomba::CGoomba(float x, float y) :CGameObject(x, y)
 {
 	this->ax = 0;
@@ -93,4 +92,3 @@ void CGoomba::SetState(int state)
 		break;
 	}
 }
-#pragma endregion
