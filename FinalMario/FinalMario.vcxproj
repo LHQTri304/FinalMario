@@ -167,6 +167,9 @@
     <ClCompile Include="eParaKoopa.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameObject.cpp" />
+    <ClCompile Include="iCoin.cpp" />
+    <ClCompile Include="iLevelUp.cpp" />
+    <ClCompile Include="iStar.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Mario.cpp" />
     <ClCompile Include="Platform.cpp" />
@@ -184,7 +187,10 @@
     <ClInclude Include="Animations.h" />
     <ClInclude Include="AssetIDs.h" />
     <ClInclude Include="BackgroundStuff.h" />
+    <ClInclude Include="iCoin.h" />
+    <ClInclude Include="iLevelUp.h" />
     <ClInclude Include="InteractiveItems.h" />
+    <ClInclude Include="iStar.h" />
     <ClInclude Include="StationaryObject.h" />
     <ClInclude Include="BrickBlocking.h" />
     <ClInclude Include="BrickBreakable.h" />
