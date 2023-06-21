@@ -6,7 +6,7 @@
 
 #include "Enemies.h"
 #include "Coin.h"
-#include "Brick.h"
+#include "StationaryObject.h"
 #include "Portal.h"
 
 #include "Collision.h"

@@ -8,6 +8,6 @@
 #include "eBitePlant.h"
 
 #include "Mario.h"
-#include "Brick.h"
+#include "StationaryObject.h"
 #include "Coin.h"
 #include "PlayScene.h"

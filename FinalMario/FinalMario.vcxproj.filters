@@ -128,7 +128,7 @@
     <ClInclude Include="AssetIDs.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Brick.h">
+    <ClInclude Include="StationaryObject.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Coin.h">

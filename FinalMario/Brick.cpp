@@ -1,4 +1,4 @@
-#include "Brick.h"
+#include "StationaryObject.h"
 
 void CBrick::Render()
 {

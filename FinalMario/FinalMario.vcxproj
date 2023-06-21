@@ -185,7 +185,7 @@
     <ClInclude Include="Animations.h" />
     <ClInclude Include="AssetIDs.h" />
     <ClInclude Include="BackgroundStuff.h" />
-    <ClInclude Include="Brick.h" />
+    <ClInclude Include="StationaryObject.h" />
     <ClInclude Include="BrickBlocking.h" />
     <ClInclude Include="BrickBreakable.h" />
     <ClInclude Include="BrickCoin.h" />
