@@ -117,7 +117,7 @@ public:
 #pragma region Koopa
 #define KOOPA_GRAVITY 0.0008f
 #define KOOPA_WALKING_SPEED 0.05f
-#define KOOPA_KICKED_SPEED 0.5f
+#define KOOPA_KICKED_SPEED 0.25f
 
 
 #define KOOPA_BBOX_WIDTH 16

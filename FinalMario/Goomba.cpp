@@ -356,7 +356,6 @@ void CKoopa::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		return;
 	}
 
-	/*
 	if (respawnCountdown <=0)
 	{
 		x = ix;
@@ -366,7 +365,7 @@ void CKoopa::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	}
 	else
 		respawnCountdown--;
-	*/
+	
 
 	//fake head:..
 	float fHeadX, fHeadY;
@@ -547,7 +546,8 @@ void CParaKoopa::OnCollisionWithQuestBrick(LPCOLLISIONEVENT e)
 	CQuestBrick* questBrick = dynamic_cast<CQuestBrick*>(e->obj);
 
 	// Hit when being kicked >> Activate the QuestBrick 
-	questBrick->SetState(QUESTBRICK_STATE_ACTIVATED);
+	if (GetState() == KOOPA_STATE_KICKED)
+		questBrick->SetState(QUESTBRICK_STATE_ACTIVATED);
 }
 
 void CParaKoopa::OnCollisionWithGlassBrick(LPCOLLISIONEVENT e)
@@ -555,7 +555,8 @@ void CParaKoopa::OnCollisionWithGlassBrick(LPCOLLISIONEVENT e)
 	CGlassBrick* glassBrick = dynamic_cast<CGlassBrick*>(e->obj);
 
 	// Hit when being kicked >> Break the GlassBrick
-	glassBrick->Delete();
+	if (GetState() == KOOPA_STATE_KICKED)
+		glassBrick->Delete();
 }
 
 void CParaKoopa::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)

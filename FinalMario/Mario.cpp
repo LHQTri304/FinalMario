@@ -332,7 +332,13 @@ void CMario::OnCollisionWithMushroom(LPCOLLISIONEVENT e)
 	if (e->ny > 0)
 	{
 		if(mushroom->GetState() == MUSHROOM_STATE_WAIT && level == MARIO_LEVEL_SMALL)
+		{
 			mushroom->SetState(MUSHROOM_STATE_ACTIVATED);
+		}
+		else
+		{
+			mushroom->Delete();
+		}
 	}
 
 	// touch Mushroom
@@ -357,6 +363,10 @@ void CMario::OnCollisionWithLeaf(LPCOLLISIONEVENT e)
 		if (e->ny > 0 && level != MARIO_LEVEL_SMALL)
 		{
 				leaf->SetState(LEAF_STATE_ACTIVATED);
+		}
+		else
+		{
+			leaf->Delete();
 		}
 	}	
 
