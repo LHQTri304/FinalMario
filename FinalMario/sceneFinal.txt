@@ -2,8 +2,13 @@
 [ASSETS]
 mario.txt
 brick.txt
-coin.txt
-goomba.txt
+iItems.txt
+
+eGoomba.txt
+eKoopa.txt
+eFirePlant.txt
+eBitePlant.txt
+
 platform.txt
 #
 [OBJECTS]

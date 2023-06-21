@@ -78,14 +78,12 @@ void CBulletFire::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 void CBulletFire::Render()
 {
-	int aniId = ID_ANI_BULLETFIRE_MOVE;
-	if (state == BULLETFIRE_STATE_INSIDE_PLANT || state == BULLETFIRE_STATE_DELAY)
+	if (state != BULLETFIRE_STATE_INSIDE_PLANT || state != BULLETFIRE_STATE_DELAY)
 	{
-		aniId = ID_ANI_BULLETFIRE_STAY;
+		CAnimations::GetInstance()->Get(ID_ANI_BULLETFIRE_MOVE)->Render(x, y);
 	}
 
-	CAnimations::GetInstance()->Get(aniId)->Render(x, y);
-	//RenderBoundingBox();
+	RenderBoundingBox();
 }
 
 void CBulletFire::SetState(int state)

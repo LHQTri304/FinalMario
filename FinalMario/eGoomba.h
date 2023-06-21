@@ -1,7 +1,7 @@
 #pragma once
 #include "GameObject.h"
 
-#include "AllDefineTest.h"
+#include "AllDefineStatus.h"
 
 class CGoomba : public CGameObject
 {

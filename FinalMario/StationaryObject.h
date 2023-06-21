@@ -6,4 +6,4 @@
 #include "BrickLevelUp.h"
 #include "BrickCoin.h"
 
-#include "AllDefineTest.h"
+#include "AllDefineStatus.h"
