@@ -233,7 +233,7 @@
     <ClInclude Include="iStar.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="AllDefineTest.h">
+    <ClInclude Include="AllDefineStatus.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="AniIDs.h">
