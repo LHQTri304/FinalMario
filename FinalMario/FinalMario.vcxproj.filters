@@ -218,5 +218,8 @@
     <ClInclude Include="BrickCoin.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="InteractiveItems.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
