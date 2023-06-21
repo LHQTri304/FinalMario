@@ -1,7 +1,6 @@
 #pragma once
 #include "GameObject.h"
 
-#pragma region FirePlant
 #define FIREPLANT_MOVING_SPEED 0.05f
 
 #define FIREPLANT_BBOX_WIDTH 16
@@ -95,4 +94,3 @@ public:
 	CBulletFire(float x, float y);
 	virtual void SetState(int state);
 };
-#pragma endregion
