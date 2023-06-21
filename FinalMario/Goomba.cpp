@@ -1,10 +1,5 @@
 #include "Enemies.h"
 
-#include "Mario.h"
-#include "Brick.h"
-#include "Coin.h"
-#include "PlayScene.h"
-
 #pragma region Goomba
 CGoomba::CGoomba(float x, float y):CGameObject(x, y)
 {
