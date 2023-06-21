@@ -5,7 +5,7 @@
 #include "Game.h"
 
 #include "Enemies.h"
-#include "Coin.h"
+#include "InteractiveItems.h"
 #include "StationaryObject.h"
 #include "Portal.h"
 

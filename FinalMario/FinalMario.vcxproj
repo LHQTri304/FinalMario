@@ -196,7 +196,6 @@
     <ClInclude Include="BrickBreakable.h" />
     <ClInclude Include="BrickCoin.h" />
     <ClInclude Include="BrickLevelUp.h" />
-    <ClInclude Include="Coin.h" />
     <ClInclude Include="Collision.h" />
     <ClInclude Include="ColorBox.h" />
     <ClInclude Include="debug.h" />

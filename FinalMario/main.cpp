@@ -36,7 +36,7 @@ HOW TO INSTALL Microsoft.DXSDK.D3DX
 #include "Mario.h"
 #include "StationaryObject.h"
 #include "Enemies.h"
-#include "Coin.h"
+#include "InteractiveItems.h"
 #include "Platform.h"
 #include "ColorBox.h"
 

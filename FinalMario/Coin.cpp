@@ -1,4 +1,4 @@
-#include "Coin.h"
+#include "InteractiveItems.h"
 
 #pragma region Coin
 void CCoin::Render()

@@ -8,7 +8,7 @@
 #include "Mario.h"
 #include "Enemies.h"
 #include "Portal.h"
-#include "Coin.h"
+#include "InteractiveItems.h"
 #include "Platform.h"
 
 

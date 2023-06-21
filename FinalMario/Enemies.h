@@ -9,5 +9,5 @@
 
 #include "Mario.h"
 #include "StationaryObject.h"
-#include "Coin.h"
+#include "InteractiveItems.h"
 #include "PlayScene.h"
