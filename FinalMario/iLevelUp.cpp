@@ -59,15 +59,12 @@ void CMushroom::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 void CMushroom::Render()
 {
-	int aniId = ID_ANI_MUSHROOM;
-	if (GetState() == MUSHROOM_STATE_WAIT)
+	if (GetState() != MUSHROOM_STATE_WAIT)
 	{
-		aniId = ID_ANI_INVISIBLE_OBJ;
+		CAnimations::GetInstance()->Get(ID_ANI_MUSHROOM)->Render(x, y);
 	}
 
-
-	CAnimations::GetInstance()->Get(aniId)->Render(x, y);
-	//RenderBoundingBox();
+	RenderBoundingBox();
 }
 
 void CMushroom::SetState(int state)
@@ -167,18 +164,19 @@ void CLeaf::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 void CLeaf::Render()
 {
-	int aniId = ID_ANI_LEAF_LEFT;
-	if (GetState() == LEAF_STATE_MOVING_RIGHT)
+	if (GetState() != LEAF_STATE_WAIT)
 	{
-		aniId = ID_ANI_LEAF_RIGHT;
-	}
-	if (GetState() == LEAF_STATE_WAIT)
-	{
-		aniId = ID_ANI_INVISIBLE_OBJ;
+		if (GetState() == LEAF_STATE_MOVING_RIGHT)
+		{
+			CAnimations::GetInstance()->Get(ID_ANI_LEAF_RIGHT)->Render(x, y);
+		}
+		else
+		{
+			CAnimations::GetInstance()->Get(ID_ANI_LEAF_LEFT)->Render(x, y);
+		}
 	}
 
-	CAnimations::GetInstance()->Get(aniId)->Render(x, y);
-	//RenderBoundingBox();
+	RenderBoundingBox();
 }
 
 void CLeaf::SetState(int state)

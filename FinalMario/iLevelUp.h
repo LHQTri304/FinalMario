@@ -1,21 +1,9 @@
 #pragma once
 #include "GameObject.h"
 
+#include "AllDefineTest.h"
+
 #pragma region Mushroom (& Leaf)
-#define ID_ANI_MUSHROOM 11001
-
-#define MUSHROOM_GRAVITY 0.002f
-#define MUSHROOM_SPEED 0.07f
-#define MUSHROOM_ACTIVATED_SPEED 0.2f
-
-#define MUSHROOM_BBOX_WIDTH 16
-#define MUSHROOM_BBOX_HEIGHT 16
-
-#define MUSHROOM_ACTIVATED_PIXEL_MOVE 16
-
-#define MUSHROOM_STATE_WAIT 100
-#define MUSHROOM_STATE_ACTIVATED 200
-#define MUSHROOM_STATE_MOVING 300
 
 class CMushroom : public CGameObject
 {
@@ -43,24 +31,6 @@ public:
 
 //*********************//
 #pragma region Leaf
-#define ID_ANI_LEAF_LEFT 11002
-#define ID_ANI_LEAF_RIGHT 11003
-#define ID_ANI_INVISIBLE_OBJ 11004
-
-#define LEAF_GRAVITY 0.02f	//Count as vy instead of ay because leaf drop slowy
-#define LEAF_SPEED 1.25f
-#define LEAF_ACTIVATED_SPEED 3.5f
-
-#define LEAF_BBOX_WIDTH 16
-#define LEAF_BBOX_HEIGHT 16
-
-#define LEAF_PIXEL_MOVING_X 32
-#define LEAF_PIXEL_MOVING_Y 48
-
-#define LEAF_STATE_WAIT 100
-#define LEAF_STATE_ACTIVATED 200
-#define LEAF_STATE_MOVING_LEFT 300
-#define LEAF_STATE_MOVING_RIGHT 301
 
 class CLeaf : public CGameObject
 {

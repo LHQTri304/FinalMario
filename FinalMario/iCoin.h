@@ -1,12 +1,9 @@
 #pragma once
 #include "GameObject.h"
 
-#pragma region Coin
-#define ID_ANI_COIN 11000
+#include "AllDefineTest.h"
 
-#define	COIN_WIDTH 10
-#define COIN_BBOX_WIDTH 10
-#define COIN_BBOX_HEIGHT 16
+#pragma region Coin
 
 class CCoin : public CGameObject {
 public:
@@ -19,12 +16,6 @@ public:
 #pragma endregion
 
 #pragma region HidedCoin
-#define COIN_ACTIVATED_SPEED 0.001f
-
-#define COIN_PIXEL_MOVING_Y 64
-
-#define COIN_STATE_WAIT 100
-#define COIN_STATE_ACTIVATED 200
 
 class CHidedCoin : public CGameObject
 {

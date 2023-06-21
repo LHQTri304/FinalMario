@@ -1,19 +1,7 @@
 #pragma once
 #include "GameObject.h"
 
-#define BITEPLANT_MOVING_SPEED 0.05f
-
-#define BITEPLANT_BBOX_WIDTH 16
-#define BITEPLANT_BBOX_HEIGHT 24
-
-#define BITEPLANT_LOWEST_HEIGHT 200
-#define BITEPLANT_BITE_TIME 75	//Pause time
-
-#define BITEPLANT_STATE_MOVING_UP 100
-#define BITEPLANT_STATE_MOVING_DOWN 101
-#define BITEPLANT_STATE_BITING 150
-
-#define ID_ANI_BITEPLANT_BITING 5013
+#include "AllDefineTest.h"
 
 class CBitePlant : public CGameObject
 {

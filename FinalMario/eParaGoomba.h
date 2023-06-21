@@ -1,13 +1,7 @@
 #pragma once
 #include "GameObject.h"
 
-#define GOOMBA_FLIGHT_TIME	33.0f
-#define GOOMBA_FLYING_SPEED	0.1f
-
-#define GOOMBA_STATE_FLYING 300
-#define GOOMBA_STATE_DROPING 301
-
-#define ID_ANI_GOOMBA_FLYING 5002
+#include "AllDefineTest.h"
 
 class CParaGoomba : public CGameObject
 {

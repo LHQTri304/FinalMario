@@ -1,8 +1,7 @@
 #pragma once
 #include "GameObject.h"
 
-#define QUESTBRICK_STATE_WAIT 100
-#define QUESTBRICK_STATE_ACTIVATED 200
+#include "AllDefineTest.h"
 
 class CQuestBrick : public CGameObject {
 public:

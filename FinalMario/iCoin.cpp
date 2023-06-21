@@ -75,15 +75,12 @@ void CHidedCoin::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 void CHidedCoin::Render()
 {
-	int aniId = ID_ANI_COIN;
-	if (GetState() == COIN_STATE_WAIT)
+	if (GetState() != COIN_STATE_WAIT)
 	{
-		aniId = ID_ANI_INVISIBLE_OBJ;
+		CAnimations::GetInstance()->Get(ID_ANI_COIN)->Render(x, y);
 	}
-
-
-	CAnimations::GetInstance()->Get(aniId)->Render(x, y);
-	//RenderBoundingBox();
+	
+	RenderBoundingBox();
 }
 
 void CHidedCoin::SetState(int state)

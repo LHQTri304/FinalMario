@@ -1,14 +1,7 @@
 #pragma once
 #include "GameObject.h"
 
-#define KOOPA_FLIGHT_TIME	33.0f
-#define KOOPA_FLYING_SPEED	0.1f
-
-#define KOOPA_STATE_FLYING 300
-#define KOOPA_STATE_DROPING 301
-
-#define ID_ANI_KOOPA_FLYING_LEFT 5007
-#define ID_ANI_KOOPA_FLYING_RIGHT 5008
+#include "AllDefineTest.h"
 
 class CParaKoopa : public CGameObject
 {

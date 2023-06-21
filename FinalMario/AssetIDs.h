@@ -5,10 +5,11 @@
 //
 
 /*IDs ani :
-* Mario:	400 -> 2000
-* Goomba:	5000
-* Brick:	10000 
-* Coin:		11000
+* Mario:			400 -> 2000
+* Enemies:			5000
+* StationaryObject:	10000 
+* InteractiveItems:	11000
+* 
 * ColorBox:	12000
 */
 
