@@ -19,7 +19,7 @@ HOW TO INSTALL Microsoft.DXSDK.D3DX
 2) execute command :  Install-Package Microsoft.DXSDK.D3DX
 
 
-================================================================ */
+================================================================= */
 
 #include <windows.h>
 #include <d3d10.h>
