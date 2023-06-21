@@ -1,1 +1,1 @@
-#include "BrickCoin.h"
+#include "StationaryObject.h"
