@@ -82,8 +82,6 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 		OnCollisionWithLeaf(e);
 	else if (dynamic_cast<CStar*>(e->obj))
 		OnCollisionWithStar(e);
-	else if (dynamic_cast<CHidedCoin*>(e->obj))
-		OnCollisionWithHidedCoin(e);
 
 	//Special blocks
 	else if (dynamic_cast<CQuestBrick*>(e->obj))
@@ -94,6 +92,10 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 	//Others
 	else if (dynamic_cast<CPortal*>(e->obj))
 		OnCollisionWithPortal(e);
+
+
+	else if (dynamic_cast<CQuestBrickCoin*>(e->obj))
+		OnCollisionWithBrickCoin(e);
 }
 
 void CMario::OnCollisionWithGoomba(LPCOLLISIONEVENT e)
@@ -412,22 +414,19 @@ void CMario::OnCollisionWithStar(LPCOLLISIONEVENT e)
 	}
 }
 
-void CMario::OnCollisionWithHidedCoin(LPCOLLISIONEVENT e)
-{
-	CHidedCoin* hidedCoin = dynamic_cast<CHidedCoin*>(e->obj);
-
-	// jump and hit the bottom >> Activate HidedCoin 
-	if (e->ny > 0 && hidedCoin->GetState() == COIN_STATE_WAIT)
-	{
-		hidedCoin->SetState(COIN_STATE_ACTIVATED);
-		coin++;
-	}
-}
-
 void CMario::OnCollisionWithPortal(LPCOLLISIONEVENT e)
 {
 	CPortal* p = (CPortal*)e->obj;
 	CGame::GetInstance()->InitiateSwitchScene(p->GetSceneId());
+}
+
+void CMario::OnCollisionWithBrickCoin(LPCOLLISIONEVENT e)
+{
+	CQuestBrickCoin* brickCoin = dynamic_cast<CQuestBrickCoin*>(e->obj);
+
+	// jump and hit the bottom >> Activate the QuestBrick 
+	if (e->ny > 0)
+		brickCoin->SetState(QUESTBRICK_STATE_ACTIVATED);
 }
 
 //
