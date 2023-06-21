@@ -102,6 +102,9 @@
     <ClCompile Include="eFakeHead.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="eBulletFire.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animation.h">
@@ -173,9 +176,6 @@
     <ClInclude Include="ColorBox.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Enemies.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="eGoomba.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -192,6 +192,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="eBitePlant.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemies.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
