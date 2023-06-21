@@ -127,7 +127,6 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 	case OBJECT_TYPE_DIRT_BRICK: obj = new CDirtBrick(x, y); break;
 	case OBJECT_TYPE_GLASS_BRICK: obj = new CGlassBrick(x, y); break;
 	case OBJECT_TYPE_QUEST_BRICK: obj = new CQuestBrick(x, y); break;
-	case OBJECT_TYPE_KOOPA_SUPPORT_BLOCK: obj = new CKoopaSupportBlock(x, y); break;
 
 	//Disappear-able
 	case OBJECT_TYPE_COIN: obj = new CCoin(x, y); break;

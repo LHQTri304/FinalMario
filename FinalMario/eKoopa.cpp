@@ -40,12 +40,6 @@ void CKoopa::OnNoCollision(DWORD dt)
 
 void CKoopa::OnCollisionWith(LPCOLLISIONEVENT e)
 {
-	if (state != KOOPA_STATE_KICKED && dynamic_cast<CKoopaSupportBlock*>(e->obj))
-	{
-		vx = -vx;
-		return;
-	}
-
 	if (dynamic_cast<CKoopa*>(e->obj)) return;
 	if (dynamic_cast<CGoomba*>(e->obj))
 	{
