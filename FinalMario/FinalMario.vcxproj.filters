@@ -75,9 +75,6 @@
     <ClCompile Include="ColorBox.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Enemies.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="eGoomba.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>

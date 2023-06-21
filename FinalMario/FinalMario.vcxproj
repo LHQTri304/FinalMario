@@ -159,7 +159,6 @@
     <ClCompile Include="eFirePlant.cpp" />
     <ClCompile Include="eGoomba.cpp" />
     <ClCompile Include="eKoopa.cpp" />
-    <ClCompile Include="Enemies.cpp" />
     <ClCompile Include="eParaGoomba.cpp" />
     <ClCompile Include="eParaKoopa.cpp" />
     <ClCompile Include="Game.cpp" />
