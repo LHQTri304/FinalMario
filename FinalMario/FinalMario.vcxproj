@@ -154,6 +154,7 @@
     <ClCompile Include="ColorBox.cpp" />
     <ClCompile Include="debug.cpp" />
     <ClCompile Include="eGoomba.cpp" />
+    <ClCompile Include="eKoopa.cpp" />
     <ClCompile Include="Enemies.cpp" />
     <ClCompile Include="eParaGoomba.cpp" />
     <ClCompile Include="Game.cpp" />
@@ -181,6 +182,7 @@
     <ClInclude Include="ColorBox.h" />
     <ClInclude Include="debug.h" />
     <ClInclude Include="eGoomba.h" />
+    <ClInclude Include="eKoopa.h" />
     <ClInclude Include="Enemies.h" />
     <ClInclude Include="eParaGoomba.h" />
     <ClInclude Include="Game.h" />
