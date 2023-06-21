@@ -4,6 +4,8 @@
 #include "Animation.h"
 #include "Animations.h"
 
+#include "BackgroundStuff.h"
+
 #define ID_ANI_INVISIBLE_BLOCK 10000
 #define ID_ANI_DIRT_BRICK 10001
 #define ID_ANI_GLASS_BRICK 10002
@@ -61,70 +63,4 @@ public:
 	void GetBoundingBox(float& l, float& t, float& r, float& b);
 
 	virtual void SetState(int state);
-};
-
-class CTrees : public CGameObject {
-public:
-	CTrees(float x, float y) : CGameObject(x, y) {}
-	void Render();
-	void Update(DWORD dt) {}
-	void GetBoundingBox(float& l, float& t, float& r, float& b) { return; }
-
-	virtual int IsCollidable() { return 0; }
-	virtual int IsBlocking() { return 0; }
-};
-
-class CBush : public CGameObject {
-public:
-	CBush(float x, float y) : CGameObject(x, y) {}
-	void Render();
-	void Update(DWORD dt) {}
-	void GetBoundingBox(float& l, float& t, float& r, float& b) { return; }
-
-	virtual int IsCollidable() { return 0; }
-	virtual int IsBlocking() { return 0; }
-};
-
-class CCloud1 : public CGameObject {
-public:
-	CCloud1(float x, float y) : CGameObject(x, y) {}
-	void Render();
-	void Update(DWORD dt) {}
-	void GetBoundingBox(float& l, float& t, float& r, float& b) { return; }
-
-	virtual int IsCollidable() { return 0; }
-	virtual int IsBlocking() { return 0; }
-};
-
-class CCloud2 : public CGameObject {
-public:
-	CCloud2(float x, float y) : CGameObject(x, y) {}
-	void Render();
-	void Update(DWORD dt) {}
-	void GetBoundingBox(float& l, float& t, float& r, float& b) { return; }
-
-	virtual int IsCollidable() { return 0; }
-	virtual int IsBlocking() { return 0; }
-};
-
-class CCloud3 : public CGameObject {
-public:
-	CCloud3(float x, float y) : CGameObject(x, y) {}
-	void Render();
-	void Update(DWORD dt) {}
-	void GetBoundingBox(float& l, float& t, float& r, float& b) { return; }
-
-	virtual int IsCollidable() { return 0; }
-	virtual int IsBlocking() { return 0; }
-};
-
-class CBlackEnd : public CGameObject {
-public:
-	CBlackEnd(float x, float y) : CGameObject(x, y) {}
-	void Render();
-	void Update(DWORD dt) {}
-	void GetBoundingBox(float& l, float& t, float& r, float& b) { return; }
-
-	virtual int IsCollidable() { return 0; }
-	virtual int IsBlocking() { return 0; }
 };
