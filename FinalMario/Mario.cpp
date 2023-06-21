@@ -4,7 +4,7 @@
 #include "Mario.h"
 #include "Game.h"
 
-#include "Goomba.h"
+#include "Enemies.h"
 #include "Coin.h"
 #include "Brick.h"
 #include "Portal.h"
