@@ -242,7 +242,7 @@ CKoopa::CKoopa(float x, float y) :CGameObject(x, y)
 
 	fakeHead = new CFakeHead(x, y);
 
-	respawnCountdown = RESPAWN_COUNTDOWN;
+	respawnCountdown = 0;
 	die_start = -1;
 	SetState(KOOPA_STATE_WALKING);
 }
@@ -361,7 +361,7 @@ void CKoopa::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		x = ix;
 		y = iy;
 		SetState(KOOPA_STATE_WALKING);
-		respawnCountdown = RESPAWN_COUNTDOWN;
+		respawnCountdown = 0;
 	}
 	else
 		respawnCountdown--;
@@ -452,7 +452,7 @@ CParaKoopa::CParaKoopa(float x, float y) :CGameObject(x, y)
 	this->ay = KOOPA_GRAVITY;
 	this->ix = x;
 	this->iy = y;
-	respawnCountdown = RESPAWN_COUNTDOWN;
+	respawnCountdown = 0;
 	die_start = -1;
 	SetState(KOOPA_STATE_WALKING);
 	SetState(KOOPA_STATE_FLYING);
@@ -593,7 +593,7 @@ void CParaKoopa::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		x = ix;
 		y = iy;
 		SetState(KOOPA_STATE_FLYING);
-		respawnCountdown = RESPAWN_COUNTDOWN;
+		respawnCountdown = 0;
 	}
 	else
 		respawnCountdown--;
