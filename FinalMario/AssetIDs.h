@@ -4,15 +4,6 @@
 // This file contains all IDs of game assets 
 //
 
-/*IDs ani :
-* Mario:			400 -> 2000
-* Enemies:			5000
-* StationaryObject:	10000 
-* InteractiveItems:	11000
-* 
-* ColorBox:	12000
-*/
-
 #define ID_TEX_MARIO 0
 #define ID_TEX_ENEMY 10
 #define ID_TEX_MISC 20
@@ -39,8 +30,8 @@
 #define OBJECT_TYPE_INVISIBLE_BLOCK	30
 #define OBJECT_TYPE_DIRT_BRICK	31
 #define OBJECT_TYPE_GLASS_BRICK	32
-#define OBJECT_TYPE_QUEST_BRICK	33
-#define OBJECT_TYPE_KOOPA_SUPPORT_BLOCK	34
+#define OBJECT_TYPE_QUEST_BRICK_LEVELUP	33
+#define OBJECT_TYPE_QUEST_BRICK_COIN	34
 
 //Platform >40
 #define OBJECT_TYPE_PLATFORM 40

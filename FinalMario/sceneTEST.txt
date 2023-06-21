@@ -10,9 +10,16 @@ platform.txt
 # type	x	y	extra_settings per object type
 # type: See OBJECT_TYPE constants in AssetIDs.h
 
+###Platform & SIMILAR###
+40	10	195	8	8	3	411000	412000	413000
+45	8	184	16	16	99	2	450001	450002	450003	450004	450005	450006	450007	450008	450009
 
 #MARIO
-10	20	10
+10	64	10
+
+#STUFF
+34	160	120
+
 
 #Portal
-50	0	240	2750	250	10
+#50	0	240	2750	250	10
