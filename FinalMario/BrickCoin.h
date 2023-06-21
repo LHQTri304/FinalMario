@@ -8,7 +8,7 @@ class CQuestBrickCoin : public CGameObject {
 protected:
 	int countDownTest = 150;
 
-	CCoin* hidedCoin;
+	CHidedCoin* hidedCoin;
 public:
 	CQuestBrickCoin(float x, float y);
 	void Render();
