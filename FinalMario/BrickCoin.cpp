@@ -25,6 +25,22 @@ void CQuestBrickCoin::GetBoundingBox(float& l, float& t, float& r, float& b)
 	b = t + BRICK_BBOX_HEIGHT;
 }
 
+void CQuestBrickCoin::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
+{
+	if (countDownTest <= 0)
+	{
+		SetState(QUESTBRICK_STATE_ACTIVATED);
+	}
+	else
+	{
+		countDownTest--;
+	}
+
+	CGameObject::Update(dt, coObjects);
+	CCollision::GetInstance()->Process(this, dt, coObjects);
+}
+
+
 void CQuestBrickCoin::SetState(int state)
 {
 	CGameObject::SetState(state);
