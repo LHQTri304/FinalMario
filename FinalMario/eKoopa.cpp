@@ -57,10 +57,10 @@ void CKoopa::OnCollisionWith(LPCOLLISIONEVENT e)
 	}
 
 
-	if (dynamic_cast<CMushroom*>(e->obj))
+	/*if (dynamic_cast<CMushroom*>(e->obj))
 		OnCollisionWithMushroom(e);
 	else if (dynamic_cast<CLeaf*>(e->obj))
-		OnCollisionWithLeaf(e);
+		OnCollisionWithLeaf(e);*/
 	//else if (dynamic_cast<CQuestBrick*>(e->obj))
 		//OnCollisionWithQuestBrick(e);
 	else if (dynamic_cast<CGlassBrick*>(e->obj))
@@ -69,24 +69,24 @@ void CKoopa::OnCollisionWith(LPCOLLISIONEVENT e)
 
 void CKoopa::OnCollisionWithMushroom(LPCOLLISIONEVENT e)
 {
-	CMushroom* mushroom = dynamic_cast<CMushroom*>(e->obj);
+	/*CMushroom* mushroom = dynamic_cast<CMushroom*>(e->obj);
 	CMario* mario = (CMario*)((LPPLAYSCENE)CGame::GetInstance()->GetCurrentScene())->GetPlayer();
 
 	// Hit when being kicked >> Activate Mushroom 
 	if (mushroom->GetState() == MUSHROOM_STATE_WAIT && GetState() == KOOPA_STATE_KICKED
 		&& mario->GetLevel() == MARIO_LEVEL_SMALL)
-		mushroom->SetState(MUSHROOM_STATE_ACTIVATED);
+		mushroom->SetState(MUSHROOM_STATE_ACTIVATED);*/
 }
 
 void CKoopa::OnCollisionWithLeaf(LPCOLLISIONEVENT e)
 {
-	CLeaf* leaf = dynamic_cast<CLeaf*>(e->obj);
+	/*CLeaf* leaf = dynamic_cast<CLeaf*>(e->obj);
 	CMario* mario = (CMario*)((LPPLAYSCENE)CGame::GetInstance()->GetCurrentScene())->GetPlayer();
 
 	// Hit when being kicked >> Activate Leaf 
 	if (leaf->GetState() == LEAF_STATE_WAIT && GetState() == KOOPA_STATE_KICKED
 		&& mario->GetLevel() != MARIO_LEVEL_SMALL)
-		leaf->SetState(LEAF_STATE_ACTIVATED);
+		leaf->SetState(LEAF_STATE_ACTIVATED);*/
 }
 
 void CKoopa::OnCollisionWithQuestBrick(LPCOLLISIONEVENT e)

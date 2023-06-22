@@ -1,5 +1,8 @@
 #pragma once
 
+//Invisible
+#define ID_ANI_INVISIBLE 999999999
+
 //Enemies: 5000
 #define ID_ANI_GOOMBA_WALKING 5000
 #define ID_ANI_GOOMBA_DIE 5001

@@ -93,7 +93,7 @@ void CItemsLevelUp::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 void CItemsLevelUp::Render()
 {
-	int aniId = ID_ANI_GOOMBA_WALKING;
+	int aniId = ID_ANI_INVISIBLE;
 
 	if (GetState() != ITEMS_LEVELUP_STATE_WAIT)
 	{
@@ -139,4 +139,5 @@ void CItemsLevelUp::SetState(int state)
 		{
 			vy = LEAF_GRAVITY;
 		}
+	}
 }

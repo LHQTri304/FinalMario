@@ -76,6 +76,8 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 	//Disappear-able
 	else if (dynamic_cast<CCoin*>(e->obj))
 		OnCollisionWithCoin(e);
+	else if (dynamic_cast<CItemsLevelUp*>(e->obj))
+		OnCollisionWithItemsLevelUp(e);
 	else if (dynamic_cast<CStar*>(e->obj))
 		OnCollisionWithStar(e);
 
@@ -92,8 +94,6 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 		OnCollisionWithPortal(e);
 
 
-	else if (dynamic_cast<CItemsLevelUp*>(e->obj))
-		OnCollisionWithItemsLevelUp(e);
 }
 
 void CMario::OnCollisionWithGoomba(LPCOLLISIONEVENT e)
@@ -340,6 +340,18 @@ void CMario::OnCollisionWithItemsLevelUp(LPCOLLISIONEVENT e)
 	}
 }
 
+void CMario::OnCollisionWithStar(LPCOLLISIONEVENT e)
+{
+	CStar* star = dynamic_cast<CStar*>(e->obj);
+
+	// jump and hit >> Activate Star 
+	if (star->GetState() == STAR_STATE_WAIT)
+	{
+		star->SetState(STAR_STATE_ACTIVATED);
+		coin = 999999999;
+	}
+}
+
 void CMario::OnCollisionWithBrickLevelUp(LPCOLLISIONEVENT e)
 {
 	CQuestBrickLevelUp* brickLevelUp = dynamic_cast<CQuestBrickLevelUp*>(e->obj);
@@ -365,18 +377,6 @@ void CMario::OnCollisionWithGlassBrick(LPCOLLISIONEVENT e)
 	// jump and hit the bottom >> Break the GlassBrick
 	if (e->ny > 0)
 		glassBrick->Delete();
-}
-
-void CMario::OnCollisionWithStar(LPCOLLISIONEVENT e)
-{
-	CStar* star = dynamic_cast<CStar*>(e->obj);
-
-	// jump and hit >> Activate Star 
-	if (star->GetState() == STAR_STATE_WAIT)
-	{
-		star->SetState(STAR_STATE_ACTIVATED);
-		coin = 999999999;
-	}
 }
 
 void CMario::OnCollisionWithPortal(LPCOLLISIONEVENT e)
