@@ -70,23 +70,18 @@ void CItemsLevelUp::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		}
 	}
 
-	//Leaf
-	//if (GetState() == LEAF_STATE_ACTIVATED)
-	{
-	}
-
-	if (GetState() == LEAF_STATE_MOVING_RIGHT)
+	if (GetState() == ITEMS_LEVELUP_STATE_MOVING && isMovingRight)	//Moving right as Leaf
 	{
 		if (x >= ix + pixelMovingX)
-			SetState(LEAF_STATE_MOVING_LEFT);
+			isMovingRight = false;
 		else
 			x += LEAF_SPEED;
 	}
 
-	if (GetState() == LEAF_STATE_MOVING_LEFT)
+	if (GetState() == ITEMS_LEVELUP_STATE_MOVING && !isMovingRight)	//Moving left as Leaf
 	{
 		if (x <= ix)
-			SetState(LEAF_STATE_MOVING_RIGHT);
+			isMovingRight = true;
 		else
 			x -= LEAF_SPEED;
 	}
@@ -98,24 +93,28 @@ void CItemsLevelUp::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 void CItemsLevelUp::Render()
 {
-	if (GetState() != MUSHROOM_STATE_WAIT)
+	int aniId = ID_ANI_GOOMBA_WALKING;
+
+	if (GetState() != ITEMS_LEVELUP_STATE_WAIT)
 	{
-		CAnimations::GetInstance()->Get(ID_ANI_MUSHROOM)->Render(x, y);
+		if (kind == ITEMS_LEVELUP_KIND_MUSHROOM)	//Mushroom
+		{
+			aniId = ID_ANI_MUSHROOM;
+		}
+		else	//Leaf
+		{
+			if (isMovingRight)
+			{
+				aniId = ID_ANI_LEAF_RIGHT;
+			}
+			else
+			{
+				aniId = ID_ANI_LEAF_LEFT;
+			}
+		}
 	}
 
-	//Leaf
-	if (GetState() != LEAF_STATE_WAIT)
-	{
-		if (GetState() == LEAF_STATE_MOVING_RIGHT)
-		{
-			CAnimations::GetInstance()->Get(ID_ANI_LEAF_RIGHT)->Render(x, y);
-		}
-		else
-		{
-			CAnimations::GetInstance()->Get(ID_ANI_LEAF_LEFT)->Render(x, y);
-		}
-	}
-
+	CAnimations::GetInstance()->Get(aniId)->Render(x, y);
 	RenderBoundingBox();
 }
 
@@ -124,6 +123,12 @@ void CItemsLevelUp::SetState(int state)
 	CGameObject::SetState(state);
 	switch (state)
 	{
+	case ITEMS_LEVELUP_STATE_WAIT:
+		vx = 0;
+		vy = 0;
+		break;
+	case ITEMS_LEVELUP_STATE_ACTIVATED:
+		break;
 	case ITEMS_LEVELUP_STATE_MOVING:
 		if (kind == ITEMS_LEVELUP_KIND_MUSHROOM)	//Mushroom
 		{
@@ -134,32 +139,4 @@ void CItemsLevelUp::SetState(int state)
 		{
 			vy = LEAF_GRAVITY;
 		}
-
-
-	case MUSHROOM_STATE_WAIT:
-		vx = 0;
-		vy = 0;
-		break;
-	case MUSHROOM_STATE_ACTIVATED:
-		break;
-	case MUSHROOM_STATE_MOVING:
-		break;
-	}
-
-	//Leaf
-	CGameObject::SetState(state);
-	switch (state)
-	{
-	case LEAF_STATE_WAIT:
-		vx = 0;
-		vy = 0;
-		break;
-	case LEAF_STATE_ACTIVATED:
-		break;
-	case LEAF_STATE_MOVING_LEFT:
-		break;
-	case LEAF_STATE_MOVING_RIGHT:
-		vy = LEAF_GRAVITY;
-		break;
-	}
 }
