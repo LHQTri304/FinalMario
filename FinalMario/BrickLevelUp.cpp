@@ -2,7 +2,7 @@
 
 CQuestBrickLevelUp::CQuestBrickLevelUp(float x, float y) :CGameObject(x, y)
 {
-	itemsUp = new CMushroom(x, y);
+	itemsUp = new CItemsLevelUp(x, y);
 	SetState(QUESTBRICK_STATE_WAIT);
 }
 

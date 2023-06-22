@@ -3,11 +3,16 @@
 #pragma region Mushroom
 CItemsLevelUp::CItemsLevelUp(float x, float y) :CGameObject(x, y)
 {
+	SetState(MUSHROOM_STATE_WAIT);
+
 	this->ax = 0;
 	this->ay = 0;
+	this->ix = x;
 	this->iy = y;
-	this->pixelMoving = MUSHROOM_ACTIVATED_PIXEL_MOVE;
-	SetState(MUSHROOM_STATE_WAIT);
+	//this->pixelMovingY = MUSHROOM_ACTIVATED_PIXEL_MOVE_Y;
+	//this->pixelMovingX = LEAF_ACTIVATED_PIXEL_MOVE_X;
+	//this->pixelMovingY = LEAF_ACTIVATED_PIXEL_MOVE_Y;
+	SetState(LEAF_STATE_WAIT);
 }
 
 void CItemsLevelUp::GetBoundingBox(float& left, float& top, float& right, float& bottom)
@@ -90,13 +95,6 @@ void CItemsLevelUp::SetState(int state)
 #pragma region Leaf
 CLeaf::CLeaf(float x, float y) :CGameObject(x, y)
 {
-	this->ax = 0;
-	this->ay = 0;
-	this->ix = x;
-	this->iy = y;
-	this->pixelMovingX = LEAF_PIXEL_MOVING_X;
-	this->pixelMovingY = LEAF_PIXEL_MOVING_Y;
-	SetState(LEAF_STATE_WAIT);
 }
 
 void CLeaf::GetBoundingBox(float& left, float& top, float& right, float& bottom)

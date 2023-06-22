@@ -6,7 +6,7 @@
 
 class CQuestBrickLevelUp : public CGameObject {
 protected:
-	CMushroom* itemsUp;
+	CItemsLevelUp* itemsUp;
 public:
 	CQuestBrickLevelUp(float x, float y);
 	void Render();
