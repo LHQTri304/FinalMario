@@ -188,6 +188,7 @@
     <ClInclude Include="Animations.h" />
     <ClInclude Include="AssetIDs.h" />
     <ClInclude Include="BackgroundStuff.h" />
+    <ClInclude Include="BrickLevelUp.h" />
     <ClInclude Include="iCoin.h" />
     <ClInclude Include="iLevelUp.h" />
     <ClInclude Include="InteractiveItems.h" />

@@ -1,7 +1,7 @@
 #include "InteractiveItems.h"
 
 #pragma region Mushroom
-CMushroom::CMushroom(float x, float y) :CGameObject(x, y)
+CItemsLevelUp::CItemsLevelUp(float x, float y) :CGameObject(x, y)
 {
 	this->ax = 0;
 	this->ay = 0;
@@ -10,7 +10,7 @@ CMushroom::CMushroom(float x, float y) :CGameObject(x, y)
 	SetState(MUSHROOM_STATE_WAIT);
 }
 
-void CMushroom::GetBoundingBox(float& left, float& top, float& right, float& bottom)
+void CItemsLevelUp::GetBoundingBox(float& left, float& top, float& right, float& bottom)
 {
 	left = x - MUSHROOM_BBOX_WIDTH / 2;
 	top = y - MUSHROOM_BBOX_HEIGHT / 2;
@@ -18,16 +18,16 @@ void CMushroom::GetBoundingBox(float& left, float& top, float& right, float& bot
 	bottom = top + MUSHROOM_BBOX_HEIGHT;
 }
 
-void CMushroom::OnNoCollision(DWORD dt)
+void CItemsLevelUp::OnNoCollision(DWORD dt)
 {
 	x += vx * dt;
 	y += vy * dt;
 };
 
-void CMushroom::OnCollisionWith(LPCOLLISIONEVENT e)
+void CItemsLevelUp::OnCollisionWith(LPCOLLISIONEVENT e)
 {
 	//if (!e->obj->IsBlocking()) return;
-	//if (dynamic_cast<CMushroom*>(e->obj)) return;
+	//if (dynamic_cast<CItemsLevelUp*>(e->obj)) return;
 
 	if (e->ny != 0)
 	{
@@ -39,7 +39,7 @@ void CMushroom::OnCollisionWith(LPCOLLISIONEVENT e)
 	}
 }
 
-void CMushroom::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
+void CItemsLevelUp::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	vy += ay * dt;
 	vx += ax * dt;
@@ -57,7 +57,7 @@ void CMushroom::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 }
 
 
-void CMushroom::Render()
+void CItemsLevelUp::Render()
 {
 	if (GetState() != MUSHROOM_STATE_WAIT)
 	{
@@ -67,7 +67,7 @@ void CMushroom::Render()
 	RenderBoundingBox();
 }
 
-void CMushroom::SetState(int state)
+void CItemsLevelUp::SetState(int state)
 {
 	CGameObject::SetState(state);
 	switch (state)

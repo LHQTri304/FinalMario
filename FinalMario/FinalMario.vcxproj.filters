@@ -236,5 +236,8 @@
     <ClInclude Include="AniIDs.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="BrickLevelUp.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
