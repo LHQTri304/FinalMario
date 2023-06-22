@@ -76,10 +76,6 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 	//Disappear-able
 	else if (dynamic_cast<CCoin*>(e->obj))
 		OnCollisionWithCoin(e);
-	else if (dynamic_cast<CMushroom*>(e->obj))
-		OnCollisionWithMushroom(e);
-	else if (dynamic_cast<CLeaf*>(e->obj))
-		OnCollisionWithLeaf(e);
 	else if (dynamic_cast<CStar*>(e->obj))
 		OnCollisionWithStar(e);
 
@@ -96,6 +92,8 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 		OnCollisionWithPortal(e);
 
 
+	else if (dynamic_cast<CItemsLevelUp*>(e->obj))
+		OnCollisionWithItemsLevelUp(e);
 }
 
 void CMario::OnCollisionWithGoomba(LPCOLLISIONEVENT e)
@@ -326,61 +324,19 @@ void CMario::OnCollisionWithCoin(LPCOLLISIONEVENT e)
 	coin++;
 }
 
-void CMario::OnCollisionWithMushroom(LPCOLLISIONEVENT e)
+void CMario::OnCollisionWithItemsLevelUp(LPCOLLISIONEVENT e)
 {
-	CMushroom* mushroom = dynamic_cast<CMushroom*>(e->obj);
-
-	// jump and hit the bottom >> Activate Mushroom 
-	if (e->ny > 0)
+	CItemsLevelUp* itemsLevelUp = dynamic_cast<CItemsLevelUp*>(e->obj);
+	
+	// touch >> Level up
+	if (itemsLevelUp->GetState() == ITEMS_LEVELUP_STATE_MOVING)
 	{
-		if(mushroom->GetState() == MUSHROOM_STATE_WAIT && level == MARIO_LEVEL_SMALL)
+		if (level < MARIO_LEVEL_RACCOON)
 		{
-			mushroom->SetState(MUSHROOM_STATE_ACTIVATED);
-		}
-		else
-		{
-			mushroom->Delete();
-		}
-	}
-
-	// touch Mushroom
-	else if (mushroom->GetState() == MUSHROOM_STATE_MOVING)
-	{
-		if (level == MARIO_LEVEL_SMALL)
-		{
-			level = MARIO_LEVEL_BIG;
+			level++;	//Small (1) >> Big (2) >> Raccoon (3)
 			vy = -MARIO_JUMP_DEFLECT_SPEED;
 		}
-		mushroom->Delete();
-	}
-}
-
-void CMario::OnCollisionWithLeaf(LPCOLLISIONEVENT e)
-{
-	CLeaf* leaf = dynamic_cast<CLeaf*>(e->obj);
-
-	// jump and hit the bottom >> Activate Leaf 
-	if (leaf->GetState() == LEAF_STATE_WAIT)
-	{
-		if (e->ny > 0 && level != MARIO_LEVEL_SMALL)
-		{
-				leaf->SetState(LEAF_STATE_ACTIVATED);
-		}
-		else
-		{
-			leaf->Delete();
-		}
-	}	
-
-	// touch Leaf && != STATE_WAIT
-	else
-	{
-		if (level != MARIO_LEVEL_RACCOON)
-		{
-			level = MARIO_LEVEL_RACCOON;
-			vy = -MARIO_JUMP_DEFLECT_SPEED;
-		}
-		leaf->Delete();
+		itemsLevelUp->Delete();
 	}
 }
 
@@ -392,6 +348,7 @@ void CMario::OnCollisionWithBrickLevelUp(LPCOLLISIONEVENT e)
 	if (e->ny > 0)
 		brickLevelUp->SetState(QUESTBRICK_STATE_ACTIVATED);
 }
+
 void CMario::OnCollisionWithBrickCoin(LPCOLLISIONEVENT e)
 {
 	CQuestBrickCoin* brickCoin = dynamic_cast<CQuestBrickCoin*>(e->obj);
