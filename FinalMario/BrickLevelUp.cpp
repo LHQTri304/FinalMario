@@ -1,16 +1,28 @@
 #include "StationaryObject.h"
 
-void CQuestBrick::Render()
+CQuestBrickCoin::CQuestBrickCoin(float x, float y) :CGameObject(x, y)
 {
+	hidedCoin = new CHidedCoin(x, y);
+	SetState(QUESTBRICK_STATE_WAIT);
+}
+
+
+void CQuestBrickCoin::Render()
+{
+	hidedCoin->Render();
+
 	CAnimations* animations = CAnimations::GetInstance();
 
 	animations->Get(ID_ANI_QUEST_BRICK)->Render(x, y);
 
 	if (GetState() == QUESTBRICK_STATE_ACTIVATED)
 		animations->Get(ID_ANI_BLANK_BRICK)->Render(x, y);
+
+
+	//RenderBoundingBox();
 }
 
-void CQuestBrick::GetBoundingBox(float& l, float& t, float& r, float& b)
+void CQuestBrickCoin::GetBoundingBox(float& l, float& t, float& r, float& b)
 {
 	l = x - BRICK_BBOX_WIDTH / 2;
 	t = y - BRICK_BBOX_HEIGHT / 2;
@@ -18,7 +30,15 @@ void CQuestBrick::GetBoundingBox(float& l, float& t, float& r, float& b)
 	b = t + BRICK_BBOX_HEIGHT;
 }
 
-void CQuestBrick::SetState(int state)
+void CQuestBrickCoin::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
+{
+	hidedCoin->Update(dt, coObjects);
+	CGameObject::Update(dt, coObjects);
+	CCollision::GetInstance()->Process(this, dt, coObjects);
+}
+
+
+void CQuestBrickCoin::SetState(int state)
 {
 	CGameObject::SetState(state);
 	switch (state)
@@ -26,6 +46,7 @@ void CQuestBrick::SetState(int state)
 	case QUESTBRICK_STATE_WAIT:
 		break;
 	case QUESTBRICK_STATE_ACTIVATED:
+		hidedCoin->SetState(COIN_STATE_ACTIVATED);
 		break;
 	}
 }
