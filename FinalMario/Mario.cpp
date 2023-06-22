@@ -84,8 +84,10 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 		OnCollisionWithStar(e);
 
 	//Special blocks
-	//else if (dynamic_cast<CQuestBrick*>(e->obj))
-		//OnCollisionWithQuestBrick(e);
+	else if (dynamic_cast<CQuestBrickLevelUp*>(e->obj))
+		OnCollisionWithBrickLevelUp(e);
+	else if (dynamic_cast<CQuestBrickCoin*>(e->obj))
+		OnCollisionWithBrickCoin(e);
 	else if (dynamic_cast<CGlassBrick*>(e->obj))
 		OnCollisionWithGlassBrick(e);
 
@@ -94,8 +96,6 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 		OnCollisionWithPortal(e);
 
 
-	else if (dynamic_cast<CQuestBrickCoin*>(e->obj))
-		OnCollisionWithBrickCoin(e);
 }
 
 void CMario::OnCollisionWithGoomba(LPCOLLISIONEVENT e)
@@ -384,13 +384,21 @@ void CMario::OnCollisionWithLeaf(LPCOLLISIONEVENT e)
 	}
 }
 
-void CMario::OnCollisionWithQuestBrick(LPCOLLISIONEVENT e)
+void CMario::OnCollisionWithBrickLevelUp(LPCOLLISIONEVENT e)
 {
-	//CQuestBrick* questBrick = dynamic_cast<CQuestBrick*>(e->obj);
+	CQuestBrickLevelUp* brickLevelUp = dynamic_cast<CQuestBrickLevelUp*>(e->obj);
 
 	// jump and hit the bottom >> Activate the QuestBrick 
-	//if (e->ny > 0)
-		//questBrick->SetState(QUESTBRICK_STATE_ACTIVATED);
+	if (e->ny > 0)
+		brickLevelUp->SetState(QUESTBRICK_STATE_ACTIVATED);
+}
+void CMario::OnCollisionWithBrickCoin(LPCOLLISIONEVENT e)
+{
+	CQuestBrickCoin* brickCoin = dynamic_cast<CQuestBrickCoin*>(e->obj);
+
+	// jump and hit the bottom >> Activate the QuestBrick 
+	if (e->ny > 0)
+		brickCoin->SetState(QUESTBRICK_STATE_ACTIVATED);
 }
 
 void CMario::OnCollisionWithGlassBrick(LPCOLLISIONEVENT e)
@@ -418,15 +426,6 @@ void CMario::OnCollisionWithPortal(LPCOLLISIONEVENT e)
 {
 	CPortal* p = (CPortal*)e->obj;
 	CGame::GetInstance()->InitiateSwitchScene(p->GetSceneId());
-}
-
-void CMario::OnCollisionWithBrickCoin(LPCOLLISIONEVENT e)
-{
-	CQuestBrickCoin* brickCoin = dynamic_cast<CQuestBrickCoin*>(e->obj);
-
-	// jump and hit the bottom >> Activate the QuestBrick 
-	if (e->ny > 0)
-		brickCoin->SetState(QUESTBRICK_STATE_ACTIVATED);
 }
 
 //

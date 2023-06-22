@@ -24,6 +24,7 @@ platform.txt
 
 #STUFF
 34	160	120
+33	200	130
 
 
 #Portal
