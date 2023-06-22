@@ -7,7 +7,8 @@
 #include "eFirePlant.h"
 #include "eBitePlant.h"
 
-#include "Mario.h"
 #include "StationaryObject.h"
 #include "InteractiveItems.h"
+
+#include "Mario.h"
 #include "PlayScene.h"
