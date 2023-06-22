@@ -20,6 +20,11 @@ void CItemsLevelUp::GetBoundingBox(float& left, float& top, float& right, float&
 	bottom = top + ITEMS_LEVELUP_BBOX_HEIGHT;
 }
 
+int CItemsLevelUp::IsCollidable()
+{
+	return 0;
+};
+
 void CItemsLevelUp::OnNoCollision(DWORD dt)
 {
 	x += vx * dt;

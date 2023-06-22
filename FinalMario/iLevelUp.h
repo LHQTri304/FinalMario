@@ -14,9 +14,11 @@ protected:
 	float pixelMovingX;
 	float pixelMovingY;
 
+	int kind;	// 0: Mushroom | 1: Leaf
+
 	virtual void GetBoundingBox(float& left, float& top, float& right, float& bottom);
 
-	virtual int IsCollidable() { return state == MUSHROOM_STATE_MOVING; };	//Don't let anything change the mushroom if it's not activated yet.
+	virtual int IsCollidable();	//Don't let anything change the mushroom if it's not activated yet.
 	virtual int IsBlocking() { return 0; }
 	virtual void OnNoCollision(DWORD dt);
 
