@@ -144,7 +144,7 @@
 
 
 //	### Mushroom ###
-#define MUSHROOM_GRAVITY 0.002f
+#define MUSHROOM_GRAVITY 0.002f	//Count as "ay" because mushroom drop normally
 #define MUSHROOM_SPEED 0.07f
 #define MUSHROOM_ACTIVATED_SPEED 0.2f
 
@@ -153,7 +153,7 @@
 
 
 //	### Leaf ###
-#define LEAF_GRAVITY 0.02f	//Count as vy instead of ay because leaf drop slowy
+#define LEAF_GRAVITY 0.02f	//Count as vy instead of ay because leaf falls slowly and steadily
 #define LEAF_SPEED 1.25f
 #define LEAF_ACTIVATED_SPEED 3.5f
 

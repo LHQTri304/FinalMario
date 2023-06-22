@@ -3,8 +3,6 @@
 #pragma region Mushroom
 CItemsLevelUp::CItemsLevelUp(float x, float y) :CGameObject(x, y)
 {
-	SetState(MUSHROOM_STATE_WAIT);
-
 	this->ax = 0;
 	this->ay = 0;
 	this->ix = x;
@@ -12,15 +10,15 @@ CItemsLevelUp::CItemsLevelUp(float x, float y) :CGameObject(x, y)
 	//this->pixelMovingY = MUSHROOM_ACTIVATED_PIXEL_MOVE_Y;
 	//this->pixelMovingX = LEAF_ACTIVATED_PIXEL_MOVE_X;
 	//this->pixelMovingY = LEAF_ACTIVATED_PIXEL_MOVE_Y;
-	SetState(LEAF_STATE_WAIT);
+	SetState(ITEMS_LEVELUP_STATE_WAIT);
 }
 
 void CItemsLevelUp::GetBoundingBox(float& left, float& top, float& right, float& bottom)
 {
-	left = x - MUSHROOM_BBOX_WIDTH / 2;
-	top = y - MUSHROOM_BBOX_HEIGHT / 2;
-	right = left + MUSHROOM_BBOX_WIDTH;
-	bottom = top + MUSHROOM_BBOX_HEIGHT;
+	left = x - ITEMS_LEVELUP_BBOX_WIDTH / 2;
+	top = y - ITEMS_LEVELUP_BBOX_HEIGHT / 2;
+	right = left + ITEMS_LEVELUP_BBOX_WIDTH;
+	bottom = top + ITEMS_LEVELUP_BBOX_HEIGHT;
 }
 
 void CItemsLevelUp::OnNoCollision(DWORD dt)
