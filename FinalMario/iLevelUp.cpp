@@ -6,9 +6,10 @@ CItemsLevelUp::CItemsLevelUp(float x, float y) :CGameObject(x, y)
 	this->ay = 0;
 	this->ix = x;
 	this->iy = y;
-	//this->pixelMovingY = MUSHROOM_ACTIVATED_PIXEL_MOVE_Y;
-	//this->pixelMovingX = LEAF_ACTIVATED_PIXEL_MOVE_X;
-	//this->pixelMovingY = LEAF_ACTIVATED_PIXEL_MOVE_Y;
+	this->pixelMovingX = 0;
+	this->pixelMovingY = MUSHROOM_ACTIVATED_PIXEL_MOVE_Y;
+	this->kind = 0;	//Mushroom first
+	this->isMovingRight = true;
 	SetState(ITEMS_LEVELUP_STATE_WAIT);
 }
 
@@ -51,21 +52,27 @@ void CItemsLevelUp::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	vy += ay * dt;
 	vx += ax * dt;
 
-	if (GetState() == MUSHROOM_STATE_ACTIVATED)
+	if (GetState() == ITEMS_LEVELUP_STATE_ACTIVATED)
 	{
-		if (y <= iy - pixelMoving)
-			SetState(MUSHROOM_STATE_MOVING);
-		else
-			y -= MUSHROOM_ACTIVATED_SPEED;
+		if (kind == ITEMS_LEVELUP_KIND_MUSHROOM)	//Mushroom
+		{
+			if (y <= iy - pixelMovingY)
+				SetState(ITEMS_LEVELUP_STATE_MOVING);
+			else
+				y -= MUSHROOM_ACTIVATED_SPEED;
+		}
+		else	//Leaf
+		{
+			if (y <= iy - pixelMovingY)
+				SetState(ITEMS_LEVELUP_STATE_MOVING);
+			else
+				y -= LEAF_ACTIVATED_SPEED;
+		}
 	}
 
 	//Leaf
-	if (GetState() == LEAF_STATE_ACTIVATED)
+	//if (GetState() == LEAF_STATE_ACTIVATED)
 	{
-		if (y <= iy - pixelMovingY)
-			SetState(LEAF_STATE_MOVING_RIGHT);
-		else
-			y -= LEAF_ACTIVATED_SPEED;
 	}
 
 	if (GetState() == LEAF_STATE_MOVING_RIGHT)
@@ -117,6 +124,18 @@ void CItemsLevelUp::SetState(int state)
 	CGameObject::SetState(state);
 	switch (state)
 	{
+	case ITEMS_LEVELUP_STATE_MOVING:
+		if (kind == ITEMS_LEVELUP_KIND_MUSHROOM)	//Mushroom
+		{
+			ay = MUSHROOM_GRAVITY;
+			vx = MUSHROOM_SPEED;
+		}
+		else	//Leaf
+		{
+			vy = LEAF_GRAVITY;
+		}
+
+
 	case MUSHROOM_STATE_WAIT:
 		vx = 0;
 		vy = 0;
@@ -124,8 +143,6 @@ void CItemsLevelUp::SetState(int state)
 	case MUSHROOM_STATE_ACTIVATED:
 		break;
 	case MUSHROOM_STATE_MOVING:
-		ay = MUSHROOM_GRAVITY;
-		vx = MUSHROOM_SPEED;
 		break;
 	}
 
@@ -140,7 +157,6 @@ void CItemsLevelUp::SetState(int state)
 	case LEAF_STATE_ACTIVATED:
 		break;
 	case LEAF_STATE_MOVING_LEFT:
-		vy = LEAF_GRAVITY;
 		break;
 	case LEAF_STATE_MOVING_RIGHT:
 		vy = LEAF_GRAVITY;
