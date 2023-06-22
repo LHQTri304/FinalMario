@@ -215,9 +215,6 @@
     <ClInclude Include="BrickBreakable.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="BrickLevelUp.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="BrickCoin.h">
       <Filter>Header Files</Filter>
     </ClInclude>
