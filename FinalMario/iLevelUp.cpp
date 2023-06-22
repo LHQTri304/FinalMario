@@ -52,20 +52,22 @@ void CItemsLevelUp::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	vy += ay * dt;
 	vx += ax * dt;
 
-	CMario* mario = (CMario*)((LPPLAYSCENE)CGame::GetInstance()->GetCurrentScene())->GetPlayer();
-	if (mario->GetLevel() == MARIO_LEVEL_SMALL)
+	if (GetState() == ITEMS_LEVELUP_STATE_WAIT)	//Change kind based on mario >> If activated then won't change
 	{
-		this->pixelMovingX = 0;
-		this->pixelMovingY = MUSHROOM_ACTIVATED_PIXEL_MOVE_Y;
-		this->kind = 0;	//Mushroom
+		CMario* mario = (CMario*)((LPPLAYSCENE)CGame::GetInstance()->GetCurrentScene())->GetPlayer();
+		if (mario->GetLevel() == MARIO_LEVEL_SMALL)
+		{
+			this->pixelMovingX = 0;
+			this->pixelMovingY = MUSHROOM_ACTIVATED_PIXEL_MOVE_Y;
+			this->kind = 0;	//Mushroom
+		}
+		else
+		{
+			this->pixelMovingX = LEAF_ACTIVATED_PIXEL_MOVE_X;
+			this->pixelMovingY = LEAF_ACTIVATED_PIXEL_MOVE_Y;
+			this->kind = 1;	//Leaf
+		}
 	}
-	else
-	{
-		this->pixelMovingX = LEAF_ACTIVATED_PIXEL_MOVE_X;
-		this->pixelMovingY = LEAF_ACTIVATED_PIXEL_MOVE_Y;
-		this->kind = 1;	//Leaf
-	}
-	
 
 	if (GetState() == ITEMS_LEVELUP_STATE_ACTIVATED)
 	{
