@@ -126,7 +126,7 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 	case OBJECT_TYPE_INVISIBLE_BLOCK: obj = new CBrick(x,y); break;
 	case OBJECT_TYPE_DIRT_BRICK: obj = new CDirtBrick(x, y); break;
 	case OBJECT_TYPE_GLASS_BRICK: obj = new CGlassBrick(x, y); break;
-	case OBJECT_TYPE_QUEST_BRICK_LEVELUP: obj = new CQuestBrick(x, y); break;
+	case OBJECT_TYPE_QUEST_BRICK_LEVELUP: obj = new CQuestBrickLevelUp(x, y); break;
 	case OBJECT_TYPE_QUEST_BRICK_COIN: obj = new CQuestBrickCoin(x, y); break;
 
 	//Disappear-able

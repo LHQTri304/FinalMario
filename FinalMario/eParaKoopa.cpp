@@ -61,8 +61,8 @@ void CParaKoopa::OnCollisionWith(LPCOLLISIONEVENT e)
 		OnCollisionWithMushroom(e);
 	else if (dynamic_cast<CLeaf*>(e->obj))
 		OnCollisionWithLeaf(e);
-	else if (dynamic_cast<CQuestBrick*>(e->obj))
-		OnCollisionWithQuestBrick(e);
+	//else if (dynamic_cast<CQuestBrick*>(e->obj))
+		//OnCollisionWithQuestBrick(e);
 	else if (dynamic_cast<CGlassBrick*>(e->obj))
 		OnCollisionWithGlassBrick(e);
 }
@@ -91,11 +91,11 @@ void CParaKoopa::OnCollisionWithLeaf(LPCOLLISIONEVENT e)
 
 void CParaKoopa::OnCollisionWithQuestBrick(LPCOLLISIONEVENT e)
 {
-	CQuestBrick* questBrick = dynamic_cast<CQuestBrick*>(e->obj);
+	//CQuestBrick* questBrick = dynamic_cast<CQuestBrick*>(e->obj);
 
 	// Hit when being kicked >> Activate the QuestBrick 
-	if (GetState() == KOOPA_STATE_KICKED)
-		questBrick->SetState(QUESTBRICK_STATE_ACTIVATED);
+	//if (GetState() == KOOPA_STATE_KICKED)
+		//questBrick->SetState(QUESTBRICK_STATE_ACTIVATED);
 }
 
 void CParaKoopa::OnCollisionWithGlassBrick(LPCOLLISIONEVENT e)

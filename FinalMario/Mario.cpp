@@ -84,8 +84,8 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 		OnCollisionWithStar(e);
 
 	//Special blocks
-	else if (dynamic_cast<CQuestBrick*>(e->obj))
-		OnCollisionWithQuestBrick(e);
+	//else if (dynamic_cast<CQuestBrick*>(e->obj))
+		//OnCollisionWithQuestBrick(e);
 	else if (dynamic_cast<CGlassBrick*>(e->obj))
 		OnCollisionWithGlassBrick(e);
 
@@ -386,11 +386,11 @@ void CMario::OnCollisionWithLeaf(LPCOLLISIONEVENT e)
 
 void CMario::OnCollisionWithQuestBrick(LPCOLLISIONEVENT e)
 {
-	CQuestBrick* questBrick = dynamic_cast<CQuestBrick*>(e->obj);
+	//CQuestBrick* questBrick = dynamic_cast<CQuestBrick*>(e->obj);
 
 	// jump and hit the bottom >> Activate the QuestBrick 
-	if (e->ny > 0)
-		questBrick->SetState(QUESTBRICK_STATE_ACTIVATED);
+	//if (e->ny > 0)
+		//questBrick->SetState(QUESTBRICK_STATE_ACTIVATED);
 }
 
 void CMario::OnCollisionWithGlassBrick(LPCOLLISIONEVENT e)

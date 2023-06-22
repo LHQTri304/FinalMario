@@ -14,8 +14,6 @@ protected:
 	float pixelMoving;
 
 	virtual void GetBoundingBox(float& left, float& top, float& right, float& bottom);
-	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
-	virtual void Render();
 
 	virtual int IsCollidable() { return state == MUSHROOM_STATE_MOVING; };	//Don't let anything change the mushroom if it's not activated yet.
 	virtual int IsBlocking() { return 0; }
@@ -26,6 +24,9 @@ protected:
 public:
 	CMushroom(float x, float y);
 	virtual void SetState(int state);
+
+	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
+	virtual void Render();
 };
 #pragma endregion
 
