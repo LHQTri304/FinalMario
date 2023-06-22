@@ -9,6 +9,7 @@ CQuestBrickLevelUp::CQuestBrickLevelUp(float x, float y) :CGameObject(x, y)
 
 void CQuestBrickLevelUp::Render()
 {
+	itemsUp->Render();
 
 	CAnimations* animations = CAnimations::GetInstance();
 
@@ -16,8 +17,6 @@ void CQuestBrickLevelUp::Render()
 
 	if (GetState() == QUESTBRICK_STATE_ACTIVATED)
 		animations->Get(ID_ANI_BLANK_BRICK)->Render(x, y);
-
-	itemsUp->Render();
 
 	//RenderBoundingBox();
 }

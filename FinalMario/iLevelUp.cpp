@@ -23,7 +23,7 @@ void CItemsLevelUp::GetBoundingBox(float& left, float& top, float& right, float&
 
 int CItemsLevelUp::IsCollidable()
 {
-	return 0;
+	return 1;
 };
 
 void CItemsLevelUp::OnNoCollision(DWORD dt)
@@ -34,8 +34,8 @@ void CItemsLevelUp::OnNoCollision(DWORD dt)
 
 void CItemsLevelUp::OnCollisionWith(LPCOLLISIONEVENT e)
 {
-	//if (!e->obj->IsBlocking()) return;
-	//if (dynamic_cast<CItemsLevelUp*>(e->obj)) return;
+	if (!e->obj->IsBlocking()) return;
+	if (dynamic_cast<CItemsLevelUp*>(e->obj)) return;
 
 	if (e->ny != 0)
 	{
@@ -70,20 +70,22 @@ void CItemsLevelUp::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		}
 	}
 
-	if (GetState() == ITEMS_LEVELUP_STATE_MOVING && isMovingRight)	//Moving right as Leaf
+	if (kind == ITEMS_LEVELUP_KIND_LEAF && GetState() == ITEMS_LEVELUP_STATE_MOVING)	
 	{
-		if (x >= ix + pixelMovingX)
-			isMovingRight = false;
-		else
-			x += LEAF_SPEED;
-	}
-
-	if (GetState() == ITEMS_LEVELUP_STATE_MOVING && !isMovingRight)	//Moving left as Leaf
-	{
-		if (x <= ix)
-			isMovingRight = true;
-		else
-			x -= LEAF_SPEED;
+		if (isMovingRight)	//Moving right as Leaf
+		{
+			if (x >= ix + pixelMovingX)
+				isMovingRight = false;
+			else
+				x += LEAF_SPEED;
+		}
+		else	//Moving left as Leaf
+		{
+			if (x <= ix)
+				isMovingRight = true;
+			else
+				x -= LEAF_SPEED;
+		}
 	}
 
 	CGameObject::Update(dt, coObjects);
