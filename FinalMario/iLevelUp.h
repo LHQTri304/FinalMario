@@ -31,4 +31,6 @@ public:
 
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
 	virtual void Render();
+
+	int GetKind() { return kind; }
 };

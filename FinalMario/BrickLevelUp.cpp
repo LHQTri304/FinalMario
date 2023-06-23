@@ -9,7 +9,8 @@ CQuestBrickLevelUp::CQuestBrickLevelUp(float x, float y) :CGameObject(x, y)
 
 void CQuestBrickLevelUp::Render()
 {
-	itemsUp->Render();
+	if (itemsUp->GetKind() == ITEMS_LEVELUP_KIND_MUSHROOM)	// Mushroom render behind the Brick
+		itemsUp->Render();
 
 	CAnimations* animations = CAnimations::GetInstance();
 
@@ -17,6 +18,9 @@ void CQuestBrickLevelUp::Render()
 
 	if (GetState() == QUESTBRICK_STATE_ACTIVATED)
 		animations->Get(ID_ANI_BLANK_BRICK)->Render(x, y);
+
+	if (itemsUp->GetKind() == ITEMS_LEVELUP_KIND_LEAF)	// Leaf render in front of the Brick
+		itemsUp->Render();
 
 	//RenderBoundingBox();
 }

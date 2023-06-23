@@ -23,7 +23,7 @@ void CItemsLevelUp::GetBoundingBox(float& left, float& top, float& right, float&
 
 int CItemsLevelUp::IsCollidable()
 {
-	return 1;
+	return (GetState() != ITEMS_LEVELUP_STATE_DELETED);
 };
 
 void CItemsLevelUp::OnNoCollision(DWORD dt)
@@ -34,17 +34,72 @@ void CItemsLevelUp::OnNoCollision(DWORD dt)
 
 void CItemsLevelUp::OnCollisionWith(LPCOLLISIONEVENT e)
 {
-	if (!e->obj->IsBlocking()) return;
-	if (dynamic_cast<CItemsLevelUp*>(e->obj)) return;
+	if (kind == ITEMS_LEVELUP_KIND_MUSHROOM)	//Mushroom
+	{
+		if (!e->obj->IsBlocking()) return;
+		if (dynamic_cast<CGoomba*>(e->obj)) return;
+		if (dynamic_cast<CKoopa*>(e->obj)) return;
+		if (dynamic_cast<CFirePlant*>(e->obj)) return;
+		if (dynamic_cast<CBulletFire*>(e->obj)) return;
+		if (dynamic_cast<CBitePlant*>(e->obj)) return;
 
-	if (e->ny != 0)
-	{
-		vy = 0;
+		if (dynamic_cast<CMario*>(e->obj))
+		{
+			CMario* mario = (CMario*)((LPPLAYSCENE)CGame::GetInstance()->GetCurrentScene())->GetPlayer();
+			int mLevel = mario->GetLevel();
+
+			// touch >> Level up
+			if (GetState() == ITEMS_LEVELUP_STATE_MOVING)
+			{
+				if (mLevel == MARIO_LEVEL_SMALL)
+				{
+					mario->SetLevel(MARIO_LEVEL_BIG);	//Small (1) >> Big (2) >> Raccoon (3)
+					mario->SetSpeed(0, -MARIO_JUMP_DEFLECT_SPEED);
+				}
+				SetState(ITEMS_LEVELUP_STATE_DELETED);
+			}
+			return;
+		}
+
+		if (e->ny != 0)
+		{
+			vy = 0;
+		}
+		else if (e->nx != 0)
+		{
+			vx = -vx;
+		}
 	}
-	else if (e->nx != 0)
+	else	//Leaf >> Only collides with mario
 	{
-		vx = -vx;
+		if (dynamic_cast<CMario*>(e->obj))
+		{
+			CMario* mario = (CMario*)((LPPLAYSCENE)CGame::GetInstance()->GetCurrentScene())->GetPlayer();
+			int mLevel = mario->GetLevel();
+
+			// touch >> Level up
+			if (GetState() == ITEMS_LEVELUP_STATE_MOVING)
+			{
+				if (mLevel == MARIO_LEVEL_BIG)
+				{
+					mario->SetLevel(MARIO_LEVEL_RACCOON);	//Small (1) >> Big (2) >> Raccoon (3)
+					mario->SetSpeed(0, -MARIO_JUMP_DEFLECT_SPEED);
+				}
+				SetState(ITEMS_LEVELUP_STATE_DELETED);
+			}
+			return;
+		}
+		else if (e->obj->IsBlocking())
+		{
+			vy = LEAF_GRAVITY;
+		}
+		else
+		{
+			return;
+		}
 	}
+
+
 }
 
 void CItemsLevelUp::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
@@ -132,6 +187,10 @@ void CItemsLevelUp::Render()
 			}
 		}
 	}
+	if (GetState() == ITEMS_LEVELUP_STATE_DELETED)
+	{
+		aniId = ID_ANI_INVISIBLE;
+	}
 
 	CAnimations::GetInstance()->Get(aniId)->Render(x, y);
 	RenderBoundingBox();
@@ -158,5 +217,7 @@ void CItemsLevelUp::SetState(int state)
 		{
 			vy = LEAF_GRAVITY;
 		}
+	case ITEMS_LEVELUP_STATE_DELETED:
+		break;
 	}
 }

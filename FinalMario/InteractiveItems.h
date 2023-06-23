@@ -4,5 +4,7 @@
 #include "iLevelUp.h"
 #include "iStar.h"
 
+#include "Enemies.h"
+
 #include "Mario.h"
 #include "PlayScene.h"

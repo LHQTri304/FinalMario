@@ -325,7 +325,7 @@ void CMario::OnCollisionWithCoin(LPCOLLISIONEVENT e)
 }
 
 void CMario::OnCollisionWithItemsLevelUp(LPCOLLISIONEVENT e)
-{
+{/*
 	CItemsLevelUp* itemsLevelUp = dynamic_cast<CItemsLevelUp*>(e->obj);
 	
 	// touch >> Level up
@@ -338,6 +338,7 @@ void CMario::OnCollisionWithItemsLevelUp(LPCOLLISIONEVENT e)
 		}
 		itemsLevelUp->Delete();
 	}
+	*/
 }
 
 void CMario::OnCollisionWithStar(LPCOLLISIONEVENT e)
