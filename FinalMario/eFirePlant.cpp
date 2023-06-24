@@ -7,6 +7,8 @@ CFirePlant::CFirePlant(float x, float y) :CGameObject(x, y)
 	this->highestHeight = this->y;
 	this->fireTime = FIREPLANT_FIRE_TIME;
 	isMoving = true;
+
+	bullet = new CBulletFire(x, y);
 	SetState(FIREPLANT_STATE_MOVING_DOWN);
 }
 
@@ -56,7 +58,7 @@ void CFirePlant::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			fireTime--;
 	}
 
-
+	bullet->Update(dt, coObjects);
 	CGameObject::Update(dt, coObjects);
 	CCollision::GetInstance()->Process(this, dt, coObjects);
 }
@@ -87,6 +89,7 @@ void CFirePlant::Render()
 			aniId = ID_ANI_FIREPLANT_FIRING_DOWNRIGHT;
 	}
 
+	bullet->Render();
 	CAnimations::GetInstance()->Get(aniId)->Render(x, y);
 	//RenderBoundingBox();
 }
