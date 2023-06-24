@@ -35,6 +35,17 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 		level = MARIO_LEVEL_SMALL;
 	}
 
+	//Only update near Mario;
+	float coObjX, coObjY;
+	for (auto x: *coObjects)
+	{
+		x->GetPosition(coObjX, coObjY);
+		if (abs(this->x - coObjX) < RENDER_WIDTH)
+			x->SetAllowToUpdate(true);
+		else
+			x->SetAllowToUpdate(false);
+	}
+
 	CCollision::GetInstance()->Process(this, dt, coObjects);
 }
 

@@ -130,6 +130,8 @@
 
 #define MARIO_UNTOUCHABLE_TIME 2500
 
+#define RENDER_WIDTH 80
+
 class CMario : public CGameObject
 {
 	BOOLEAN isSitting;
