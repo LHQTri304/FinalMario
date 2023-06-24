@@ -119,7 +119,6 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 	case OBJECT_TYPE_KOOPA: obj = new CKoopa(x, y); break;
 	case OBJECT_TYPE_PARAKOOPA: obj = new CParaKoopa(x, y); break;
 	case OBJECT_TYPE_FIREPLANT: obj = new CFirePlant(x, y); break;
-	//case OBJECT_TYPE_BULLETFIRE: obj = new CBulletFire(x, y); break;
 	case OBJECT_TYPE_BITEPLANT: obj = new CBitePlant(x, y); break;
 
 	//Blocks
@@ -131,9 +130,7 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 
 	//Disappear-able
 	case OBJECT_TYPE_COIN: obj = new CCoin(x, y); break;
-	//case OBJECT_TYPE_ITEMS_LEVELUP: obj = new CItemsLevelUp(x, y); break;
 	case OBJECT_TYPE_STAR: obj = new CStar(x, y); break;
-	//case OBJECT_TYPE_HIDEDCOIN: obj = new CHidedCoin(x, y); break;
 
 	case OBJECT_TYPE_PLATFORM: //40 -->> CLOUD 42 & DIRT 41
 	{

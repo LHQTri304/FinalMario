@@ -65,6 +65,7 @@ void CBulletFire::OnCollisionWith(LPCOLLISIONEVENT e)
 			}
 			SetState(ITEMS_LEVELUP_STATE_DELETED);
 		}
+		isCollidingProperly = false;
 		return;
 	}
 }
@@ -86,7 +87,7 @@ void CBulletFire::Render()
 		CAnimations::GetInstance()->Get(ID_ANI_BULLETFIRE_MOVE)->Render(x, y);
 	}
 
-	RenderBoundingBox();
+	//RenderBoundingBox();
 }
 
 void CBulletFire::SetState(int state)

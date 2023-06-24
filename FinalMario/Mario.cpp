@@ -68,8 +68,6 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 		OnCollisionWithParaKoopa(e);
 	else if (dynamic_cast<CFirePlant*>(e->obj))
 		OnCollisionWithFirePlant(e);
-	//else if (dynamic_cast<CBulletFire*>(e->obj))
-		//OnCollisionWithBulletFire(e);
 	else if (dynamic_cast<CBitePlant*>(e->obj))
 		OnCollisionWithFirePlant(e);
 
@@ -275,29 +273,6 @@ void CMario::OnCollisionWithFirePlant(LPCOLLISIONEVENT e)
 		}
 	}
 }
-
-/*
-void CMario::OnCollisionWithBulletFire(LPCOLLISIONEVENT e)
-{
-	CBulletFire* bullet = dynamic_cast<CBulletFire*>(e->obj);
-
-	if (bullet->GetState() == BULLETFIRE_STATE_INSIDE_PLANT || bullet->GetState() == BULLETFIRE_STATE_DELAY)
-		return;	//Only when being fired will hit.
-
-	if (untouchable == 0)
-	{
-		if (level > MARIO_LEVEL_SMALL)
-		{
-			level--;
-			StartUntouchable();
-		}
-		else
-		{
-			DebugOut(L">>> Mario DIE >>> \n");
-			SetState(MARIO_STATE_DIE);
-		}
-	}
-}*/
 
 void CMario::OnCollisionWithBitePlant(LPCOLLISIONEVENT e)
 {

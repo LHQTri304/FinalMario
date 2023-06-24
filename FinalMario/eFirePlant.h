@@ -10,9 +10,6 @@ protected:
 	float ay;
 	float ix;	// i = initial
 	float iy;
-	//float moveTime;
-	//float delayTime;
-	//BOOLEAN isMoving;
 	BOOLEAN isCollidingProperly;
 
 	virtual void GetBoundingBox(float& left, float& top, float& right, float& bottom);

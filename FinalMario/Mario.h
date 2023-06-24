@@ -152,7 +152,6 @@ class CMario : public CGameObject
 	void OnCollisionWithParaKoopa(LPCOLLISIONEVENT e);
 
 	void OnCollisionWithFirePlant(LPCOLLISIONEVENT e);
-	//void OnCollisionWithBulletFire(LPCOLLISIONEVENT e);
 	void OnCollisionWithBitePlant(LPCOLLISIONEVENT e);
 
 	//Disappear-able
