@@ -74,40 +74,6 @@ void CBulletFire::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	vy += ay * dt;
 	vx += ax * dt;
 
-	CMario* mario = (CMario*)((LPPLAYSCENE)CGame::GetInstance()->GetCurrentScene())->GetPlayer();
-
-	float xMario, yMario;
-	mario->GetPosition(xMario, yMario);
-
-	if (GetState() == BULLETFIRE_STATE_DELAY)
-	{
-		if (delayTime <= 0)
-		{
-			if (xMario < x && yMario < y)
-				SetState(BULLETFIRE_STATE_FIRING_UPLEFT);
-			else if (xMario < x && yMario > y)
-				SetState(BULLETFIRE_STATE_FIRING_DOWNLEFT);
-			else if (xMario > x && yMario < y)
-				SetState(BULLETFIRE_STATE_FIRING_UPRIGHT);
-			else
-				SetState(BULLETFIRE_STATE_FIRING_DOWNRIGHT);
-			delayTime = BULLETFIRE_DELAY_TIME;
-		}
-		else
-			delayTime--;
-	}
-
-	else if (isMoving)
-	{
-		if (moveTime <= 0)
-		{
-			SetState(BULLETFIRE_STATE_INSIDE_PLANT);
-			moveTime = BULLETFIRE_MOVE_TIME;
-		}
-		else
-			moveTime--;
-	}
-
 	CGameObject::Update(dt, coObjects);
 	CCollision::GetInstance()->Process(this, dt, coObjects);
 }
@@ -115,7 +81,7 @@ void CBulletFire::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 void CBulletFire::Render()
 {
-	if (state != BULLETFIRE_STATE_INSIDE_PLANT || state != BULLETFIRE_STATE_DELAY)
+	if (state != BULLETFIRE_STATE_INSIDE_PLANT)
 	{
 		CAnimations::GetInstance()->Get(ID_ANI_BULLETFIRE_MOVE)->Render(x, y);
 	}
@@ -133,29 +99,35 @@ void CBulletFire::SetState(int state)
 		y = iy;	//So the bullet will begin at the center of the plant's head
 		vx = 0;
 		vy = 0;
-		isMoving = false;
+		//isMoving = false;
 		break;
 	case BULLETFIRE_STATE_FIRING_UPLEFT:
+		x = ix;
+		y = iy;
 		vx = -BULLETFIRE_MOVING_SPEED_X;
 		vy = -BULLETFIRE_MOVING_SPEED_Y;
-		isMoving = true;
+		//isMoving = true;
 		break;
 	case BULLETFIRE_STATE_FIRING_DOWNLEFT:
+		x = ix;
+		y = iy;
 		vx = -BULLETFIRE_MOVING_SPEED_X;
 		vy = BULLETFIRE_MOVING_SPEED_Y;
-		isMoving = true;
+		//isMoving = true;
 		break;
 	case BULLETFIRE_STATE_FIRING_UPRIGHT:
+		x = ix;
+		y = iy;
 		vx = BULLETFIRE_MOVING_SPEED_X;
 		vy = -BULLETFIRE_MOVING_SPEED_Y;
-		isMoving = true;
+		//isMoving = true;
 		break;
 	case BULLETFIRE_STATE_FIRING_DOWNRIGHT:
+		x = ix;
+		y = iy;
 		vx = BULLETFIRE_MOVING_SPEED_X;
 		vy = BULLETFIRE_MOVING_SPEED_Y;
-		isMoving = true;
-		break;
-	case BULLETFIRE_STATE_DELAY:
+		//isMoving = true;
 		break;
 	}
 }

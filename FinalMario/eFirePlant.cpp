@@ -106,6 +106,18 @@ void CFirePlant::SetState(int state)
 		vy = FIREPLANT_MOVING_SPEED;
 		break;
 	case FIREPLANT_STATE_FIRING:
+		CMario* mario = (CMario*)((LPPLAYSCENE)CGame::GetInstance()->GetCurrentScene())->GetPlayer();
+		float xMario, yMario;
+		mario->GetPosition(xMario, yMario);
+
+		if (xMario < x && yMario < y)
+			bullet->SetState(BULLETFIRE_STATE_FIRING_UPLEFT);
+		else if (xMario < x && yMario > y)
+			bullet->SetState(BULLETFIRE_STATE_FIRING_DOWNLEFT);
+		else if (xMario > x && yMario < y)
+			bullet->SetState(BULLETFIRE_STATE_FIRING_UPRIGHT);
+		else
+			bullet->SetState(BULLETFIRE_STATE_FIRING_DOWNRIGHT);
 		vy = 0;
 		break;
 	}
