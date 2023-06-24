@@ -4,13 +4,8 @@ CKoopa::CKoopa(float x, float y) :CGameObject(x, y)
 {
 	this->ax = 0;
 	this->ay = KOOPA_GRAVITY;
-	this->ix = x;
-	this->iy = y;
-
 	fakeHead = new CFakeHead(x, y);
-
-	respawnCountdown = 0;
-	die_start = -1;
+	stun_start = -1;
 	SetState(KOOPA_STATE_WALKING);
 }
 
@@ -44,7 +39,11 @@ void CKoopa::OnCollisionWith(LPCOLLISIONEVENT e)
 	if (dynamic_cast<CGoomba*>(e->obj))
 	{
 		CGoomba* goomba = dynamic_cast<CGoomba*>(e->obj);
-		goomba->SetState(GOOMBA_STATE_DIE);
+		if (goomba->GetState() != GOOMBA_STATE_DIE)
+		{
+			goomba->SetState(GOOMBA_STATE_DIE);
+		}
+		return;
 	}
 
 	if (e->ny != 0)
@@ -56,45 +55,19 @@ void CKoopa::OnCollisionWith(LPCOLLISIONEVENT e)
 		vx = -vx;
 	}
 
-
-	/*if (dynamic_cast<CMushroom*>(e->obj))
-		OnCollisionWithMushroom(e);
-	else if (dynamic_cast<CLeaf*>(e->obj))
-		OnCollisionWithLeaf(e);*/
-	//else if (dynamic_cast<CQuestBrick*>(e->obj))
-		//OnCollisionWithQuestBrick(e);
+	 if (dynamic_cast<CQuestBrickLevelUp*>(e->obj))
+		OnCollisionWithBrickLevelUp(e);
 	else if (dynamic_cast<CGlassBrick*>(e->obj))
 		OnCollisionWithGlassBrick(e);
 }
 
-void CKoopa::OnCollisionWithMushroom(LPCOLLISIONEVENT e)
+
+void CKoopa::OnCollisionWithBrickLevelUp(LPCOLLISIONEVENT e)
 {
-	/*CMushroom* mushroom = dynamic_cast<CMushroom*>(e->obj);
-	CMario* mario = (CMario*)((LPPLAYSCENE)CGame::GetInstance()->GetCurrentScene())->GetPlayer();
-
-	// Hit when being kicked >> Activate Mushroom 
-	if (mushroom->GetState() == MUSHROOM_STATE_WAIT && GetState() == KOOPA_STATE_KICKED
-		&& mario->GetLevel() == MARIO_LEVEL_SMALL)
-		mushroom->SetState(MUSHROOM_STATE_ACTIVATED);*/
-}
-
-void CKoopa::OnCollisionWithLeaf(LPCOLLISIONEVENT e)
-{
-	/*CLeaf* leaf = dynamic_cast<CLeaf*>(e->obj);
-	CMario* mario = (CMario*)((LPPLAYSCENE)CGame::GetInstance()->GetCurrentScene())->GetPlayer();
-
-	// Hit when being kicked >> Activate Leaf 
-	if (leaf->GetState() == LEAF_STATE_WAIT && GetState() == KOOPA_STATE_KICKED
-		&& mario->GetLevel() != MARIO_LEVEL_SMALL)
-		leaf->SetState(LEAF_STATE_ACTIVATED);*/
-}
-
-void CKoopa::OnCollisionWithQuestBrick(LPCOLLISIONEVENT e)
-{
-	//CQuestBrick* questBrick = dynamic_cast<CQuestBrick*>(e->obj);
+	CQuestBrickLevelUp* questBrick = dynamic_cast<CQuestBrickLevelUp*>(e->obj);
 
 	// Hit when being kicked >> Activate the QuestBrick 
-	//questBrick->SetState(QUESTBRICK_STATE_ACTIVATED);
+	questBrick->SetState(QUESTBRICK_STATE_ACTIVATED);
 }
 
 void CKoopa::OnCollisionWithGlassBrick(LPCOLLISIONEVENT e)
@@ -108,50 +81,42 @@ void CKoopa::OnCollisionWithGlassBrick(LPCOLLISIONEVENT e)
 
 void CKoopa::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
-	vy += ay * dt;
-	vx += ax * dt;
-
-	if ((state == KOOPA_STATE_STUNNED) && (GetTickCount64() - die_start > KOOPA_STUNNED_TIMEOUT))
+	if (isAllowToUpdate)
 	{
-		SetState(KOOPA_STATE_REVIVE);
-		return;
-	}
+		vy += ay * dt;
+		vx += ax * dt;
 
-	if (respawnCountdown <= 0)
-	{
-		x = ix;
-		y = iy;
-		SetState(KOOPA_STATE_WALKING);
-		respawnCountdown = 0;
-	}
-	else
-		respawnCountdown--;
-
-
-	//fake head:..
-	float fHeadX, fHeadY;
-	if (GetState() == KOOPA_STATE_WALKING)
-	{
-		fakeHead->GetPosition(fHeadX, fHeadY);
-
-		if (fHeadY > this->y)	//Ready to fall
+		if ((state == KOOPA_STATE_STUNNED) && (GetTickCount64() - stun_start > KOOPA_STUNNED_TIMEOUT))
 		{
-			vx = -vx;
+			SetState(KOOPA_STATE_REVIVE);
+			return;
 		}
 
-		if (vx > 0)
+		//fake head:..
+		float fHeadX, fHeadY;
+		if (GetState() == KOOPA_STATE_WALKING)
 		{
-			fakeHead->SetPosition(x + KOOPA_BBOX_WIDTH / 2, y - KOOPA_BBOX_HEIGHT);
-		}
-		else
-		{
-			fakeHead->SetPosition(x - KOOPA_BBOX_WIDTH / 2, y - KOOPA_BBOX_HEIGHT);
-		}
-	}
+			fakeHead->GetPosition(fHeadX, fHeadY);
 
-	fakeHead->Update(dt, coObjects);
-	CGameObject::Update(dt, coObjects);
-	CCollision::GetInstance()->Process(this, dt, coObjects);
+			if (fHeadY > this->y)	//Ready to fall
+			{
+				vx = -vx;
+			}
+
+			if (vx > 0)
+			{
+				fakeHead->SetPosition(x + KOOPA_BBOX_WIDTH / 2, y - KOOPA_BBOX_HEIGHT);
+			}
+			else
+			{
+				fakeHead->SetPosition(x - KOOPA_BBOX_WIDTH / 2, y - KOOPA_BBOX_HEIGHT);
+			}
+		}
+
+		fakeHead->Update(dt, coObjects);
+		CGameObject::Update(dt, coObjects);
+		CCollision::GetInstance()->Process(this, dt, coObjects);
+	}
 }
 
 
@@ -164,7 +129,7 @@ void CKoopa::Render()
 		aniId = ID_ANI_KOOPA_WALKING_LEFT;
 	else if (state == KOOPA_STATE_STUNNED)
 	{
-		if (GetTickCount64() - die_start > KOOPA_STUNNED_TIMEOUT - KOOPA_REVIVING_TIMEOUT)
+		if (GetTickCount64() - stun_start > KOOPA_STUNNED_TIMEOUT - KOOPA_REVIVING_TIMEOUT)
 			aniId = ID_ANI_KOOPA_REVIVE;
 		else
 			aniId = ID_ANI_KOOPA_STUNNED;
@@ -183,7 +148,7 @@ void CKoopa::SetState(int state)
 	switch (state)
 	{
 	case KOOPA_STATE_STUNNED:
-		die_start = GetTickCount64();
+		stun_start = GetTickCount64();
 		y -= (KOOPA_BBOX_HEIGHT - KOOPA_BBOX_HEIGHT_STUNNED) / 2;
 		vx = 0;
 		vy = 0;
@@ -195,7 +160,7 @@ void CKoopa::SetState(int state)
 		y -= KOOPA_BBOX_HEIGHT_STUNNED / 2;
 		ax = 0;
 		ay = KOOPA_GRAVITY;
-		die_start = -1;
+		stun_start = -1;
 		SetState(KOOPA_STATE_WALKING);
 		break;
 	case KOOPA_STATE_KICKED:

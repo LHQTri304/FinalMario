@@ -25,9 +25,9 @@
 
 
 //	### Koopa ###
-#define KOOPA_GRAVITY 0.0008f
+#define KOOPA_GRAVITY 0.0005f
 #define KOOPA_WALKING_SPEED 0.05f
-#define KOOPA_KICKED_SPEED 0.25f
+#define KOOPA_KICKED_SPEED 0.35f
 
 #define KOOPA_BBOX_WIDTH 16
 #define KOOPA_BBOX_HEIGHT 24
@@ -89,7 +89,7 @@
 
 
 
-//	### BitrPlant ###
+//	### BitePlant ###
 #define BITEPLANT_MOVING_SPEED 0.05f
 
 #define BITEPLANT_BBOX_WIDTH 16
