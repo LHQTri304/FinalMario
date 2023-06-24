@@ -55,7 +55,7 @@ void CKoopa::OnCollisionWith(LPCOLLISIONEVENT e)
 		vx = -vx;
 	}
 
-	 if (dynamic_cast<CQuestBrickLevelUp*>(e->obj))
+	if (dynamic_cast<CQuestBrickLevelUp*>(e->obj))
 		OnCollisionWithBrickLevelUp(e);
 	else if (dynamic_cast<CGlassBrick*>(e->obj))
 		OnCollisionWithGlassBrick(e);
@@ -75,7 +75,8 @@ void CKoopa::OnCollisionWithGlassBrick(LPCOLLISIONEVENT e)
 	CGlassBrick* glassBrick = dynamic_cast<CGlassBrick*>(e->obj);
 
 	// Hit when being kicked >> Break the GlassBrick
-	glassBrick->Delete();
+	if (GetState() == KOOPA_STATE_KICKED)
+		glassBrick->Delete();
 }
 
 

@@ -35,9 +35,6 @@ class CKoopa : public CGameObject
 protected:
 	float ax;
 	float ay;
-	//float ix;
-	//float iy;
-	//int respawnCountdown;
 
 	CFakeHead* fakeHead;
 
