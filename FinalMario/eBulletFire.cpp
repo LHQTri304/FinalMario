@@ -39,6 +39,8 @@ void CBulletFire::OnCollisionWith(LPCOLLISIONEVENT e)
 {
 	if (!dynamic_cast<CMario*>(e->obj))
 	{
+		x += vx;
+		y += vy;
 		isCollidingProperly = false;
 		return;
 	}
