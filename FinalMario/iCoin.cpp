@@ -80,7 +80,7 @@ void CHidedCoin::Render()
 		CAnimations::GetInstance()->Get(ID_ANI_COIN)->Render(x, y);
 	}
 	
-	RenderBoundingBox();
+	//RenderBoundingBox();
 }
 
 void CHidedCoin::SetState(int state)
