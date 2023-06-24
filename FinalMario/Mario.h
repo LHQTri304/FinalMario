@@ -130,7 +130,7 @@
 
 #define MARIO_UNTOUCHABLE_TIME 2500
 
-#define RENDER_WIDTH 80
+#define RENDER_WIDTH 160
 
 class CMario : public CGameObject
 {

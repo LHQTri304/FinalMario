@@ -31,33 +31,36 @@ void CBitePlant::OnCollisionWith(LPCOLLISIONEVENT e)
 
 void CBitePlant::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
-	vy += ay * dt;
-	vx += ax * dt;
-
-	if (GetState() == BITEPLANT_STATE_MOVING_UP && y < highestHeight)
+	if (isAllowToUpdate)
 	{
-		y = highestHeight;
-		SetState(BITEPLANT_STATE_BITING);
-	}
+		vy += ay * dt;
+		vx += ax * dt;
 
-	if (GetState() == BITEPLANT_STATE_MOVING_DOWN && y >= BITEPLANT_LOWEST_HEIGHT)
-	{
-		SetState(BITEPLANT_STATE_MOVING_UP);
-	}
-
-	if (GetState() == BITEPLANT_STATE_BITING)
-	{
-		if (biteTime <= 0)
+		if (GetState() == BITEPLANT_STATE_MOVING_UP && y < highestHeight)
 		{
-			SetState(BITEPLANT_STATE_MOVING_DOWN);
-			biteTime = BITEPLANT_STATE_BITING;
+			y = highestHeight;
+			SetState(BITEPLANT_STATE_BITING);
 		}
-		else
-			biteTime--;
-	}
 
-	CGameObject::Update(dt, coObjects);
-	CCollision::GetInstance()->Process(this, dt, coObjects);
+		if (GetState() == BITEPLANT_STATE_MOVING_DOWN && y >= BITEPLANT_LOWEST_HEIGHT)
+		{
+			SetState(BITEPLANT_STATE_MOVING_UP);
+		}
+
+		if (GetState() == BITEPLANT_STATE_BITING)
+		{
+			if (biteTime <= 0)
+			{
+				SetState(BITEPLANT_STATE_MOVING_DOWN);
+				biteTime = BITEPLANT_STATE_BITING;
+			}
+			else
+				biteTime--;
+		}
+
+		CGameObject::Update(dt, coObjects);
+		CCollision::GetInstance()->Process(this, dt, coObjects);
+	}
 }
 
 

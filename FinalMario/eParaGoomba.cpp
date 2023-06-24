@@ -53,34 +53,37 @@ void CParaGoomba::OnCollisionWith(LPCOLLISIONEVENT e)
 
 void CParaGoomba::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
-	vy += ay * dt;
-	vx += ax * dt;
-
-	if ((state == GOOMBA_STATE_DIE) && (GetTickCount64() - die_start > GOOMBA_DIE_TIMEOUT))
+	if (isAllowToUpdate)
 	{
-		isDeleted = true;
-		return;
-	}
+		vy += ay * dt;
+		vx += ax * dt;
 
-	//add...
-	if (isFlying && !isGetHit)
-	{
-		SetState(GOOMBA_STATE_FLYING);
-		flightTime--;
-	}
-	if (!isFlying && !isGetHit)
-	{
-		SetState(GOOMBA_STATE_DROPING);
-		flightTime++;
-	}
+		if ((state == GOOMBA_STATE_DIE) && (GetTickCount64() - die_start > GOOMBA_DIE_TIMEOUT))
+		{
+			isDeleted = true;
+			return;
+		}
 
-	if (flightTime <= 0)
-		isFlying = false;
-	if (flightTime >= GOOMBA_FLIGHT_TIME)
-		isFlying = true;
+		//add...
+		if (isFlying && !isGetHit)
+		{
+			SetState(GOOMBA_STATE_FLYING);
+			flightTime--;
+		}
+		if (!isFlying && !isGetHit)
+		{
+			SetState(GOOMBA_STATE_DROPING);
+			flightTime++;
+		}
 
-	CGameObject::Update(dt, coObjects);
-	CCollision::GetInstance()->Process(this, dt, coObjects);
+		if (flightTime <= 0)
+			isFlying = false;
+		if (flightTime >= GOOMBA_FLIGHT_TIME)
+			isFlying = true;
+
+		CGameObject::Update(dt, coObjects);
+		CCollision::GetInstance()->Process(this, dt, coObjects);
+	}
 }
 
 

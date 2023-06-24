@@ -72,11 +72,14 @@ void CBulletFire::OnCollisionWith(LPCOLLISIONEVENT e)
 
 void CBulletFire::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
-	vy += ay * dt;
-	vx += ax * dt;
+	if (isAllowToUpdate)
+	{
+		vy += ay * dt;
+		vx += ax * dt;
 
-	CGameObject::Update(dt, coObjects);
-	CCollision::GetInstance()->Process(this, dt, coObjects);
+		CGameObject::Update(dt, coObjects);
+		CCollision::GetInstance()->Process(this, dt, coObjects);
+	}
 }
 
 

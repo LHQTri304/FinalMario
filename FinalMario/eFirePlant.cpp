@@ -33,46 +33,49 @@ void CFirePlant::OnCollisionWith(LPCOLLISIONEVENT e)
 
 void CFirePlant::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
-	vy += ay * dt;
-	vx += ax * dt;
-
-
-	CMario* mario = (CMario*)((LPPLAYSCENE)CGame::GetInstance()->GetCurrentScene())->GetPlayer();
-
-	float xMario, yMario;
-	mario->GetPosition(xMario, yMario);
-
-
-	if (GetState() == FIREPLANT_STATE_MOVING_UP && y < highestHeight)
+	if (isAllowToUpdate)
 	{
-		y = highestHeight;
-		SetState(FIREPLANT_STATE_FIRING);
-	}
+		vy += ay * dt;
+		vx += ax * dt;
 
-	if (GetState() == FIREPLANT_STATE_PAUSE && abs(xMario - x) >= FIREPLANT_SAFE_WIDTH)
-	{
-		SetState(FIREPLANT_STATE_MOVING_UP);
-	}
 
-	if (GetState() == FIREPLANT_STATE_MOVING_DOWN && y >= FIREPLANT_LOWEST_HEIGHT)
-	{
-		SetState(FIREPLANT_STATE_PAUSE);
-	}
+		CMario* mario = (CMario*)((LPPLAYSCENE)CGame::GetInstance()->GetCurrentScene())->GetPlayer();
 
-	if (GetState() == FIREPLANT_STATE_FIRING)
-	{
-		if (fireTime <= 0)
+		float xMario, yMario;
+		mario->GetPosition(xMario, yMario);
+
+
+		if (GetState() == FIREPLANT_STATE_MOVING_UP && y < highestHeight)
 		{
-			SetState(FIREPLANT_STATE_MOVING_DOWN);
-			fireTime = FIREPLANT_FIRE_TIME;
+			y = highestHeight;
+			SetState(FIREPLANT_STATE_FIRING);
 		}
-		else
-			fireTime--;
-	}
 
-	bullet->Update(dt, coObjects);
-	CGameObject::Update(dt, coObjects);
-	CCollision::GetInstance()->Process(this, dt, coObjects);
+		if (GetState() == FIREPLANT_STATE_PAUSE && abs(xMario - x) >= FIREPLANT_SAFE_WIDTH)
+		{
+			SetState(FIREPLANT_STATE_MOVING_UP);
+		}
+
+		if (GetState() == FIREPLANT_STATE_MOVING_DOWN && y >= FIREPLANT_LOWEST_HEIGHT)
+		{
+			SetState(FIREPLANT_STATE_PAUSE);
+		}
+
+		if (GetState() == FIREPLANT_STATE_FIRING)
+		{
+			if (fireTime <= 0)
+			{
+				SetState(FIREPLANT_STATE_MOVING_DOWN);
+				fireTime = FIREPLANT_FIRE_TIME;
+			}
+			else
+				fireTime--;
+		}
+
+		bullet->Update(dt, coObjects);
+		CGameObject::Update(dt, coObjects);
+		CCollision::GetInstance()->Process(this, dt, coObjects);
+	}
 }
 
 
