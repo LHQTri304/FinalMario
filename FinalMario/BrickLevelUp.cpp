@@ -2,6 +2,7 @@
 
 CQuestBrickLevelUp::CQuestBrickLevelUp(float x, float y) :CGameObject(x, y)
 {
+	this->isActivated = false;
 	itemsUp = new CItemsLevelUp(x, y);
 	SetState(QUESTBRICK_STATE_WAIT);
 }
@@ -49,7 +50,11 @@ void CQuestBrickLevelUp::SetState(int state)
 	case QUESTBRICK_STATE_WAIT:
 		break;
 	case QUESTBRICK_STATE_ACTIVATED:
-		itemsUp->SetState(COIN_STATE_ACTIVATED);
+		if (!isActivated)
+		{
+			itemsUp->SetState(COIN_STATE_ACTIVATED);
+			isActivated = true;
+		}
 		break;
 	}
 }

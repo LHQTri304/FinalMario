@@ -16,6 +16,7 @@ protected:
 
 	int kind;	// 0: Mushroom | 1: Leaf
 	BOOLEAN	isMovingRight;
+	BOOLEAN	isCollidingProperly;
 
 	virtual void GetBoundingBox(float& left, float& top, float& right, float& bottom);
 

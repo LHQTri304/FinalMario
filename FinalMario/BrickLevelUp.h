@@ -6,6 +6,7 @@
 
 class CQuestBrickLevelUp : public CGameObject {
 protected:
+	BOOLEAN isActivated;
 	CItemsLevelUp* itemsUp;
 public:
 	CQuestBrickLevelUp(float x, float y);

@@ -158,7 +158,7 @@
 
 //	### Leaf ###
 #define LEAF_GRAVITY 0.02f	//Count as vy instead of ay because leaf falls slowly and steadily
-#define LEAF_SPEED 1.25f
+#define LEAF_SPEED 0.05f
 #define LEAF_ACTIVATED_SPEED 3.5f
 
 #define LEAF_ACTIVATED_PIXEL_MOVE_X 32

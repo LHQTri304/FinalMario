@@ -10,6 +10,7 @@ CItemsLevelUp::CItemsLevelUp(float x, float y) :CGameObject(x, y)
 	this->pixelMovingY = MUSHROOM_ACTIVATED_PIXEL_MOVE_Y;
 	this->kind = 0;	//Mushroom first
 	this->isMovingRight = true;
+	this->isCollidingProperly = true;
 	SetState(ITEMS_LEVELUP_STATE_WAIT);
 }
 
@@ -23,17 +24,24 @@ void CItemsLevelUp::GetBoundingBox(float& left, float& top, float& right, float&
 
 int CItemsLevelUp::IsCollidable()
 {
-	return (GetState() != ITEMS_LEVELUP_STATE_DELETED);
-};
+	if (isCollidingProperly)
+	{
+		return (GetState() != ITEMS_LEVELUP_STATE_DELETED);
+	}
+	return 0;
+}
 
 void CItemsLevelUp::OnNoCollision(DWORD dt)
 {
+	isCollidingProperly = true;
+
 	x += vx * dt;
 	y += vy * dt;
-};
+}
 
 void CItemsLevelUp::OnCollisionWith(LPCOLLISIONEVENT e)
 {
+
 	if (kind == ITEMS_LEVELUP_KIND_MUSHROOM)	//Mushroom
 	{
 		if (!e->obj->IsBlocking()) return;
@@ -72,7 +80,12 @@ void CItemsLevelUp::OnCollisionWith(LPCOLLISIONEVENT e)
 	}
 	else	//Leaf >> Only collides with mario
 	{
-		if (dynamic_cast<CMario*>(e->obj))
+		if (!dynamic_cast<CMario*>(e->obj))
+		{
+			isCollidingProperly = false;
+			return;
+		}
+		else
 		{
 			CMario* mario = (CMario*)((LPPLAYSCENE)CGame::GetInstance()->GetCurrentScene())->GetPlayer();
 			int mLevel = mario->GetLevel();
@@ -87,14 +100,6 @@ void CItemsLevelUp::OnCollisionWith(LPCOLLISIONEVENT e)
 				}
 				SetState(ITEMS_LEVELUP_STATE_DELETED);
 			}
-			return;
-		}
-		else if (e->obj->IsBlocking())
-		{
-			vy = LEAF_GRAVITY;
-		}
-		else
-		{
 			return;
 		}
 	}
@@ -147,16 +152,18 @@ void CItemsLevelUp::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		if (isMovingRight)	//Moving right as Leaf
 		{
 			if (x >= ix + pixelMovingX)
+			{
 				isMovingRight = false;
-			else
-				x += LEAF_SPEED;
+				vx = -vx;
+			}
 		}
 		else	//Moving left as Leaf
 		{
 			if (x <= ix)
+			{
 				isMovingRight = true;
-			else
-				x -= LEAF_SPEED;
+				vx = -vx;
+			}
 		}
 	}
 
@@ -215,6 +222,7 @@ void CItemsLevelUp::SetState(int state)
 		}
 		else	//Leaf
 		{
+			vx = LEAF_SPEED;
 			vy = LEAF_GRAVITY;
 		}
 	case ITEMS_LEVELUP_STATE_DELETED:
