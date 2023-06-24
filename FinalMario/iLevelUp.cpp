@@ -200,7 +200,7 @@ void CItemsLevelUp::Render()
 	}
 
 	CAnimations::GetInstance()->Get(aniId)->Render(x, y);
-	RenderBoundingBox();
+	//RenderBoundingBox();
 }
 
 void CItemsLevelUp::SetState(int state)

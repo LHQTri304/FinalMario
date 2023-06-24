@@ -157,7 +157,6 @@ class CMario : public CGameObject
 
 	//Disappear-able
 	void OnCollisionWithCoin(LPCOLLISIONEVENT e);
-	void OnCollisionWithItemsLevelUp(LPCOLLISIONEVENT e);
 	void OnCollisionWithStar(LPCOLLISIONEVENT e);
 
 	void OnCollisionWithBrickCoin(LPCOLLISIONEVENT e);

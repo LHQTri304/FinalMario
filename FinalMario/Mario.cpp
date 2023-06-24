@@ -76,8 +76,6 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 	//Disappear-able
 	else if (dynamic_cast<CCoin*>(e->obj))
 		OnCollisionWithCoin(e);
-	else if (dynamic_cast<CItemsLevelUp*>(e->obj))
-		OnCollisionWithItemsLevelUp(e);
 	else if (dynamic_cast<CStar*>(e->obj))
 		OnCollisionWithStar(e);
 
@@ -322,23 +320,6 @@ void CMario::OnCollisionWithCoin(LPCOLLISIONEVENT e)
 {
 	e->obj->Delete();
 	coin++;
-}
-
-void CMario::OnCollisionWithItemsLevelUp(LPCOLLISIONEVENT e)
-{/*
-	CItemsLevelUp* itemsLevelUp = dynamic_cast<CItemsLevelUp*>(e->obj);
-	
-	// touch >> Level up
-	if (itemsLevelUp->GetState() == ITEMS_LEVELUP_STATE_MOVING)
-	{
-		if (level < MARIO_LEVEL_RACCOON)
-		{
-			level++;	//Small (1) >> Big (2) >> Raccoon (3)
-			vy = -MARIO_JUMP_DEFLECT_SPEED;
-		}
-		itemsLevelUp->Delete();
-	}
-	*/
 }
 
 void CMario::OnCollisionWithStar(LPCOLLISIONEVENT e)
