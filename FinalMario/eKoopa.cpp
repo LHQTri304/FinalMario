@@ -11,7 +11,9 @@ CKoopa::CKoopa(float x, float y) :CGameObject(x, y)
 
 void CKoopa::GetBoundingBox(float& left, float& top, float& right, float& bottom)
 {
-	if (state == KOOPA_STATE_STUNNED)
+	if (state == KOOPA_STATE_STUNNED 
+		|| state == KOOPA_STATE_REVIVE
+		|| state == KOOPA_STATE_KICKED)
 	{
 		left = x - KOOPA_BBOX_WIDTH / 2;
 		top = y - KOOPA_BBOX_HEIGHT_STUNNED / 2;
@@ -35,6 +37,7 @@ void CKoopa::OnNoCollision(DWORD dt)
 
 void CKoopa::OnCollisionWith(LPCOLLISIONEVENT e)
 {
+	if (dynamic_cast<CMario*>(e->obj)) return;
 	if (dynamic_cast<CKoopa*>(e->obj)) return;
 	if (dynamic_cast<CGoomba*>(e->obj))
 	{
@@ -139,8 +142,8 @@ void CKoopa::Render()
 		aniId = ID_ANI_KOOPA_STUNNED;
 
 	CAnimations::GetInstance()->Get(aniId)->Render(x, y);
-	//fakeHead->RenderBoundingBox();
-	//RenderBoundingBox();
+	fakeHead->RenderBoundingBox();
+	RenderBoundingBox();
 }
 
 void CKoopa::SetState(int state)
@@ -150,7 +153,7 @@ void CKoopa::SetState(int state)
 	{
 	case KOOPA_STATE_STUNNED:
 		stun_start = GetTickCount64();
-		y -= (KOOPA_BBOX_HEIGHT - KOOPA_BBOX_HEIGHT_STUNNED) / 2;
+		y -= KOOPA_BBOX_HEIGHT / 2;
 		vx = 0;
 		vy = 0;
 		break;
@@ -165,6 +168,7 @@ void CKoopa::SetState(int state)
 		SetState(KOOPA_STATE_WALKING);
 		break;
 	case KOOPA_STATE_KICKED:
+		y -= KOOPA_BBOX_HEIGHT_STUNNED / 2;
 		vx = KOOPA_KICKED_SPEED;
 		break;
 	}

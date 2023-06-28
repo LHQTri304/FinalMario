@@ -103,7 +103,7 @@
 
 #pragma endregion
 
-#define GROUND_Y 160.0f
+//#define GROUND_Y 160.0f
 
 
 

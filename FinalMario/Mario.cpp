@@ -188,7 +188,9 @@ void CMario::OnCollisionWithKoopa(LPCOLLISIONEVENT e)
 	{
 		if (koopa->GetState() == KOOPA_STATE_KICKED)
 		{ 
-			//skip
+			float kpX, kpY;
+			koopa->GetPosition(kpX, kpY);
+			koopa->SetPosition(kpX, kpY-1);
 		}
 		else if (koopa->GetState() != KOOPA_STATE_STUNNED)
 		{
@@ -555,7 +557,7 @@ void CMario::Render()
 
 	animations->Get(aniId)->Render(x, y);
 
-	//RenderBoundingBox();
+	RenderBoundingBox();
 	
 	DebugOutTitle(L"Coins: %d", coin);
 }

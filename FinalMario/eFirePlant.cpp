@@ -72,10 +72,10 @@ void CFirePlant::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 				fireTime--;
 		}
 
-		bullet->Update(dt, coObjects);
 		CGameObject::Update(dt, coObjects);
 		CCollision::GetInstance()->Process(this, dt, coObjects);
 	}
+	bullet->Update(dt, coObjects);
 }
 
 

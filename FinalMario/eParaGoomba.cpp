@@ -8,7 +8,8 @@ CParaGoomba::CParaGoomba(float x, float y) :CGameObject(x, y)
 	SetState(GOOMBA_STATE_WALKING);
 	SetState(GOOMBA_STATE_FLYING);
 	isGetHit = false;
-	isFlying = false;
+	//isFlying = false;
+	isOnPlatform = false;
 }
 
 void CParaGoomba::GetBoundingBox(float& left, float& top, float& right, float& bottom)
@@ -39,6 +40,9 @@ void CParaGoomba::OnCollisionWith(LPCOLLISIONEVENT e)
 {
 	if (!e->obj->IsBlocking()) return;
 	if (dynamic_cast<CParaGoomba*>(e->obj)) return;
+	if (dynamic_cast<CGoomba*>(e->obj)) return;
+	if (dynamic_cast<CParaKoopa*>(e->obj)) return;
+	if (dynamic_cast<CKoopa*>(e->obj)) return;
 
 	if (e->ny != 0)
 	{
@@ -64,7 +68,11 @@ void CParaGoomba::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			return;
 		}
 
-		//add...
+
+
+		isOnPlatform = false;
+
+		
 		if (isFlying && !isGetHit)
 		{
 			SetState(GOOMBA_STATE_FLYING);
@@ -80,6 +88,7 @@ void CParaGoomba::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			isFlying = false;
 		if (flightTime >= GOOMBA_FLIGHT_TIME)
 			isFlying = true;
+		
 
 		CGameObject::Update(dt, coObjects);
 		CCollision::GetInstance()->Process(this, dt, coObjects);
