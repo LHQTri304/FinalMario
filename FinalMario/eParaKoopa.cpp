@@ -1,12 +1,21 @@
 #include "Enemies.h"
 
-CParaKoopa::CParaKoopa(float x, float y) :CGameObject(x, y)
+CParaKoopa::CParaKoopa(float x, float y, int lv) :CGameObject(x, y)
 {
 	this->ax = 0;
 	this->ay = KOOPA_GRAVITY;
+	this->level = lv;
+	isOnPlatform = false;
 	stun_start = -1;
-	SetState(KOOPA_STATE_WALKING);
-	SetState(KOOPA_STATE_FLYING);
+	fakeHead = new CFakeHead(x, y);
+	if (level == KOOPA_LEVEL_FLY)
+	{
+		SetState(KOOPA_STATE_FLYING);
+	}
+	else
+	{
+		SetState(KOOPA_STATE_WALKING);
+	}
 	//isGetHit = false;
 	//isFlying = false;
 }
@@ -120,7 +129,7 @@ void CParaKoopa::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 void CParaKoopa::Render()
 {
-	int aniId;
+	int aniId = ID_ANI_KOOPA_STUNNED;
 	if (state == KOOPA_STATE_KICKED)
 		aniId = ID_ANI_KOOPA_STUNNED;
 
@@ -145,7 +154,8 @@ void CParaKoopa::Render()
 			aniId = ID_ANI_KOOPA_FLYING_LEFT;
 		else
 			aniId = ID_ANI_KOOPA_WALKING_LEFT;
-	}*/
+	}*/else
+		aniId = ID_ANI_KOOPA_FLYING_LEFT;
 
 	CAnimations::GetInstance()->Get(aniId)->Render(x, y);
 	//RenderBoundingBox();
@@ -176,7 +186,8 @@ void CParaKoopa::SetState(int state)
 		vx = -KOOPA_KICKED_SPEED;
 		break;
 	case KOOPA_STATE_FLYING:
-		vy = -KOOPA_FLYING_SPEED;
+		vx = -KOOPA_WALKING_SPEED;
+		vy = -KOOPA_FLYING_SPEED * 5;
 		break;
 
 	}

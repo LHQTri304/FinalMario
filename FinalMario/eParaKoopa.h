@@ -8,7 +8,7 @@ class CParaKoopa : public CGameObject
 protected:
 	float ax;
 	float ay;
-	float flightTime = 0;
+	//float flightTime = 0;
 
 	int level;
 
@@ -33,7 +33,7 @@ protected:
 	void OnCollisionWithBrickLevelUp(LPCOLLISIONEVENT e);
 	void OnCollisionWithGlassBrick(LPCOLLISIONEVENT e);
 public:
-	CParaKoopa(float x, float y);
+	CParaKoopa(float x, float y, int level);
 	virtual void SetState(int state);
 
 	int GetLevel() { return level; }
