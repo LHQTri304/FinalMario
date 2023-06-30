@@ -7,8 +7,8 @@ CParaKoopa::CParaKoopa(float x, float y) :CGameObject(x, y)
 	stun_start = -1;
 	SetState(KOOPA_STATE_WALKING);
 	SetState(KOOPA_STATE_FLYING);
-	isGetHit = false;
-	isFlying = false;
+	//isGetHit = false;
+	//isFlying = false;
 }
 
 void CParaKoopa::GetBoundingBox(float& left, float& top, float& right, float& bottom)
@@ -131,7 +131,7 @@ void CParaKoopa::Render()
 		else
 			aniId = ID_ANI_KOOPA_STUNNED;
 	}
-
+	/*
 	else if (vx > 0 && state)
 	{
 		if (isGetHit == false)
@@ -145,7 +145,7 @@ void CParaKoopa::Render()
 			aniId = ID_ANI_KOOPA_FLYING_LEFT;
 		else
 			aniId = ID_ANI_KOOPA_WALKING_LEFT;
-	}
+	}*/
 
 	CAnimations::GetInstance()->Get(aniId)->Render(x, y);
 	//RenderBoundingBox();
@@ -164,7 +164,7 @@ void CParaKoopa::SetState(int state)
 		break;
 	case KOOPA_STATE_WALKING:
 		vx = -KOOPA_WALKING_SPEED;
-		isGetHit = true;
+		//isGetHit = true;
 		break;
 	case KOOPA_STATE_REVIVE:
 		y -= KOOPA_BBOX_HEIGHT_STUNNED / 2;

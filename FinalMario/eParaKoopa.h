@@ -12,8 +12,8 @@ protected:
 
 	int level;
 
-	BOOLEAN isGetHit;
-	BOOLEAN isFlying;
+	//BOOLEAN isGetHit;
+	//BOOLEAN isFlying;
 	BOOLEAN isOnPlatform;
 
 	ULONGLONG stun_start;
@@ -32,10 +32,11 @@ protected:
 
 	void OnCollisionWithBrickLevelUp(LPCOLLISIONEVENT e);
 	void OnCollisionWithGlassBrick(LPCOLLISIONEVENT e);
-
 public:
 	CParaKoopa(float x, float y);
 	virtual void SetState(int state);
 
 	int GetLevel() { return level; }
+	void LevelUp();
+	void LevelDown();
 };
