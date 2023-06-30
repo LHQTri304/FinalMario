@@ -190,8 +190,8 @@ void CParaKoopa::Render()
 	}
 
 	CAnimations::GetInstance()->Get(aniId)->Render(x, y);
-	fakeHead->RenderBoundingBox();
-	RenderBoundingBox();
+	//fakeHead->RenderBoundingBox();
+	//RenderBoundingBox();
 }
 
 void CParaKoopa::SetState(int state)
@@ -214,7 +214,17 @@ void CParaKoopa::SetState(int state)
 		LevelUp();
 		break;
 	case KOOPA_STATE_KICKED:
-		vx = -KOOPA_KICKED_SPEED;
+		CMario* mario = (CMario*)((LPPLAYSCENE)CGame::GetInstance()->GetCurrentScene())->GetPlayer();
+		float mX, mY;
+		mario->GetPosition(mX, mY);
+		if (this->x > mX)
+		{
+			vx = KOOPA_KICKED_SPEED;
+		}
+		else
+		{
+			vx = -KOOPA_KICKED_SPEED;
+		}
 		break;
 
 	}
