@@ -84,6 +84,32 @@ void CParaKoopa::OnCollisionWithGlassBrick(LPCOLLISIONEVENT e)
 		glassBrick->Delete();
 }
 
+void CParaKoopa::LevelUp()
+{
+	if (level == KOOPA_LEVEL_SHELL)
+	{
+		level = KOOPA_LEVEL_WALK;
+	}
+	if (level == KOOPA_LEVEL_WALK)
+	{
+		SetState(KOOPA_LEVEL_FLY);
+	}
+	return;
+}
+
+void CParaKoopa::LevelDown()
+{
+	if (level == KOOPA_LEVEL_FLY)
+	{
+		level = KOOPA_LEVEL_WALK;
+	}
+	if (level == KOOPA_LEVEL_WALK)
+	{
+		SetState(KOOPA_LEVEL_SHELL);
+	}
+	return;
+}
+
 void CParaKoopa::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	if (isAllowToUpdate)
