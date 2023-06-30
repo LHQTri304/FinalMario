@@ -27,7 +27,7 @@
 //	### Koopa ###
 #define KOOPA_GRAVITY 0.0005f
 #define KOOPA_WALKING_SPEED 0.05f
-#define KOOPA_KICKED_SPEED 0.045f
+#define KOOPA_KICKED_SPEED 0.45f
 #define KOOPA_FLYING_SPEED	0.1f
 
 #define KOOPA_BBOX_WIDTH 16

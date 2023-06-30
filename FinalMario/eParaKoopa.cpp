@@ -89,10 +89,11 @@ void CParaKoopa::LevelUp()
 	if (level == KOOPA_LEVEL_SHELL)
 	{
 		level = KOOPA_LEVEL_WALK;
+		SetState(KOOPA_STATE_MOVING);
 	}
-	if (level == KOOPA_LEVEL_WALK)
+	else if (level == KOOPA_LEVEL_WALK)
 	{
-		SetState(KOOPA_LEVEL_FLY);
+		level = KOOPA_LEVEL_FLY;
 	}
 	return;
 }
@@ -103,10 +104,12 @@ void CParaKoopa::LevelDown()
 	{
 		level = KOOPA_LEVEL_WALK;
 	}
-	if (level == KOOPA_LEVEL_WALK)
+	else if (level == KOOPA_LEVEL_WALK)
 	{
-		SetState(KOOPA_LEVEL_SHELL);
+		level = KOOPA_LEVEL_SHELL;
+		SetState(KOOPA_STATE_STUNNED);
 	}
+	vy = 0.5;
 	return;
 }
 
@@ -208,7 +211,7 @@ void CParaKoopa::SetState(int state)
 		y -= KOOPA_BBOX_HEIGHT_STUNNED / 2;
 		ax = 0;
 		stun_start = -1;
-		SetState(KOOPA_STATE_MOVING);
+		LevelUp();
 		break;
 	case KOOPA_STATE_KICKED:
 		vx = -KOOPA_KICKED_SPEED;

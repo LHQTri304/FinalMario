@@ -228,30 +228,21 @@ void CMario::OnCollisionWithParaKoopa(LPCOLLISIONEVENT e)
 {
 	CParaKoopa* koopa = dynamic_cast<CParaKoopa*>(e->obj);
 
-	/* jump on top >> remove the wings >> kill Koopa and deflect a bit
-	if (e->ny < 0)
+	// jump on top >> remove the wings >> kill Koopa and deflect a bit
+	if (koopa->GetLevel() != KOOPA_LEVEL_SHELL && e->ny < 0)
 	{
-		if (koopa->GetState() == KOOPA_STATE_FLYING)
-		{
-			koopa->SetState(KOOPA_STATE_WALKING);
+			koopa->LevelDown();
 			vy = -MARIO_JUMP_DEFLECT_SPEED;
-		}
-		else if (koopa->GetState() == KOOPA_STATE_WALKING)
-		{
-			koopa->SetState(KOOPA_STATE_STUNNED);
-			vy = -MARIO_JUMP_DEFLECT_SPEED;
-		}
-		else if (koopa->GetState() == KOOPA_STATE_STUNNED)
-		{
-			koopa->SetState(KOOPA_STATE_KICKED);
-			vy = -MARIO_JUMP_DEFLECT_SPEED;
-		}
+	}
+	else if (koopa->GetLevel() == KOOPA_LEVEL_SHELL && koopa->GetState() != KOOPA_STATE_KICKED)
+	{
+		koopa->SetState(KOOPA_STATE_KICKED);
 	}
 	else // hit by Koopa
 	{
 		if (untouchable == 0)
 		{
-			if (koopa->GetState() != KOOPA_STATE_STUNNED)
+			if (koopa->GetLevel() != KOOPA_STATE_STUNNED)
 			{
 				if (level > MARIO_LEVEL_SMALL)
 				{
@@ -265,7 +256,7 @@ void CMario::OnCollisionWithParaKoopa(LPCOLLISIONEVENT e)
 				}
 			}
 		}
-	}*/
+	}
 }
 
 void CMario::OnCollisionWithFirePlant(LPCOLLISIONEVENT e)
