@@ -111,6 +111,29 @@ void CParaKoopa::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 		isOnPlatform = false;
 
+
+		//fake head:..
+		float fHeadX, fHeadY;
+		if (GetState() == KOOPA_STATE_WALKING)
+		{
+			fakeHead->GetPosition(fHeadX, fHeadY);
+
+			if (fHeadY > this->y)	//Ready to fall
+			{
+				vx = -vx;
+			}
+
+			if (vx > 0)
+			{
+				fakeHead->SetPosition(x + KOOPA_BBOX_WIDTH / 2, y - KOOPA_BBOX_HEIGHT);
+			}
+			else
+			{
+				fakeHead->SetPosition(x - KOOPA_BBOX_WIDTH / 2, y - KOOPA_BBOX_HEIGHT);
+			}
+		}
+
+		fakeHead->Update(dt, coObjects);
 		CGameObject::Update(dt, coObjects);
 		CCollision::GetInstance()->Process(this, dt, coObjects);
 	}
@@ -148,7 +171,8 @@ void CParaKoopa::Render()
 		aniId = ID_ANI_KOOPA_FLYING_LEFT;
 
 	CAnimations::GetInstance()->Get(aniId)->Render(x, y);
-	//RenderBoundingBox();
+	fakeHead->RenderBoundingBox();
+	RenderBoundingBox();
 }
 
 void CParaKoopa::SetState(int state)
