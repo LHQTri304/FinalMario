@@ -107,7 +107,7 @@ void CParaKoopa::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 		//fake head:..
 		float fHeadX, fHeadY;
-		if (GetState() == KOOPA_STATE_MOVING)
+		if (level == KOOPA_LEVEL_WALK)
 		{
 			fakeHead->GetPosition(fHeadX, fHeadY);
 
@@ -136,32 +136,28 @@ void CParaKoopa::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 void CParaKoopa::Render()
 {
 	int aniId = ID_ANI_KOOPA_STUNNED;
-	if (state == KOOPA_STATE_KICKED)
-		aniId = ID_ANI_KOOPA_STUNNED;
-
-	else if (state == KOOPA_STATE_STUNNED)
+	if (level == KOOPA_LEVEL_SHELL)
 	{
-		if (GetTickCount64() - stun_start > KOOPA_STUNNED_TIMEOUT - KOOPA_REVIVING_TIMEOUT)
+		if (state == KOOPA_STATE_STUNNED && GetTickCount64() - stun_start > KOOPA_STUNNED_TIMEOUT - KOOPA_REVIVING_TIMEOUT)
 			aniId = ID_ANI_KOOPA_REVIVE;
 		else
 			aniId = ID_ANI_KOOPA_STUNNED;
 	}
-	/*
-	else if (vx > 0 && state)
+	
+	else if (vx > 0)
 	{
-		if (isGetHit == false)
+		if (level == KOOPA_LEVEL_FLY)
 			aniId = ID_ANI_KOOPA_FLYING_RIGHT;
 		else
 			aniId = ID_ANI_KOOPA_WALKING_RIGHT;
 	}
-	else if (vx < 0 && state)
+	else if (vx < 0)
 	{
-		if (isGetHit == false)
+		if (level == KOOPA_LEVEL_FLY)
 			aniId = ID_ANI_KOOPA_FLYING_LEFT;
 		else
 			aniId = ID_ANI_KOOPA_WALKING_LEFT;
-	}*/else
-		aniId = ID_ANI_KOOPA_FLYING_LEFT;
+	}
 
 	CAnimations::GetInstance()->Get(aniId)->Render(x, y);
 	fakeHead->RenderBoundingBox();
