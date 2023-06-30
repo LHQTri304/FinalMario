@@ -8,16 +8,11 @@ class CParaKoopa : public CGameObject
 protected:
 	float ax;
 	float ay;
-	//float flightTime = 0;
 
 	int level;
 
-	//BOOLEAN isGetHit;
-	//BOOLEAN isFlying;
 	BOOLEAN isOnPlatform;
-
 	ULONGLONG stun_start;
-
 	CFakeHead* fakeHead;
 
 	virtual void GetBoundingBox(float& left, float& top, float& right, float& bottom);

@@ -16,8 +16,6 @@ CParaKoopa::CParaKoopa(float x, float y, int lv) :CGameObject(x, y)
 	{
 		SetState(KOOPA_STATE_WALKING);
 	}
-	//isGetHit = false;
-	//isFlying = false;
 }
 
 void CParaKoopa::GetBoundingBox(float& left, float& top, float& right, float& bottom)
@@ -106,29 +104,10 @@ void CParaKoopa::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			return;
 		}
 
-
 		if (level == KOOPA_LEVEL_FLY && isOnPlatform)
 		{
 			vy = -KOOPA_FLYING_SPEED;
 		}
-
-		/*add...
-		if (isFlying && !isGetHit)
-		{
-			SetState(KOOPA_STATE_FLYING);
-			flightTime--;
-		}
-		if (!isFlying && !isGetHit)
-		{
-			SetState(KOOPA_STATE_DROPING);
-			flightTime++;
-		}
-
-		if (flightTime <= 0)
-			isFlying = false;
-		if (flightTime >= KOOPA_FLIGHT_TIME)
-			isFlying = true;
-		*/
 
 		isOnPlatform = false;
 
