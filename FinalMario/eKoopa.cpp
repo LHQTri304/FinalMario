@@ -126,7 +126,7 @@ void CKoopa::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 void CKoopa::Render()
 {
-	int aniId;
+	int aniId = ID_ANI_KOOPA_STUNNED;
 	if (vx > 0 && state != KOOPA_STATE_KICKED)
 		aniId = ID_ANI_KOOPA_WALKING_RIGHT;
 	else if (vx < 0 && state != KOOPA_STATE_KICKED)

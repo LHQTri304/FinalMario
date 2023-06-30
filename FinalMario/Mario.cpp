@@ -231,7 +231,7 @@ void CMario::OnCollisionWithParaKoopa(LPCOLLISIONEVENT e)
 	// jump on top >> remove the wings >> kill Koopa and deflect a bit 
 	if (e->ny < 0)
 	{
-		if (koopa->GetState() == KOOPA_STATE_FLYING || koopa->GetState() == KOOPA_STATE_DROPING)
+		if (koopa->GetState() == KOOPA_STATE_FLYING)
 		{
 			koopa->SetState(KOOPA_STATE_WALKING);
 			vy = -MARIO_JUMP_DEFLECT_SPEED;

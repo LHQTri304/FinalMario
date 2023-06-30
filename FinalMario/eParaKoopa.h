@@ -9,11 +9,16 @@ protected:
 	float ax;
 	float ay;
 	float flightTime = 0;
+
+	int level;
+
 	BOOLEAN isGetHit;
 	BOOLEAN isFlying;
 	BOOLEAN isOnPlatform;
 
 	ULONGLONG stun_start;
+
+	CFakeHead* fakeHead;
 
 	virtual void GetBoundingBox(float& left, float& top, float& right, float& bottom);
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
@@ -31,4 +36,6 @@ protected:
 public:
 	CParaKoopa(float x, float y);
 	virtual void SetState(int state);
+
+	int GetLevel() { return level; }
 };

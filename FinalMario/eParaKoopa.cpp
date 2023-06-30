@@ -94,7 +94,7 @@ void CParaKoopa::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			return;
 		}
 
-		//add...
+		/*add...
 		if (isFlying && !isGetHit)
 		{
 			SetState(KOOPA_STATE_FLYING);
@@ -110,7 +110,7 @@ void CParaKoopa::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			isFlying = false;
 		if (flightTime >= KOOPA_FLIGHT_TIME)
 			isFlying = true;
-
+		*/
 
 		CGameObject::Update(dt, coObjects);
 		CCollision::GetInstance()->Process(this, dt, coObjects);
@@ -175,13 +175,8 @@ void CParaKoopa::SetState(int state)
 	case KOOPA_STATE_KICKED:
 		vx = -KOOPA_KICKED_SPEED;
 		break;
-
 	case KOOPA_STATE_FLYING:
 		vy = -KOOPA_FLYING_SPEED;
-		break;
-
-	case KOOPA_STATE_DROPING:
-		if (vy < 0) vy += KOOPA_FLYING_SPEED / 2;
 		break;
 
 	}
