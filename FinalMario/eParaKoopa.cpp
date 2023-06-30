@@ -78,7 +78,8 @@ void CParaKoopa::OnCollisionWithBrickLevelUp(LPCOLLISIONEVENT e)
 	CQuestBrickLevelUp* questBrick = dynamic_cast<CQuestBrickLevelUp*>(e->obj);
 
 	// Hit when being kicked >> Activate the QuestBrick 
-	questBrick->SetState(QUESTBRICK_STATE_ACTIVATED);
+	if (GetState() == KOOPA_STATE_KICKED)
+		questBrick->SetState(QUESTBRICK_STATE_ACTIVATED);
 }
 
 void CParaKoopa::OnCollisionWithGlassBrick(LPCOLLISIONEVENT e)
