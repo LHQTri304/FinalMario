@@ -184,11 +184,13 @@ void CMario::OnCollisionWithParaKoopa(LPCOLLISIONEVENT e)
 	// jump on top >> remove the wings >> kill Koopa and deflect a bit
 	if (koopa->GetLevel() != KOOPA_LEVEL_SHELL && e->ny < 0)
 	{
-			koopa->LevelDown();
-			vy = -MARIO_JUMP_DEFLECT_SPEED;
+		koopa->AvoidFallBug();
+		koopa->LevelDown();
+		vy = -MARIO_JUMP_DEFLECT_SPEED;
 	}
 	else if (koopa->GetLevel() == KOOPA_LEVEL_SHELL && koopa->GetState() != KOOPA_STATE_KICKED)
 	{
+		koopa->AvoidFallBug();
 		koopa->SetState(KOOPA_STATE_KICKED);
 	}
 	else // hit by Koopa

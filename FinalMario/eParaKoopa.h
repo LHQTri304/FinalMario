@@ -32,6 +32,7 @@ public:
 	virtual void SetState(int state);
 
 	int GetLevel() { return level; }
+	void AvoidFallBug() { vy = -KOOPA_AVOID_FALL_BUG_VY; }
 	void LevelUp();
 	void LevelDown();
 };

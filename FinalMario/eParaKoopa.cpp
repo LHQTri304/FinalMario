@@ -37,11 +37,7 @@ void CParaKoopa::OnNoCollision(DWORD dt)
 
 void CParaKoopa::OnCollisionWith(LPCOLLISIONEVENT e)
 {
-	if (dynamic_cast<CMario*>(e->obj)) 
-	{
-		vy = -KOOPA_AVOID_FALL_BUG_VY;
-		return;
-	}
+	if (dynamic_cast<CMario*>(e->obj)) return;
 	if (dynamic_cast<CParaKoopa*>(e->obj)) return;
 	if (dynamic_cast<CGoomba*>(e->obj))
 	{
