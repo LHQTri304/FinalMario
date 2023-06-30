@@ -42,7 +42,6 @@ void CParaGoomba::OnCollisionWith(LPCOLLISIONEVENT e)
 	if (dynamic_cast<CParaGoomba*>(e->obj)) return;
 	if (dynamic_cast<CGoomba*>(e->obj)) return;
 	if (dynamic_cast<CParaKoopa*>(e->obj)) return;
-	if (dynamic_cast<CKoopa*>(e->obj)) return;
 
 	if (e->ny != 0)
 	{

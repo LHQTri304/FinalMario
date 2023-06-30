@@ -73,8 +73,6 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 		OnCollisionWithGoomba(e);
 	else if (dynamic_cast<CParaGoomba*>(e->obj))
 		OnCollisionWithParaGoomba(e);
-	else if (dynamic_cast<CKoopa*>(e->obj))
-		OnCollisionWithKoopa(e);
 	else if (dynamic_cast<CParaKoopa*>(e->obj))
 		OnCollisionWithParaKoopa(e);
 	else if (dynamic_cast<CFirePlant*>(e->obj))
@@ -163,51 +161,6 @@ void CMario::OnCollisionWithParaGoomba(LPCOLLISIONEVENT e)
 		if (untouchable == 0)
 		{
 			if (goomba->GetState() != GOOMBA_STATE_DIE)
-			{
-				if (level > MARIO_LEVEL_SMALL)
-				{
-					level--;
-					StartUntouchable();
-				}
-				else
-				{
-					DebugOut(L">>> Mario DIE >>> \n");
-					SetState(MARIO_STATE_DIE);
-				}
-			}
-		}
-	}
-}
-
-void CMario::OnCollisionWithKoopa(LPCOLLISIONEVENT e)
-{
-	CKoopa* koopa = dynamic_cast<CKoopa*>(e->obj);
-
-	// jump on top >> stun Koopa and deflect a bit >> kick Koopa
-	if (e->ny < 0)
-	{
-		if (koopa->GetState() == KOOPA_STATE_KICKED)
-		{ 
-			float kpX, kpY;
-			koopa->GetPosition(kpX, kpY);
-			koopa->SetPosition(kpX, kpY-1);
-		}
-		else if (koopa->GetState() != KOOPA_STATE_STUNNED)
-		{
-			koopa->SetState(KOOPA_STATE_STUNNED);
-			vy = -MARIO_JUMP_DEFLECT_SPEED;
-		}
-		else if (koopa->GetState() == KOOPA_STATE_STUNNED)
-		{
-			koopa->SetState(KOOPA_STATE_KICKED);
-			vy = -MARIO_JUMP_DEFLECT_SPEED;
-		}
-	}
-	else // hit by Koopa
-	{
-		if (untouchable == 0)
-		{
-			if (koopa->GetState() != KOOPA_STATE_STUNNED)
 			{
 				if (level > MARIO_LEVEL_SMALL)
 				{

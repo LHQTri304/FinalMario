@@ -37,6 +37,11 @@ void CParaKoopa::OnNoCollision(DWORD dt)
 
 void CParaKoopa::OnCollisionWith(LPCOLLISIONEVENT e)
 {
+	if (dynamic_cast<CMario*>(e->obj)) 
+	{
+		vy = -KOOPA_AVOID_FALL_BUG_VY;
+		return;
+	}
 	if (dynamic_cast<CParaKoopa*>(e->obj)) return;
 	if (dynamic_cast<CGoomba*>(e->obj))
 	{
@@ -200,7 +205,7 @@ void CParaKoopa::SetState(int state)
 	{
 	case KOOPA_STATE_STUNNED:
 		stun_start = GetTickCount64();
-		y += (KOOPA_BBOX_HEIGHT - KOOPA_BBOX_HEIGHT_STUNNED) / 2;
+		y += (KOOPA_BBOX_HEIGHT - KOOPA_BBOX_HEIGHT_STUNNED) / 3;
 		vx = 0;
 		vy = 0;
 		break;
@@ -209,7 +214,6 @@ void CParaKoopa::SetState(int state)
 		break;
 	case KOOPA_STATE_REVIVE:
 		y -= KOOPA_BBOX_HEIGHT_STUNNED / 2;
-		ax = 0;
 		stun_start = -1;
 		LevelUp();
 		break;

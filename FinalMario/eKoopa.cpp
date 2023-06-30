@@ -1,3 +1,4 @@
+/*
 #include "Enemies.h"
 
 CKoopa::CKoopa(float x, float y) :CGameObject(x, y)
@@ -172,4 +173,4 @@ void CKoopa::SetState(int state)
 		vx = KOOPA_KICKED_SPEED;
 		break;
 	}
-}
+}*/

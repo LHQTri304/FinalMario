@@ -150,7 +150,6 @@ class CMario : public CGameObject
 	//Enemies
 	void OnCollisionWithGoomba(LPCOLLISIONEVENT e);
 	void OnCollisionWithParaGoomba(LPCOLLISIONEVENT e);
-	void OnCollisionWithKoopa(LPCOLLISIONEVENT e);
 	void OnCollisionWithParaKoopa(LPCOLLISIONEVENT e);
 
 	void OnCollisionWithFirePlant(LPCOLLISIONEVENT e);

@@ -46,7 +46,6 @@ void CItemsLevelUp::OnCollisionWith(LPCOLLISIONEVENT e)
 	{
 		if (!e->obj->IsBlocking()) return;
 		if (dynamic_cast<CGoomba*>(e->obj)) return;
-		if (dynamic_cast<CKoopa*>(e->obj)) return;
 		if (dynamic_cast<CFirePlant*>(e->obj)) return;
 		if (dynamic_cast<CBulletFire*>(e->obj)) return;
 		if (dynamic_cast<CBitePlant*>(e->obj)) return;

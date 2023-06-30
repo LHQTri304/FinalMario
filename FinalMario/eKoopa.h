@@ -27,7 +27,7 @@ public:
 };
 #pragma endregion
 
-//**************************//
+/*
 #pragma region Koopa
 
 class CKoopa : public CGameObject
@@ -59,3 +59,4 @@ public:
 	virtual void SetState(int state);
 };
 #pragma endregion
+*/

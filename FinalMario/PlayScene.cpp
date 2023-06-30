@@ -116,7 +116,6 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 	//Enemies
 	case OBJECT_TYPE_GOOMBA: obj = new CGoomba(x,y); break;
 	case OBJECT_TYPE_PARAGOOMBA: obj = new CParaGoomba(x, y); break;
-	case OBJECT_TYPE_KOOPA: obj = new CKoopa(x, y); break;
 
 
 	case OBJECT_TYPE_PARAKOOPA: 
