@@ -6,7 +6,7 @@ CKoopa::CKoopa(float x, float y) :CGameObject(x, y)
 	this->ay = KOOPA_GRAVITY;
 	fakeHead = new CFakeHead(x, y);
 	stun_start = -1;
-	SetState(KOOPA_STATE_WALKING);
+	SetState(KOOPA_STATE_MOVING);
 }
 
 void CKoopa::GetBoundingBox(float& left, float& top, float& right, float& bottom)
@@ -98,7 +98,7 @@ void CKoopa::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 		//fake head:..
 		float fHeadX, fHeadY;
-		if (GetState() == KOOPA_STATE_WALKING)
+		if (GetState() == KOOPA_STATE_MOVING)
 		{
 			fakeHead->GetPosition(fHeadX, fHeadY);
 
@@ -157,7 +157,7 @@ void CKoopa::SetState(int state)
 		vx = 0;
 		vy = 0;
 		break;
-	case KOOPA_STATE_WALKING:
+	case KOOPA_STATE_MOVING:
 		vx = -KOOPA_WALKING_SPEED;
 		break;
 	case KOOPA_STATE_REVIVE:
@@ -165,7 +165,7 @@ void CKoopa::SetState(int state)
 		ax = 0;
 		ay = KOOPA_GRAVITY;
 		stun_start = -1;
-		SetState(KOOPA_STATE_WALKING);
+		SetState(KOOPA_STATE_MOVING);
 		break;
 	case KOOPA_STATE_KICKED:
 		y -= KOOPA_BBOX_HEIGHT_STUNNED / 2;

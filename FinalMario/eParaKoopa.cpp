@@ -8,14 +8,7 @@ CParaKoopa::CParaKoopa(float x, float y, int lv) :CGameObject(x, y)
 	isOnPlatform = false;
 	stun_start = -1;
 	fakeHead = new CFakeHead(x, y);
-	if (level == KOOPA_LEVEL_FLY)
-	{
-		SetState(KOOPA_STATE_FLYING);
-	}
-	else
-	{
-		SetState(KOOPA_STATE_WALKING);
-	}
+	SetState(KOOPA_STATE_MOVING);
 }
 
 void CParaKoopa::GetBoundingBox(float& left, float& top, float& right, float& bottom)
@@ -114,7 +107,7 @@ void CParaKoopa::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 		//fake head:..
 		float fHeadX, fHeadY;
-		if (GetState() == KOOPA_STATE_WALKING)
+		if (GetState() == KOOPA_STATE_MOVING)
 		{
 			fakeHead->GetPosition(fHeadX, fHeadY);
 
@@ -186,21 +179,17 @@ void CParaKoopa::SetState(int state)
 		vx = 0;
 		vy = 0;
 		break;
-	case KOOPA_STATE_WALKING:
+	case KOOPA_STATE_MOVING:
 		vx = -KOOPA_WALKING_SPEED;
-		//isGetHit = true;
 		break;
 	case KOOPA_STATE_REVIVE:
 		y -= KOOPA_BBOX_HEIGHT_STUNNED / 2;
 		ax = 0;
 		stun_start = -1;
-		SetState(KOOPA_STATE_WALKING);
+		SetState(KOOPA_STATE_MOVING);
 		break;
 	case KOOPA_STATE_KICKED:
 		vx = -KOOPA_KICKED_SPEED;
-		break;
-	case KOOPA_STATE_FLYING:
-		vx = -KOOPA_WALKING_SPEED;
 		break;
 
 	}

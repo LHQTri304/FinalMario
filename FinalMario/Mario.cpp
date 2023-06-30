@@ -228,7 +228,7 @@ void CMario::OnCollisionWithParaKoopa(LPCOLLISIONEVENT e)
 {
 	CParaKoopa* koopa = dynamic_cast<CParaKoopa*>(e->obj);
 
-	// jump on top >> remove the wings >> kill Koopa and deflect a bit 
+	/* jump on top >> remove the wings >> kill Koopa and deflect a bit
 	if (e->ny < 0)
 	{
 		if (koopa->GetState() == KOOPA_STATE_FLYING)
@@ -265,7 +265,7 @@ void CMario::OnCollisionWithParaKoopa(LPCOLLISIONEVENT e)
 				}
 			}
 		}
-	}
+	}*/
 }
 
 void CMario::OnCollisionWithFirePlant(LPCOLLISIONEVENT e)
