@@ -22,7 +22,7 @@ CParaKoopa::CParaKoopa(float x, float y, int lv) :CGameObject(x, y)
 
 void CParaKoopa::GetBoundingBox(float& left, float& top, float& right, float& bottom)
 {
-	if (state == KOOPA_STATE_STUNNED)
+	if (level == KOOPA_LEVEL_SHELL)
 	{
 		left = x - KOOPA_BBOX_WIDTH / 2;
 		top = y - KOOPA_BBOX_HEIGHT_STUNNED / 2;
@@ -57,14 +57,16 @@ void CParaKoopa::OnCollisionWith(LPCOLLISIONEVENT e)
 		return;
 	}
 
-	if (e->ny != 0)
+	if (e->ny != 0 && e->obj->IsBlocking())
 	{
 		vy = 0;
+		if (e->ny < 0) isOnPlatform = true;
 	}
-	else if (e->nx != 0)
-	{
-		vx = -vx;
-	}
+	else
+		if (e->nx != 0 && e->obj->IsBlocking())
+		{
+			vx = -vx;
+		}
 
 	if (dynamic_cast<CQuestBrickLevelUp*>(e->obj))
 		OnCollisionWithBrickLevelUp(e);
@@ -104,6 +106,12 @@ void CParaKoopa::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			return;
 		}
 
+
+		if (level == KOOPA_LEVEL_FLY && isOnPlatform)
+		{
+			vy = -KOOPA_FLYING_SPEED;
+		}
+
 		/*add...
 		if (isFlying && !isGetHit)
 		{
@@ -121,6 +129,8 @@ void CParaKoopa::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		if (flightTime >= KOOPA_FLIGHT_TIME)
 			isFlying = true;
 		*/
+
+		isOnPlatform = false;
 
 		CGameObject::Update(dt, coObjects);
 		CCollision::GetInstance()->Process(this, dt, coObjects);
@@ -188,7 +198,6 @@ void CParaKoopa::SetState(int state)
 		break;
 	case KOOPA_STATE_FLYING:
 		vx = -KOOPA_WALKING_SPEED;
-		vy = -KOOPA_FLYING_SPEED * 5;
 		break;
 
 	}
