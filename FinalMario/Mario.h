@@ -198,6 +198,7 @@ public:
 	void SetState(int state);
 
 	int GetLevel() { return level; }
+	BOOLEAN GetPressingKeyA() { return isPressingKeyA; }
 
 	int IsCollidable()
 	{ 

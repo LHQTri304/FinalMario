@@ -219,9 +219,7 @@ void CMario::OnCollisionWithParaKoopa(LPCOLLISIONEVENT e)
 		//float kpX, kpY;
 		if (isPressingKeyA)
 		{
-			koopa->SetGravity(0, 0);
 			koopa->SetBeingHeld(true);
-
 		}
 		else
 		{
