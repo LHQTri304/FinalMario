@@ -213,5 +213,8 @@ public:
 	void SetPressingKeyA(BOOLEAN isPressing) { this->isPressingKeyA = isPressing; }
 	void StartUntouchable() { untouchable = 1; untouchable_start = GetTickCount64(); }
 
+	void LevelUp();
+	void LevelDown();
+
 	void GetBoundingBox(float& left, float& top, float& right, float& bottom);
 };

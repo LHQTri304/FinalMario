@@ -11,6 +11,32 @@
 
 #include "Collision.h"
 
+void CMario::LevelUp()
+{
+	if (level == MARIO_LEVEL_SMALL)
+	{
+		level = MARIO_LEVEL_BIG;
+	}
+	else if (level == MARIO_LEVEL_BIG)
+	{
+		level = MARIO_LEVEL_RACCOON;
+	}
+	return;
+}
+
+void CMario::LevelDown()
+{
+	if (level == MARIO_LEVEL_RACCOON)
+	{
+		level = MARIO_LEVEL_BIG;
+	}
+	else if (level == MARIO_LEVEL_BIG)
+	{
+		level = MARIO_LEVEL_SMALL;
+	}
+	return;
+}
+
 void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 {
 	vy += ay * dt;
@@ -195,8 +221,6 @@ void CMario::OnCollisionWithParaKoopa(LPCOLLISIONEVENT e)
 		{
 			koopa->SetGravity(0, 0);
 			koopa->SetBeingHeld(true);
-			//isHoldingShell = true;
-			//koopa->GetPosition(kpX, kpY);
 
 		}
 		else

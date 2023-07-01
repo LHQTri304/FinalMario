@@ -217,6 +217,8 @@ void CParaKoopa::Render()
 void CParaKoopa::SetState(int state)
 {
 	CGameObject::SetState(state);
+	CMario* mario = (CMario*)((LPPLAYSCENE)CGame::GetInstance()->GetCurrentScene())->GetPlayer();
+
 	switch (state)
 	{
 	case KOOPA_STATE_STUNNED:
@@ -232,11 +234,14 @@ void CParaKoopa::SetState(int state)
 	case KOOPA_STATE_REVIVE:
 		y -= KOOPA_BBOX_HEIGHT_STUNNED / 2;
 		stun_start = -1;
-		isBeingHeld = false;
+		if(isBeingHeld)
+		{
+			mario->LevelDown();
+			isBeingHeld = false;
+		}
 		LevelUp();
 		break;
 	case KOOPA_STATE_KICKED:
-		CMario* mario = (CMario*)((LPPLAYSCENE)CGame::GetInstance()->GetCurrentScene())->GetPlayer();
 		float mX, mY;
 		mario->GetPosition(mX, mY);
 		if (this->x > mX)
