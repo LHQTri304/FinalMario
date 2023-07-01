@@ -194,16 +194,10 @@ void CMario::OnCollisionWithParaKoopa(LPCOLLISIONEVENT e)
 		if (isPressingKeyA)
 		{
 			koopa->SetGravity(0, 0);
+			koopa->SetBeingHeld(true);
+			//isHoldingShell = true;
 			//koopa->GetPosition(kpX, kpY);
 
-			if (vx > 0)
-			{
-				koopa->SetPosition(x + MARIO_BIG_BBOX_WIDTH / 2, y);
-			}
-			else if(vx < 0)
-			{
-				koopa->SetPosition(x - MARIO_BIG_BBOX_WIDTH / 2, y);
-			}
 		}
 		else
 		{

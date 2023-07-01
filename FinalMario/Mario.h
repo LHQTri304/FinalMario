@@ -148,6 +148,7 @@ class CMario : public CGameObject
 	ULONGLONG untouchable_start;
 	BOOLEAN isOnPlatform;
 	BOOLEAN isPressingKeyA;
+	//BOOLEAN isHoldingShell;
 
 	//Enemies
 	void OnCollisionWithGoomba(LPCOLLISIONEVENT e);
@@ -190,6 +191,7 @@ public:
 		untouchable_start = -1;
 		isOnPlatform = false;
 		isPressingKeyA = false;
+		//isHoldingShell = false;
 	}
 	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
 	void Render();

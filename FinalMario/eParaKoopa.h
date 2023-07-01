@@ -11,6 +11,7 @@ protected:
 
 	int level;
 
+	BOOLEAN isBeingHeld;
 	BOOLEAN isOnPlatform;
 	ULONGLONG stun_start;
 	CFakeHead* fakeHead;
@@ -31,6 +32,7 @@ public:
 	CParaKoopa(float x, float y, int level);
 	virtual void SetState(int state);
 
+	void SetBeingHeld(BOOLEAN isHolding) { this->isBeingHeld = isHolding; }
 	void SetGravity(float ax, float ay) { this->ax = ax, this->ay = ay; }
 	int GetLevel() { return level; }
 	void AvoidFallBug() { vy = -KOOPA_AVOID_FALL_BUG_VY; }

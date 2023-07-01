@@ -5,6 +5,7 @@ CParaKoopa::CParaKoopa(float x, float y, int lv) :CGameObject(x, y)
 	this->ax = 0;
 	this->ay = KOOPA_GRAVITY;
 	this->level = lv;
+	isBeingHeld = false;
 	isOnPlatform = false;
 	stun_start = -1;
 	fakeHead = new CFakeHead(x, y);
@@ -156,6 +157,25 @@ void CParaKoopa::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			}
 		}
 
+		if (isBeingHeld)
+		{
+			CMario* mario = (CMario*)((LPPLAYSCENE)CGame::GetInstance()->GetCurrentScene())->GetPlayer();
+			float  mX, mY, mVX, mVY;
+			mario->GetPosition(mX, mY);
+			mario->GetSpeed(mVX, mVY);
+
+			if (mVX > 0)
+			{
+				x = mX + MARIO_BIG_BBOX_WIDTH / 2;
+				y = mY;
+			}
+			else if (mVX < 0)
+			{
+				x = mX - MARIO_BIG_BBOX_WIDTH / 2;
+				y = mY;
+			}
+		}
+
 		fakeHead->Update(dt, coObjects);
 		CGameObject::Update(dt, coObjects);
 		CCollision::GetInstance()->Process(this, dt, coObjects);
@@ -212,6 +232,7 @@ void CParaKoopa::SetState(int state)
 	case KOOPA_STATE_REVIVE:
 		y -= KOOPA_BBOX_HEIGHT_STUNNED / 2;
 		stun_start = -1;
+		isBeingHeld = false;
 		LevelUp();
 		break;
 	case KOOPA_STATE_KICKED:
