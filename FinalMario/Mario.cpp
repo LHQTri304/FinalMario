@@ -34,6 +34,7 @@ void CMario::LevelDown()
 	{
 		level = MARIO_LEVEL_SMALL;
 	}
+	StartUntouchable();
 	return;
 }
 

@@ -159,13 +159,13 @@ void CParaKoopa::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 		//When being held by mairo
 		CMario* mario = (CMario*)((LPPLAYSCENE)CGame::GetInstance()->GetCurrentScene())->GetPlayer();
+		float  mX, mY, mVX, mVY;
+		mario->GetPosition(mX, mY);
+		mario->GetSpeed(mVX, mVY);
+
 		if (isBeingHeld && mario->GetPressingKeyA() == true)
 		{
 			ay = 0;
-
-			float  mX, mY, mVX, mVY;
-			mario->GetPosition(mX, mY);
-			mario->GetSpeed(mVX, mVY);
 
 			if (mVX > 0)
 			{
@@ -183,6 +183,7 @@ void CParaKoopa::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		{
 			ay = KOOPA_GRAVITY;
 			isBeingHeld = false;
+			mario->SetSpeed(mVX, -MARIO_JUMP_DEFLECT_SPEED);
 			SetState(KOOPA_STATE_KICKED);
 		}
 
