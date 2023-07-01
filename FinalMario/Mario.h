@@ -142,10 +142,12 @@ class CMario : public CGameObject
 	float iy;				// start y (initial)
 
 	int level; 
-	int untouchable; 
+	int untouchable;
+	int coin;
+
 	ULONGLONG untouchable_start;
 	BOOLEAN isOnPlatform;
-	int coin; 
+	BOOLEAN isPressingKeyA;
 
 	//Enemies
 	void OnCollisionWithGoomba(LPCOLLISIONEVENT e);
@@ -183,9 +185,11 @@ public:
 
 		level = MARIO_LEVEL_SMALL;
 		untouchable = 0;
+		coin = 0;
+
 		untouchable_start = -1;
 		isOnPlatform = false;
-		coin = 0;
+		isPressingKeyA = false;
 	}
 	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
 	void Render();
