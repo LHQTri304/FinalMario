@@ -31,6 +31,7 @@ public:
 	CParaKoopa(float x, float y, int level);
 	virtual void SetState(int state);
 
+	void SetGravity(float ax, float ay) { this->ax = ax, this->ay = ay; }
 	int GetLevel() { return level; }
 	void AvoidFallBug() { vy = -KOOPA_AVOID_FALL_BUG_VY; }
 	void LevelUp();

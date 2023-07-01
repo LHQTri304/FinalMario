@@ -206,6 +206,7 @@ void CParaKoopa::SetState(int state)
 		vy = 0;
 		break;
 	case KOOPA_STATE_MOVING:
+		ay = KOOPA_GRAVITY;
 		vx = -KOOPA_WALKING_SPEED;
 		break;
 	case KOOPA_STATE_REVIVE:
