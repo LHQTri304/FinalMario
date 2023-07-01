@@ -190,18 +190,18 @@ void CMario::OnCollisionWithParaKoopa(LPCOLLISIONEVENT e)
 	}
 	else if (koopa->GetLevel() == KOOPA_LEVEL_SHELL && koopa->GetState() != KOOPA_STATE_KICKED)
 	{
-		float kpX, kpY;
+		//float kpX, kpY;
 		if (isPressingKeyA)
 		{
-			koopa->GetPosition(kpX, kpY);
+			//koopa->GetPosition(kpX, kpY);
 
 			if (vx > 0)
 			{
-				koopa->SetPosition(x + KOOPA_BBOX_WIDTH / 2, y - KOOPA_BBOX_HEIGHT);
+				koopa->SetPosition(x + MARIO_BIG_BBOX_WIDTH / 2, y - MARIO_BIG_BBOX_HEIGHT);
 			}
-			else
+			else if(vx < 0)
 			{
-				koopa->SetPosition(x - KOOPA_BBOX_WIDTH / 2, y - KOOPA_BBOX_HEIGHT);
+				koopa->SetPosition(x - MARIO_BIG_BBOX_WIDTH / 2, y - MARIO_BIG_BBOX_HEIGHT);
 			}
 		}
 		else
