@@ -166,6 +166,7 @@ void CParaKoopa::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		if (isBeingHeld && mario->GetPressingKeyA() == true)
 		{
 			ay = 0;
+			vx = vy = 0;
 
 			if (mVX > 0)
 			{

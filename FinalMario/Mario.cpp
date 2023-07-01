@@ -34,6 +34,11 @@ void CMario::LevelDown()
 	{
 		level = MARIO_LEVEL_SMALL;
 	}
+	else
+	{
+		DebugOut(L">>> Mario DIE >>> \n");
+		SetState(MARIO_STATE_DIE);
+	}
 	StartUntouchable();
 	return;
 }
@@ -218,7 +223,7 @@ void CMario::OnCollisionWithParaKoopa(LPCOLLISIONEVENT e)
 	else if (koopa->GetLevel() == KOOPA_LEVEL_SHELL && koopa->GetState() != KOOPA_STATE_KICKED)
 	{
 		//float kpX, kpY;
-		if (isPressingKeyA)
+		if (isPressingKeyA && level != MARIO_LEVEL_SMALL)
 		{
 			koopa->SetBeingHeld(true);
 		}
@@ -230,21 +235,9 @@ void CMario::OnCollisionWithParaKoopa(LPCOLLISIONEVENT e)
 	}
 	else // hit by Koopa
 	{
-		if (untouchable == 0)
+		if (untouchable == 0 && koopa->GetLevel() != KOOPA_STATE_STUNNED)
 		{
-			if (koopa->GetLevel() != KOOPA_STATE_STUNNED)
-			{
-				if (level > MARIO_LEVEL_SMALL)
-				{
-					level--;
-					StartUntouchable();
-				}
-				else
-				{
-					DebugOut(L">>> Mario DIE >>> \n");
-					SetState(MARIO_STATE_DIE);
-				}
-			}
+			LevelDown();
 		}
 	}
 }
