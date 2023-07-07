@@ -26,8 +26,14 @@ void CSampleKeyHandler::OnKeyDown(int KeyCode)
 			{
 				mario->SetSpeed(mVX, MARIO_FLYING_SPEED);
 			}
-			else
+			else if (mario->GetFlyable() == 0 && mVX != 0)
+			{
 				mario->SetSpeed(mVX, MARIO_FALLING_SPEED);
+			}
+			else
+			{
+				mario->SetState(MARIO_STATE_JUMP);
+			}
 		}
 		else
 		{
