@@ -48,7 +48,21 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 	vy += ay * dt;
 	vx += ax * dt;
 
-	if (abs(vx) > abs(maxVx)) vx = maxVx;
+	if (abs(vx) > abs(maxVx)) 
+	{
+		vx = maxVx;
+		if (isOnPlatform)	//Only reaching maxVX on platform will allow to fly, not when flying nor falling
+		{
+			StartFlyable();
+		}
+	}
+
+	// reset flyable timer if flyable time has passed
+	if (GetTickCount64() - flyable_start > MARIO_FLYABLE_TIME)
+	{
+		flyable_start = 0;
+		flyable = 0;
+	}
 
 	// reset untouchable timer if untouchable time has passed
 	if ( GetTickCount64() - untouchable_start > MARIO_UNTOUCHABLE_TIME) 

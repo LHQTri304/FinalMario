@@ -12,7 +12,6 @@ void CSampleKeyHandler::OnKeyDown(int KeyCode)
 	CMario* mario = (CMario *)((LPPLAYSCENE)CGame::GetInstance()->GetCurrentScene())->GetPlayer();
 	float mVX = 0;
 	float mVY = 0;
-	int flyTimeout = MARIO_FLYABLE_TIME;
 
 	switch (KeyCode)
 	{
@@ -23,10 +22,17 @@ void CSampleKeyHandler::OnKeyDown(int KeyCode)
 		if (!mario->GetIsOnPlatform())
 		{
 			mario->GetSpeed(mVX, mVY);
-			mario->SetSpeed(mVX, MARIO_FLYING_SPEED);
+			if (mario->GetFlyable() == 1)
+			{
+				mario->SetSpeed(mVX, MARIO_FLYING_SPEED);
+			}
+			else
+				mario->SetSpeed(mVX, MARIO_FALLING_SPEED);
 		}
 		else
+		{
 			mario->SetState(MARIO_STATE_JUMP);
+		}
 		break;
 	case DIK_1:
 		mario->SetLevel(MARIO_LEVEL_SMALL);
