@@ -11,8 +11,6 @@ CItemsLevelUp::CItemsLevelUp(float x, float y) :CGameObject(x, y)
 	this->kind = 0;	//Mushroom first
 	this->wrongCollisionCountDown = 5;
 	this->isMovingRight = true;
-	//this->isCollidingProperly = true;
-	//this->isOnPlatform = false;
 	SetState(ITEMS_LEVELUP_STATE_WAIT);
 }
 
@@ -26,20 +24,11 @@ void CItemsLevelUp::GetBoundingBox(float& left, float& top, float& right, float&
 
 int CItemsLevelUp::IsCollidable()
 {
-	/*
-	if (isCollidingProperly)
-	{
-		return (GetState() != ITEMS_LEVELUP_STATE_DELETED);
-	}
-	return 0;
-	*/
 	return (GetState() != ITEMS_LEVELUP_STATE_DELETED && wrongCollisionCountDown < 0);
 }
 
 void CItemsLevelUp::OnNoCollision(DWORD dt)
 {
-	//isCollidingProperly = true;
-
 	x += vx * dt;
 	y += vy * dt;
 }
@@ -107,29 +96,6 @@ void CItemsLevelUp::OnCollisionWith(LPCOLLISIONEVENT e)
 				wrongCollisionCountDown = 5;
 			}
 		}
-		/*
-		if (!dynamic_cast<CMario*>(e->obj))
-		{
-			//isCollidingProperly = false;
-			return;
-		}
-		else
-		{
-			CMario* mario = (CMario*)((LPPLAYSCENE)CGame::GetInstance()->GetCurrentScene())->GetPlayer();
-			int mLevel = mario->GetLevel();
-
-			// touch >> Level up
-			if (GetState() == ITEMS_LEVELUP_STATE_MOVING)
-			{
-				if (mLevel == MARIO_LEVEL_BIG)
-				{
-					mario->SetLevel(MARIO_LEVEL_RACCOON);	//Small (1) >> Big (2) >> Raccoon (3)
-					mario->SetSpeed(0, -MARIO_JUMP_DEFLECT_SPEED);
-				}
-				SetState(ITEMS_LEVELUP_STATE_DELETED);
-			}
-			return;
-		}*/
 	}
 
 	return;
