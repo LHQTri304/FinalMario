@@ -228,7 +228,7 @@ void CMario::OnCollisionWithParaKoopa(LPCOLLISIONEVENT e)
 			koopa->AvoidFallBug();
 			koopa->SetState(KOOPA_STATE_KICKED);
 		}
-		else if (isPressingKeyA && level != MARIO_LEVEL_SMALL)
+		else if (isPressingKeyA)
 		{
 			koopa->SetBeingHeld(true);
 		}

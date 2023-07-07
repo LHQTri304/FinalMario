@@ -168,16 +168,33 @@ void CParaKoopa::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			ay = 0;
 			vx = vy = 0;
 
-			if (mVX > 0)
+			if(mario->GetLevel() != MARIO_LEVEL_SMALL)
 			{
-				x = mX + MARIO_BIG_BBOX_WIDTH;
-				y = mY;
+				if (mVX > 0)
+				{
+					x = mX + MARIO_BIG_BBOX_WIDTH;
+					y = mY;
+				}
+				else if (mVX < 0)
+				{
+					x = mX - MARIO_BIG_BBOX_WIDTH;
+					y = mY;
+				}
 			}
-			else if (mVX < 0)
+			else
 			{
-				x = mX - MARIO_BIG_BBOX_WIDTH;
-				y = mY;
+				if (mVX > 0)
+				{
+					x = mX + MARIO_BIG_BBOX_WIDTH;
+					y = mY - MARIO_SMALL_BBOX_HEIGHT / 5;
+				}
+				else if (mVX < 0)
+				{
+					x = mX - MARIO_BIG_BBOX_WIDTH;
+					y = mY - MARIO_SMALL_BBOX_HEIGHT / 5;
+				}
 			}
+
 		}
 
 		if (isBeingHeld && mario->GetPressingKeyA() == false)
