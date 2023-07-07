@@ -195,11 +195,12 @@ void CParaKoopa::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 		}
 
-		if (isBeingHeld && mario->GetPressingKeyA() == false)
+		if (isBeingHeld && mario->GetPressingKeyA() == false)	//If mario release the shell soon
 		{
 			ay = KOOPA_GRAVITY;
 			isBeingHeld = false;
 			mario->SetSpeed(mVX, -MARIO_JUMP_DEFLECT_SPEED);
+			mario->SetHoldingShell(false);
 			SetState(KOOPA_STATE_KICKED);
 		}
 
@@ -264,6 +265,7 @@ void CParaKoopa::SetState(int state)
 		if(isBeingHeld)
 		{
 			mario->LevelDown();
+			mario->SetHoldingShell(false);
 			isBeingHeld = false;
 		}
 		LevelUp();

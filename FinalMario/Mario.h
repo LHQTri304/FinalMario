@@ -59,6 +59,9 @@
 #define ID_ANI_MARIO_BRACE_RIGHT 1000
 #define ID_ANI_MARIO_BRACE_LEFT 1001
 
+#define ID_ANI_MARIO_HELD_SHELL_RIGHT 1003
+#define ID_ANI_MARIO_HELD_SHELL_LEFT 1004
+
 #define ID_ANI_MARIO_DIE 999
 
 // SMALL MARIO
@@ -79,6 +82,9 @@
 
 #define ID_ANI_MARIO_SMALL_JUMP_RUN_RIGHT 1600
 #define ID_ANI_MARIO_SMALL_JUMP_RUN_LEFT 1601
+
+#define ID_ANI_MARIO_SMALL_HELD_SHELL_RIGHT 1800
+#define ID_ANI_MARIO_SMALL_HELD_SHELL_LEFT 1801
 
 // RACCOON MARIO
 
@@ -102,6 +108,9 @@
 
 #define ID_ANI_MARIO_RACCOON_SIT_RIGHT 1703
 #define ID_ANI_MARIO_RACCOON_SIT_LEFT 1704
+
+#define ID_ANI_MARIO_RACCOON_HELD_SHELL_RIGHT 1803
+#define ID_ANI_MARIO_RACCOON_HELD_SHELL_LEFT 1804
 
 #pragma endregion
 
@@ -155,7 +164,7 @@ class CMario : public CGameObject
 
 	BOOLEAN isOnPlatform;
 	BOOLEAN isPressingKeyA;
-	//BOOLEAN isHoldingShell;
+	BOOLEAN isHoldingShell;
 
 	//Enemies
 	void OnCollisionWithGoomba(LPCOLLISIONEVENT e);
@@ -201,7 +210,7 @@ public:
 
 		isOnPlatform = false;
 		isPressingKeyA = false;
-		//isHoldingShell = false;
+		isHoldingShell = false;
 	}
 	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
 	void Render();
@@ -209,6 +218,7 @@ public:
 	void SetState(int state);
 	void SetLevel(int l);
 	void SetPressingKeyA(BOOLEAN isPressing) { this->isPressingKeyA = isPressing; }
+	void SetHoldingShell(BOOLEAN isHolding) { this->isHoldingShell = isHolding; }
 
 	int GetLevel() { return level; }
 	int GetFlyable() { return flyable; }
