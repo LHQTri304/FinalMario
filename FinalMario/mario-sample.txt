@@ -1,5 +1,5 @@
 [SETTINGS]
-start	10
+start	11
 width	320
 height	240
 
@@ -7,10 +7,6 @@ height	240
 # type: 0: intro, 1: play scene 
 [SCENES]
 0	intro.txt
-1	scene01.txt
-2	scene02.txt
-3	scene03.txt
-5	scene0005.txt
 
 10	sceneFinal.txt
 11	sceneTEST.txt

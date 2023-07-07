@@ -9,8 +9,10 @@ CItemsLevelUp::CItemsLevelUp(float x, float y) :CGameObject(x, y)
 	this->pixelMovingX = 0;
 	this->pixelMovingY = MUSHROOM_ACTIVATED_PIXEL_MOVE_Y;
 	this->kind = 0;	//Mushroom first
+	this->wrongCollisionCountDown = 5;
 	this->isMovingRight = true;
-	this->isCollidingProperly = true;
+	//this->isCollidingProperly = true;
+	//this->isOnPlatform = false;
 	SetState(ITEMS_LEVELUP_STATE_WAIT);
 }
 
@@ -24,16 +26,19 @@ void CItemsLevelUp::GetBoundingBox(float& left, float& top, float& right, float&
 
 int CItemsLevelUp::IsCollidable()
 {
+	/*
 	if (isCollidingProperly)
 	{
 		return (GetState() != ITEMS_LEVELUP_STATE_DELETED);
 	}
 	return 0;
+	*/
+	return (GetState() != ITEMS_LEVELUP_STATE_DELETED && wrongCollisionCountDown < 0);
 }
 
 void CItemsLevelUp::OnNoCollision(DWORD dt)
 {
-	isCollidingProperly = true;
+	//isCollidingProperly = true;
 
 	x += vx * dt;
 	y += vy * dt;
@@ -79,9 +84,33 @@ void CItemsLevelUp::OnCollisionWith(LPCOLLISIONEVENT e)
 	}
 	else	//Leaf >> Only collides with mario
 	{
+		if ((e->nx != 0 || e->ny != 0) && e->obj->IsBlocking())
+		{
+			if (dynamic_cast<CMario*>(e->obj))
+			{
+				CMario* mario = (CMario*)((LPPLAYSCENE)CGame::GetInstance()->GetCurrentScene())->GetPlayer();
+				int mLevel = mario->GetLevel();
+
+				// touch >> Level up
+				if (GetState() == ITEMS_LEVELUP_STATE_MOVING)
+				{
+					if (mLevel == MARIO_LEVEL_BIG)
+					{
+						mario->SetLevel(MARIO_LEVEL_RACCOON);	//Small (1) >> Big (2) >> Raccoon (3)
+						mario->SetSpeed(0, -MARIO_JUMP_DEFLECT_SPEED);
+					}
+					SetState(ITEMS_LEVELUP_STATE_DELETED);
+				}
+			}				
+			else
+			{
+				wrongCollisionCountDown = 5;
+			}
+		}
+		/*
 		if (!dynamic_cast<CMario*>(e->obj))
 		{
-			isCollidingProperly = false;
+			//isCollidingProperly = false;
 			return;
 		}
 		else
@@ -100,16 +129,18 @@ void CItemsLevelUp::OnCollisionWith(LPCOLLISIONEVENT e)
 				SetState(ITEMS_LEVELUP_STATE_DELETED);
 			}
 			return;
-		}
+		}*/
 	}
 
-
+	return;
 }
 
 void CItemsLevelUp::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	vy += ay * dt;
 	vx += ax * dt;
+
+	wrongCollisionCountDown--;
 
 	if (GetState() == ITEMS_LEVELUP_STATE_WAIT)	//Change kind based on mario >> If activated then won't change
 	{

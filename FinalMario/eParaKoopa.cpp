@@ -170,12 +170,12 @@ void CParaKoopa::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 			if (mVX > 0)
 			{
-				x = mX + MARIO_BIG_BBOX_WIDTH / 2;
+				x = mX + MARIO_BIG_BBOX_WIDTH;
 				y = mY;
 			}
 			else if (mVX < 0)
 			{
-				x = mX - MARIO_BIG_BBOX_WIDTH / 2;
+				x = mX - MARIO_BIG_BBOX_WIDTH;
 				y = mY;
 			}
 		}
