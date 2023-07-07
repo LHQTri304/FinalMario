@@ -263,6 +263,8 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 	case OBJECT_TYPE_CLOUD2: obj = new CCloud2(x, y); break;
 	case OBJECT_TYPE_CLOUD3: obj = new CCloud3(x, y); break;
 	case OBJECT_TYPE_BLACK_END: obj = new CBlackEnd(x, y); break;
+	case OBJECT_TYPE_START_SCENE: obj = new CSTART_SCENE(x, y); break;
+	case OBJECT_TYPE_OVER_SCENE: obj = new COVER_SCENE(x, y); break;
 
 
 	default:

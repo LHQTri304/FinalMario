@@ -71,13 +71,15 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 
 	isOnPlatform = false;
 
-	if (y >= 240)	//Out of the world >> back to the start point
+	
+	if (y >= 240)	//Out of the world >> Game Ove Scene
 	{
-		x = ix;
-		y = iy;
+		//x = ix;
+		y = 184;
 		state = MARIO_STATE_IDLE;
 		level = MARIO_LEVEL_SMALL;
 	}
+	
 
 	//Only update near Mario;
 	float coObjX, coObjY;
@@ -565,7 +567,7 @@ void CMario::Render()
 
 	animations->Get(aniId)->Render(x, y);
 
-	RenderBoundingBox();
+	//RenderBoundingBox();
 	
 	DebugOutTitle(L"Coins: %d", coin);
 }

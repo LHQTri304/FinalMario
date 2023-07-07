@@ -40,6 +40,8 @@
 #define ID_ANI_CLOUD3 10008
 #define ID_ANI_BLACK_END 10009
 #define ID_ANI_BORDER_END 10010
+#define ID_ANI_START_SCENE 10011
+#define ID_ANI_OVER_SCENE 10012
 
 
 //InteractiveItems: 11000

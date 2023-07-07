@@ -8,6 +8,7 @@
 #define ID_TEX_ENEMY 10
 #define ID_TEX_MISC 20
 #define ID_TEX_MISC_2 21
+#define ID_TEX_OVER_SCENE 30
 
 //Moving >10
 #define OBJECT_TYPE_MARIO		10
@@ -51,6 +52,8 @@
 #define OBJECT_TYPE_CLOUD2 54
 #define OBJECT_TYPE_CLOUD3 55
 #define OBJECT_TYPE_BLACK_END 56
+#define OBJECT_TYPE_START_SCENE 57
+#define OBJECT_TYPE_OVER_SCENE 58
 
 #pragma region Moving Obj
 #pragma region MARIO 

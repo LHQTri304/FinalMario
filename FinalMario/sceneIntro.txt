@@ -2,13 +2,84 @@
 [ASSETS]
 mario.txt
 brick.txt
-coin.txt
-goomba.txt
-cloud.txt
+iItems.txt
+
+eGoomba.txt
+eKoopa.txt
+eFirePlant.txt
+eBitePlant.txt
+
+platform.txt
 #
 [OBJECTS]
 # type	x	y	extra_settings per object type
 # type: 0 = Mario , 1 = Brick, 2 = Goomba, 3 = Koopas
-# See OBJECT_TYPE constants in AssetIDs.h
 
 # MARIO
+10	160	80
+
+30	120	64
+30	120	80
+30	120	96
+30	120	112
+30	120	128
+
+30	140	128
+30	160	128
+30	180	128
+
+30	200	64
+30	200	80
+30	200	96
+30	200	112
+30	200	128
+
+#Unseen-Brick...
+30	8	168
+30	8	152
+30	8	136
+30	8	120
+30	8	104
+30	8	88
+
+30	312	168
+30	312	152
+30	312	136
+30	312	120
+30	312	104
+30	312	88
+
+#Portal 
+50	160	40	220	80	10
+
+#Background...
+51	188	89
+51	8	69
+51	258	210
+51	28	184
+51	238	129
+51	48	232
+51	68	146
+51	248	238
+51	78	226
+51	98	101
+51	108	127
+51	318	81
+51	118	116
+51	138	111
+51	168	122
+51	208	206
+51	218	124
+51	288	178
+
+55	248	38
+
+#Intro scene
+57	160	90
+
+#Enemies
+14	220	160	2
+14	120	160	3
+
+#Platform
+45	0	184	16	16	21	2	450001	450002	450003	450004	450005	450006	450007	450008	450009

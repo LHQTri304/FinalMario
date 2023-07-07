@@ -66,3 +66,25 @@ public:
 	virtual int IsCollidable() { return 0; }
 	virtual int IsBlocking() { return 0; }
 };
+
+class CSTART_SCENE : public CGameObject {
+public:
+	CSTART_SCENE(float x, float y) : CGameObject(x, y) {}
+	void Render();
+	void Update(DWORD dt) {}
+	void GetBoundingBox(float& l, float& t, float& r, float& b) { return; }
+
+	virtual int IsCollidable() { return 0; }
+	virtual int IsBlocking() { return 0; }
+};
+
+class COVER_SCENE : public CGameObject {
+public:
+	COVER_SCENE(float x, float y) : CGameObject(x, y) {}
+	void Render();
+	void Update(DWORD dt) {}
+	void GetBoundingBox(float& l, float& t, float& r, float& b) { return; }
+
+	virtual int IsCollidable() { return 0; }
+	virtual int IsBlocking() { return 0; }
+};

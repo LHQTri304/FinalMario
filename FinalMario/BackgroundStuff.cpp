@@ -36,3 +36,15 @@ void CBlackEnd::Render()
 	animations->Get(ID_ANI_BLACK_END)->Render(x, y);
 	animations->Get(ID_ANI_BORDER_END)->Render(x, y);
 }
+
+void CSTART_SCENE::Render()
+{
+	CAnimations* animations = CAnimations::GetInstance();
+	animations->Get(ID_ANI_START_SCENE)->Render(x, y);
+}
+
+void COVER_SCENE::Render()
+{
+	CAnimations* animations = CAnimations::GetInstance();
+	animations->Get(ID_ANI_OVER_SCENE)->Render(x, y);
+}
