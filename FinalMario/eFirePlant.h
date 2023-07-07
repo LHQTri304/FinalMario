@@ -10,7 +10,8 @@ protected:
 	float ay;
 	float ix;	// i = initial
 	float iy;
-	BOOLEAN isCollidingProperly;
+	//BOOLEAN isCollidingProperly;
+	int wrongCollisionCountDown;
 
 	virtual void GetBoundingBox(float& left, float& top, float& right, float& bottom);
 

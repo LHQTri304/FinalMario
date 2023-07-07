@@ -6,7 +6,7 @@ CBulletFire::CBulletFire(float x, float y) :CGameObject(x, y)
 	this->ay = 0;
 	this->ix = x;
 	this->iy = y;
-	this->isCollidingProperly = true;
+	this->wrongCollisionCountDown = BULLETFIRE_WRONG_COLLISION_TIMEOUT;
 	SetState(BULLETFIRE_STATE_INSIDE_PLANT);
 }
 
@@ -20,53 +20,34 @@ void CBulletFire::GetBoundingBox(float& left, float& top, float& right, float& b
 
 int CBulletFire::IsCollidable()
 {
-	if (isCollidingProperly)
-	{
-		return (GetState() != BULLETFIRE_STATE_INSIDE_PLANT);
-	}
-	return 0;
+	return (GetState() != BULLETFIRE_STATE_INSIDE_PLANT && wrongCollisionCountDown < 0);
 }
 
 void CBulletFire::OnNoCollision(DWORD dt)
 {
-	isCollidingProperly = true;
-
 	x += vx * dt;
 	y += vy * dt;
 };
 
 void CBulletFire::OnCollisionWith(LPCOLLISIONEVENT e)
 {
-	if (!dynamic_cast<CMario*>(e->obj))
+	if ((e->nx != 0 || e->ny != 0) && e->obj->IsBlocking())
 	{
-		isCollidingProperly = false;
-		return;
-	}
-	else
-	{
-		CMario* mario = (CMario*)((LPPLAYSCENE)CGame::GetInstance()->GetCurrentScene())->GetPlayer();
-		int mLevel = mario->GetLevel();
-
-		// touch >> Level down
-		if (GetState() != BULLETFIRE_STATE_INSIDE_PLANT)
+		if (dynamic_cast<CMario*>(e->obj))
 		{
-			if (mLevel == MARIO_LEVEL_RACCOON)
+			CMario* mario = (CMario*)((LPPLAYSCENE)CGame::GetInstance()->GetCurrentScene())->GetPlayer();
+			int mLevel = mario->GetLevel();
+
+			// touch >> Level down
+			if (GetState() != BULLETFIRE_STATE_INSIDE_PLANT)
 			{
-				mario->SetLevel(MARIO_LEVEL_BIG);	//Small (1) >> Big (2) >> Raccoon (3)
+				mario->LevelDown();
 			}
-			else if (mLevel == MARIO_LEVEL_BIG)
-			{
-				mario->SetLevel(MARIO_LEVEL_SMALL);
-			}
-			else
-			{
-				DebugOut(L">>> Mario DIE >>> \n");
-				mario->SetState(MARIO_STATE_DIE);
-			}
-			SetState(ITEMS_LEVELUP_STATE_DELETED);
 		}
-		isCollidingProperly = false;
-		return;
+		else
+		{
+			wrongCollisionCountDown = BULLETFIRE_WRONG_COLLISION_TIMEOUT;
+		}
 	}
 }
 

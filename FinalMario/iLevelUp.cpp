@@ -9,7 +9,7 @@ CItemsLevelUp::CItemsLevelUp(float x, float y) :CGameObject(x, y)
 	this->pixelMovingX = 0;
 	this->pixelMovingY = MUSHROOM_ACTIVATED_PIXEL_MOVE_Y;
 	this->kind = 0;	//Mushroom first
-	this->wrongCollisionCountDown = 5;
+	this->wrongCollisionCountDown = ITEMS_LEVELUP_WRONG_COLLISION_TIMEOUT;
 	this->isMovingRight = true;
 	SetState(ITEMS_LEVELUP_STATE_WAIT);
 }
@@ -93,7 +93,7 @@ void CItemsLevelUp::OnCollisionWith(LPCOLLISIONEVENT e)
 			}				
 			else
 			{
-				wrongCollisionCountDown = 5;
+				wrongCollisionCountDown = ITEMS_LEVELUP_WRONG_COLLISION_TIMEOUT;
 			}
 		}
 	}
