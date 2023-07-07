@@ -19,7 +19,7 @@ void CSampleKeyHandler::OnKeyDown(int KeyCode)
 		mario->SetState(MARIO_STATE_SIT);
 		break;
 	case DIK_S:
-		if (!mario->GetIsOnPlatform())
+		if (!mario->GetIsOnPlatform() && mario->GetLevel() == MARIO_LEVEL_RACCOON)
 		{
 			mario->GetSpeed(mVX, mVY);
 			if (mario->GetFlyable() == 1)
