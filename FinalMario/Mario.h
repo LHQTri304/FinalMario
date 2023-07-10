@@ -213,7 +213,7 @@ public:
 		isOnPlatform = false;
 		isPressingKeyA = false;
 		isHoldingShell = false;
-		isReadyToUsePipe = false;
+		isReadyToUsePipe = true;
 	}
 	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
 	void Render();
@@ -228,10 +228,11 @@ public:
 	int GetFlyable() { return flyable; }
 	BOOLEAN GetPressingKeyA() { return isPressingKeyA; }
 	BOOLEAN GetIsOnPlatform() { return isOnPlatform; }
+	BOOLEAN GetIsReadyToUsePipe() { return isReadyToUsePipe; }
 
 	int IsCollidable()
 	{ 
-		return (state != MARIO_STATE_DIE); 
+		return (state != MARIO_STATE_DIE);
 	}
 
 	int IsBlocking() { return (state != MARIO_STATE_DIE && untouchable==0); }

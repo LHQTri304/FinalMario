@@ -92,6 +92,24 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 			x->SetAllowToUpdate(false);
 	}
 
+
+	//Enter pipe when being ready
+	if (state == MARIO_STATE_ENTER_PIPE)
+	{
+		vx = 0;	//Not allow to move
+		isOnPlatform = false;
+
+		if (y < iy + MARIO_BIG_BBOX_HEIGHT)
+		{
+			y += 0.5f;
+		}
+		else
+		{
+			ay = MARIO_GRAVITY;
+			SetState(MARIO_STATE_SIT_RELEASE);
+		}
+	}
+
 	CCollision::GetInstance()->Process(this, dt, coObjects);
 }
 
@@ -626,6 +644,12 @@ void CMario::SetState(int state)
 			vx = 0; vy = 0.0f;
 			y +=MARIO_SIT_HEIGHT_ADJUST;
 		}
+		break;
+
+	case MARIO_STATE_ENTER_PIPE:
+		ay = 0;
+		vy = 0;
+		iy = this->y;
 		break;
 
 	case MARIO_STATE_SIT_RELEASE:

@@ -16,7 +16,14 @@ void CSampleKeyHandler::OnKeyDown(int KeyCode)
 	switch (KeyCode)
 	{
 	case DIK_DOWN:
-		mario->SetState(MARIO_STATE_SIT);
+		if (mario->GetIsReadyToUsePipe())
+		{
+			mario->SetState(MARIO_STATE_ENTER_PIPE);
+		}
+		else
+		{
+			mario->SetState(MARIO_STATE_SIT);
+		}
 		break;
 	case DIK_S:
 		if (!mario->GetIsOnPlatform() && mario->GetLevel() == MARIO_LEVEL_RACCOON)
@@ -72,7 +79,10 @@ void CSampleKeyHandler::OnKeyUp(int KeyCode)
 		mario->SetPressingKeyA(false);
 		break;
 	case DIK_DOWN:
-		mario->SetState(MARIO_STATE_SIT_RELEASE);
+		if (mario->GetState() != MARIO_STATE_ENTER_PIPE)
+		{
+			mario->SetState(MARIO_STATE_SIT_RELEASE);
+		}
 		break;
 	}
 }
@@ -82,26 +92,29 @@ void CSampleKeyHandler::KeyState(BYTE *states)
 	LPGAME game = CGame::GetInstance();
 	CMario* mario = (CMario*)((LPPLAYSCENE)CGame::GetInstance()->GetCurrentScene())->GetPlayer();
 
-	if (game->IsKeyDown(DIK_RIGHT))
+	if (mario->GetState() != MARIO_STATE_ENTER_PIPE)
 	{
-		if (game->IsKeyDown(DIK_A))
+		if (game->IsKeyDown(DIK_RIGHT))
 		{
-			mario->SetPressingKeyA(true);
-			mario->SetState(MARIO_STATE_RUNNING_RIGHT);
+			if (game->IsKeyDown(DIK_A))
+			{
+				mario->SetPressingKeyA(true);
+				mario->SetState(MARIO_STATE_RUNNING_RIGHT);
+			}
+			else
+				mario->SetState(MARIO_STATE_WALKING_RIGHT);
+		}
+		else if (game->IsKeyDown(DIK_LEFT))
+		{
+			if (game->IsKeyDown(DIK_A))
+			{
+				mario->SetPressingKeyA(true);
+				mario->SetState(MARIO_STATE_RUNNING_LEFT);
+			}
+			else
+				mario->SetState(MARIO_STATE_WALKING_LEFT);
 		}
 		else
-			mario->SetState(MARIO_STATE_WALKING_RIGHT);
+			mario->SetState(MARIO_STATE_IDLE);
 	}
-	else if (game->IsKeyDown(DIK_LEFT))
-	{
-		if (game->IsKeyDown(DIK_A))
-		{
-			mario->SetPressingKeyA(true);
-			mario->SetState(MARIO_STATE_RUNNING_LEFT);
-		}
-		else
-			mario->SetState(MARIO_STATE_WALKING_LEFT);
-	}
-	else
-		mario->SetState(MARIO_STATE_IDLE);
 }
