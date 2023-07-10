@@ -34,7 +34,7 @@
 
 #define MARIO_STATE_SIT				600
 #define MARIO_STATE_SIT_RELEASE		601
-#define MARIO_STATE_INTO_PIPE		602
+#define MARIO_STATE_ENTER_PIPE		602
 
 
 #pragma region ANIMATION_ID
@@ -166,6 +166,7 @@ class CMario : public CGameObject
 	BOOLEAN isOnPlatform;
 	BOOLEAN isPressingKeyA;
 	BOOLEAN isHoldingShell;
+	BOOLEAN isReadyToUsePipe;
 
 	//Enemies
 	void OnCollisionWithGoomba(LPCOLLISIONEVENT e);
@@ -212,6 +213,7 @@ public:
 		isOnPlatform = false;
 		isPressingKeyA = false;
 		isHoldingShell = false;
+		isReadyToUsePipe = false;
 	}
 	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
 	void Render();
@@ -220,6 +222,7 @@ public:
 	void SetLevel(int l);
 	void SetPressingKeyA(BOOLEAN isPressing) { this->isPressingKeyA = isPressing; }
 	void SetHoldingShell(BOOLEAN isHolding) { this->isHoldingShell = isHolding; }
+	void SetReadyToUsePipe(BOOLEAN isReady) { this->isReadyToUsePipe = isReady; }
 
 	int GetLevel() { return level; }
 	int GetFlyable() { return flyable; }
