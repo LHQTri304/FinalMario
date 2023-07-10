@@ -34,6 +34,7 @@
 
 #define MARIO_STATE_SIT				600
 #define MARIO_STATE_SIT_RELEASE		601
+#define MARIO_STATE_INTO_PIPE		602
 
 
 #pragma region ANIMATION_ID

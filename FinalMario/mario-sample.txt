@@ -1,5 +1,5 @@
 [SETTINGS]
-start	20
+start	21
 width	320
 height	240
 
@@ -12,7 +12,8 @@ height	240
 11	sceneTEST.txt
 
 20	sceneIntro.txt
-21	sceneOver.txt
+21	sceneMap.txt
+22	sceneOver.txt
 
 # id	file 
 [TEXTURES]
