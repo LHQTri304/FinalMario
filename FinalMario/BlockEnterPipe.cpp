@@ -1,4 +1,6 @@
-#include "StationaryObject.h"
+#include "BlockEnterPipe.h"
+#include "Mario.h"
+#include "PlayScene.h"
 
 void CBlockEnterPipe::GetBoundingBox(float& left, float& top, float& right, float& bottom)
 {
@@ -15,7 +17,7 @@ void CBlockEnterPipe::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	float mX, mY;
 	mario->GetPosition(mX, mY);
 
-	if (abs(mX - this->x) <= 1.0f && abs(mY - this->y) <= 0.5f)
+	if (abs(mX - this->x) <= 8.0f && abs(mY - this->y) <= 4.5f)
 		mario->SetReadyToUsePipe(true);
 	else
 		mario->SetReadyToUsePipe(false);
