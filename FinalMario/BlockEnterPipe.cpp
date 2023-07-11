@@ -29,7 +29,7 @@ void CBlockEnterPipe::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 void CBlockEnterPipe::Render()
 {
-	RenderBoundingBox();
+	//RenderBoundingBox();
 }
 
 void CBlockEnterPipe::SetState(int state)
