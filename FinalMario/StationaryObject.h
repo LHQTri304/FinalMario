@@ -6,4 +6,6 @@
 #include "BrickLevelUp.h"
 #include "BrickCoin.h"
 
+#include "BlockEnterPipe.h"
+
 #include "AllDefineStatus.h"
