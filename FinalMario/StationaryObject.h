@@ -7,5 +7,7 @@
 #include "BrickCoin.h"
 
 #include "BlockEnterPipe.h"
+#include "Mario.h"
+#include "PlayScene.h"
 
 #include "AllDefineStatus.h"

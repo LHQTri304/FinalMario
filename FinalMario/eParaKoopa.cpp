@@ -163,7 +163,7 @@ void CParaKoopa::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		mario->GetPosition(mX, mY);
 		mario->GetSpeed(mVX, mVY);
 
-		if (isBeingHeld && mario->GetPressingKeyA() == true)
+		if (isBeingHeld && mario->GetPressingKeyA() == (BOOLEAN)true)
 		{
 			ay = 0;
 			vx = vy = 0;
