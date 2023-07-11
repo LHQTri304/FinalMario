@@ -213,7 +213,7 @@ public:
 		isOnPlatform = false;
 		isPressingKeyA = false;
 		isHoldingShell = false;
-		isReadyToUsePipe = true;
+		isReadyToUsePipe = false;
 	}
 	void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
 	void Render();

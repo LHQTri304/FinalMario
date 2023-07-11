@@ -149,6 +149,7 @@
     <ClCompile Include="Animation.cpp" />
     <ClCompile Include="Animations.cpp" />
     <ClCompile Include="BackgroundStuff.cpp" />
+    <ClCompile Include="BlockEnterPipe.cpp" />
     <ClCompile Include="BrickBlocking.cpp" />
     <ClCompile Include="BrickBreakable.cpp" />
     <ClCompile Include="BrickCoin.cpp" />
@@ -188,6 +189,7 @@
     <ClInclude Include="Animations.h" />
     <ClInclude Include="AssetIDs.h" />
     <ClInclude Include="BackgroundStuff.h" />
+    <ClInclude Include="BlockEnterPipe.h" />
     <ClInclude Include="BrickLevelUp.h" />
     <ClInclude Include="iCoin.h" />
     <ClInclude Include="iLevelUp.h" />
