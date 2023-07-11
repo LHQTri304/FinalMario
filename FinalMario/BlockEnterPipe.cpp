@@ -18,9 +18,9 @@ void CBlockEnterPipe::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	mario->GetPosition(mX, mY);
 
 	if (abs(mX - this->x) <= 8.0f && abs(mY - this->y) <= 4.5f)
-		mario->SetReadyToUsePipe(true);
+		mario->SetNumOfPipeAllow(10);
 	else
-		mario->SetReadyToUsePipe(false);
+		mario->SetNumOfPipeMinus();
 
 	CGameObject::Update(dt, coObjects);
 	CCollision::GetInstance()->Process(this, dt, coObjects);

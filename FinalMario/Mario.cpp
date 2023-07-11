@@ -94,6 +94,10 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 
 
 	//Enter pipe when being ready
+	if (numOfPipeAllow > 0)
+		isReadyToUsePipe = true;
+	else
+		isReadyToUsePipe = false;
 	if (state == MARIO_STATE_ENTER_PIPE)
 	{
 		vx = 0;	//Not allow to move

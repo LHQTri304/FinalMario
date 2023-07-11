@@ -159,6 +159,7 @@ class CMario : public CGameObject
 	int untouchable;
 	int flyable;
 	int coin;
+	int numOfPipeAllow;
 
 	ULONGLONG untouchable_start;
 	ULONGLONG flyable_start;
@@ -206,6 +207,7 @@ public:
 		untouchable = 0;
 		flyable = 0;
 		coin = 0;
+		numOfPipeAllow = 0;
 
 		untouchable_start = -1;
 		flyable_start = -1;
@@ -220,9 +222,10 @@ public:
 
 	void SetState(int state);
 	void SetLevel(int l);
+	void SetNumOfPipeAllow(int num) { this->numOfPipeAllow = num; }
+	void SetNumOfPipeMinus() { this->numOfPipeAllow--; }
 	void SetPressingKeyA(BOOLEAN isPressing) { this->isPressingKeyA = isPressing; }
 	void SetHoldingShell(BOOLEAN isHolding) { this->isHoldingShell = isHolding; }
-	void SetReadyToUsePipe(BOOLEAN isReady) { this->isReadyToUsePipe = isReady; }
 
 	int GetLevel() { return level; }
 	int GetFlyable() { return flyable; }
