@@ -55,6 +55,7 @@
 #define OBJECT_TYPE_BLACK_END 56
 #define OBJECT_TYPE_START_SCENE 57
 #define OBJECT_TYPE_OVER_SCENE 58
+#define OBJECT_TYPE_LEVEL_MAP_SCENE 59
 
 #pragma region Moving Obj
 #pragma region MARIO 

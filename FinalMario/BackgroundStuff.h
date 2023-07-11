@@ -88,3 +88,16 @@ public:
 	virtual int IsCollidable() { return 0; }
 	virtual int IsBlocking() { return 0; }
 };
+
+class CLevelMapScene : public CGameObject {
+protected:
+	int num;
+public:
+	CLevelMapScene(float x, float y, int number) : CGameObject(x, y) { this->num = number; }
+	void Render();
+	void Update(DWORD dt) {}
+	void GetBoundingBox(float& l, float& t, float& r, float& b) { return; }
+
+	virtual int IsCollidable() { return 0; }
+	virtual int IsBlocking() { return 0; }
+};

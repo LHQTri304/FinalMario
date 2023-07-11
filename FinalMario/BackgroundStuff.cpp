@@ -48,3 +48,23 @@ void COVER_SCENE::Render()
 	CAnimations* animations = CAnimations::GetInstance();
 	animations->Get(ID_ANI_OVER_SCENE)->Render(x, y);
 }
+
+void CLevelMapScene::Render()
+{
+	CAnimations* animations = CAnimations::GetInstance();
+	switch (num)
+	{
+	case 4:
+		animations->Get(ID_ANI_LEVEL_MAP_SCENE_4)->Render(x, y);
+		break;
+	case 3:
+		animations->Get(ID_ANI_LEVEL_MAP_SCENE_3)->Render(x, y);
+		break;
+	case 2:
+		animations->Get(ID_ANI_LEVEL_MAP_SCENE_2)->Render(x, y);
+		break;
+	default:
+		animations->Get(ID_ANI_LEVEL_MAP_SCENE_1)->Render(x, y);
+		break;
+	}
+}

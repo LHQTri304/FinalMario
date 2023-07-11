@@ -266,6 +266,11 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 	case OBJECT_TYPE_BLACK_END: obj = new CBlackEnd(x, y); break;
 	case OBJECT_TYPE_START_SCENE: obj = new CSTART_SCENE(x, y); break;
 	case OBJECT_TYPE_OVER_SCENE: obj = new COVER_SCENE(x, y); break;
+	case OBJECT_TYPE_LEVEL_MAP_SCENE:
+	{
+		int num = (int)atof(tokens[3].c_str());
+		obj = new CLevelMapScene(x, y, num); break;
+	}
 
 
 	default:
