@@ -19,11 +19,6 @@ void CFakeHead::OnNoCollision(DWORD dt)
 	y += vy * dt;
 };
 
-void CFakeHead::OnCollisionWith(LPCOLLISIONEVENT e)
-{
-	return;
-}
-
 void CFakeHead::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	vy += ay * dt;
@@ -35,9 +30,6 @@ void CFakeHead::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 void CFakeHead::Render()
 {
-	//int aniId = ID_ANI_FAKEHEAD;
-
-	//CAnimations::GetInstance()->Get(aniId)->Render(x, y);
 	RenderBoundingBox();
 }
 
