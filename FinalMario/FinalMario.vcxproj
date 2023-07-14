@@ -167,6 +167,7 @@
     <ClCompile Include="eParaKoopa.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameObject.cpp" />
+    <ClCompile Include="iButton.cpp" />
     <ClCompile Include="iCoin.cpp" />
     <ClCompile Include="iLevelUp.cpp" />
     <ClCompile Include="iStar.cpp" />
@@ -191,6 +192,7 @@
     <ClInclude Include="BackgroundStuff.h" />
     <ClInclude Include="BlockEnterPipe.h" />
     <ClInclude Include="BrickLevelUp.h" />
+    <ClInclude Include="iButton.h" />
     <ClInclude Include="iCoin.h" />
     <ClInclude Include="iLevelUp.h" />
     <ClInclude Include="InteractiveItems.h" />
