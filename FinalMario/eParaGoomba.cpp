@@ -24,9 +24,9 @@ void CParaGoomba::GetBoundingBox(float& left, float& top, float& right, float& b
 	else
 	{
 		left = x - GOOMBA_BBOX_WIDTH / 2;
-		top = y - GOOMBA_BBOX_HEIGHT / 2;
+		top = y - (GOOMBA_BBOX_HEIGHT+4) / 2;
 		right = left + GOOMBA_BBOX_WIDTH;
-		bottom = top + GOOMBA_BBOX_HEIGHT;
+		bottom = top + GOOMBA_BBOX_HEIGHT+4;
 	}
 }
 

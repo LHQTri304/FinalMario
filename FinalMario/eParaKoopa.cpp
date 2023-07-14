@@ -82,7 +82,7 @@ void CParaKoopa::OnCollisionWithGlassBrick(LPCOLLISIONEVENT e)
 	CGlassBrick* glassBrick = dynamic_cast<CGlassBrick*>(e->obj);
 
 	// Hit when being kicked >> Break the GlassBrick
-	if (GetState() == KOOPA_STATE_KICKED)
+	if (GetState() == KOOPA_STATE_KICKED && glassBrick->GetState() != QUESTBRICK_STATE_ACTIVATED)
 		glassBrick->Delete();
 }
 
