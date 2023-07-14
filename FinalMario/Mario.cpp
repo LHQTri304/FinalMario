@@ -71,14 +71,14 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 
 	isOnPlatform = false;
 
-	/*
-	if (y >= 240)	//Out of the world >> Game Ove Scene
+	
+	if (y >= 360)	//Out of the world >> Game Ove Scene
 	{
 		//x = ix;
-		y = 184;
+		y = 350;
 		state = MARIO_STATE_IDLE;
 		level = MARIO_LEVEL_SMALL;
-	}*/
+	}
 	
 
 	//Only update near Mario;
@@ -103,9 +103,13 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 		vx = 0;	//Not allow to move
 		isOnPlatform = false;
 
-		if (y < iy + MARIO_BIG_BBOX_HEIGHT)
+		if (enterPipeDown == 1 && y < iy + MARIO_BIG_BBOX_HEIGHT)
 		{
 			y += 0.5f;
+		}
+		else if (enterPipeDown == 0 && y > iy - MARIO_BIG_BBOX_HEIGHT * 4)
+		{
+			y -= 0.75f;
 		}
 		else
 		{

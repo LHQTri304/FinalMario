@@ -18,7 +18,10 @@ void CBlockEnterPipe::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	mario->GetPosition(mX, mY);
 
 	if (abs(mX - this->x) <= 8.0f && abs(mY - this->y) <= 4.5f)
+	{
 		mario->SetNumOfPipeAllow(10);
+		mario->SetEnterPipeDown(kind);
+	}
 	else
 		mario->SetNumOfPipeMinus();
 
@@ -29,7 +32,7 @@ void CBlockEnterPipe::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 void CBlockEnterPipe::Render()
 {
-	//RenderBoundingBox();
+	RenderBoundingBox();
 }
 
 void CBlockEnterPipe::SetState(int state)

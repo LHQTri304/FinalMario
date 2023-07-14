@@ -160,6 +160,7 @@ class CMario : public CGameObject
 	int flyable;
 	int coin;
 	int numOfPipeAllow;
+	int enterPipeDown;
 
 	ULONGLONG untouchable_start;
 	ULONGLONG flyable_start;
@@ -209,6 +210,7 @@ public:
 		flyable = 0;
 		coin = 0;
 		numOfPipeAllow = 0;
+		enterPipeDown = 1;
 
 		untouchable_start = -1;
 		flyable_start = -1;
@@ -225,11 +227,13 @@ public:
 	void SetLevel(int l);
 	void SetNumOfPipeAllow(int num) { this->numOfPipeAllow = num; }
 	void SetNumOfPipeMinus() { this->numOfPipeAllow--; }
+	void SetEnterPipeDown(int downAllow) { this->enterPipeDown = downAllow; }
 	void SetPressingKeyA(BOOLEAN isPressing) { this->isPressingKeyA = isPressing; }
 	void SetHoldingShell(BOOLEAN isHolding) { this->isHoldingShell = isHolding; }
 
 	int GetLevel() { return level; }
 	int GetFlyable() { return flyable; }
+	int GetEnterPipeDown() { return enterPipeDown; }
 	BOOLEAN GetPressingKeyA() { return isPressingKeyA; }
 	BOOLEAN GetIsOnPlatform() { return isOnPlatform; }
 	BOOLEAN GetIsReadyToUsePipe() { return isReadyToUsePipe; }

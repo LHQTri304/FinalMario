@@ -16,13 +16,19 @@ void CSampleKeyHandler::OnKeyDown(int KeyCode)
 	switch (KeyCode)
 	{
 	case DIK_DOWN:
-		if (mario->GetIsReadyToUsePipe())
+		if (mario->GetIsReadyToUsePipe() && mario->GetEnterPipeDown() == 1)
 		{
 			mario->SetState(MARIO_STATE_ENTER_PIPE);
 		}
 		else
 		{
 			mario->SetState(MARIO_STATE_SIT);
+		}
+		break;
+	case DIK_UP:
+		if (mario->GetIsReadyToUsePipe() && mario->GetEnterPipeDown() == 0)
+		{
+			mario->SetState(MARIO_STATE_ENTER_PIPE);
 		}
 		break;
 	case DIK_S:

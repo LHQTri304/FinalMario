@@ -134,8 +134,14 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 	case OBJECT_TYPE_GLASS_BRICK: obj = new CGlassBrick(x, y); break;
 	case OBJECT_TYPE_QUEST_BRICK_LEVELUP: obj = new CQuestBrickLevelUp(x, y); break;
 	case OBJECT_TYPE_QUEST_BRICK_COIN: obj = new CQuestBrickCoin(x, y); break;
-	case OBJECT_TYPE_BLOCK_ENTER_PIPE: obj = new CBlockEnterPipe(x, y); break;
 	case OBJECT_TYPE_P_BUTTON_BRICK: obj = new CButtonBrick(x, y); break;
+
+	case OBJECT_TYPE_BLOCK_ENTER_PIPE:
+	{
+		int kind = (int)atof(tokens[3].c_str());
+		obj = new CBlockEnterPipe(x, y, kind);
+		break;
+	}
 
 	//Disappear-able
 	case OBJECT_TYPE_COIN: obj = new CCoin(x, y); break;
