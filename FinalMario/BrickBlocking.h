@@ -1,6 +1,6 @@
 #pragma once
 #include "GameObject.h"
-#include "iLevelUp.h"
+#include "iButton.h"
 
 #include "AllDefineStatus.h"
 
@@ -24,7 +24,7 @@ public:
 class CButtonBrick : public CGameObject {
 protected:
 	BOOLEAN isActivated;
-	CItemsLevelUp* itemsUp;
+	CButton* button;
 public:
 	CButtonBrick(float x, float y);
 	void Render();

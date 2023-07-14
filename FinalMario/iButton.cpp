@@ -4,6 +4,7 @@ CButton::CButton(float x, float y) :CGameObject(x, y)
 {
 	this->iy = y;
 	this->pixelMovingY = P_BUTTON_PIXEL_MOVE_Y;
+	this->oneTimeActived = 0;
 	SetState(P_BUTTON_STATE_WAIT);
 }
 
@@ -17,29 +18,37 @@ void CButton::GetBoundingBox(float& left, float& top, float& right, float& botto
 
 int CButton::IsCollidable()
 {
-	return (GetState() != P_BUTTON_STATE_WAIT);
+	//return (GetState() != P_BUTTON_STATE_WAIT);
+	return 1;
 }
 
 void CButton::OnCollisionWith(LPCOLLISIONEVENT e)
-{
-	//Only collides with mario
-	if ((e->nx != 0 || e->ny != 0) && e->obj->IsBlocking())
+{/*
+	if (dynamic_cast<CMario*>(e->obj))
 	{
-		if (dynamic_cast<CMario*>(e->obj))
+		// touch >> Active
+		if (GetState() == P_BUTTON_STATE_READY)
 		{
-			// touch >> Active
-			if (GetState() == P_BUTTON_STATE_READY)
-			{
-				SetState(P_BUTTON_STATE_ACTIVATED);
-			}
+			SetState(P_BUTTON_STATE_ACTIVATED);
 		}
-	}
-	else
-		return;
+	}*/
 }
 
 void CButton::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
+	// The collition has some bug so let do another way
+	CMario* mario = (CMario*)((LPPLAYSCENE)CGame::GetInstance()->GetCurrentScene())->GetPlayer();
+	float mX, mY;
+	mario->GetPosition(mX, mY);
+
+	if (abs(mX - this->x) <= 7.5f && abs(mY - this->y) <= 5.5f
+		&& GetState() == P_BUTTON_STATE_READY)
+	{
+		SetState(P_BUTTON_STATE_ACTIVATED);
+		oneTimeActived++;
+	}
+		
+
 	if (GetState() == P_BUTTON_STATE_SHOW)
 	{
 		if (y <= iy - pixelMovingY)
@@ -49,15 +58,17 @@ void CButton::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	}
 
 	//Turn all GlassBrick into Coin
-	if (GetState() == P_BUTTON_STATE_ACTIVATED)
+	if (GetState() == P_BUTTON_STATE_ACTIVATED && oneTimeActived < 2)
 	{
 		for (auto x : *coObjects)
 		{
 			if (dynamic_cast<CGlassBrick*>(x))
 			{
-				x->SetState(QUESTBRICK_STATE_ACTIVATED);
+				CGlassBrick* gb = dynamic_cast<CGlassBrick*>(x);
+				gb->SetState(QUESTBRICK_STATE_ACTIVATED);
 			}
 		}
+		SetState(P_BUTTON_STATE_NO_USE);
 	}
 
 	CGameObject::Update(dt, coObjects);
@@ -73,7 +84,7 @@ void CButton::Render()
 	{
 		aniId = ID_ANI_P_BUTTON_SHOW;
 	}
-	if (GetState() == P_BUTTON_STATE_ACTIVATED)
+	if (GetState() == P_BUTTON_STATE_ACTIVATED || GetState() == P_BUTTON_STATE_NO_USE)
 	{
 		aniId = ID_ANI_P_BUTTON_ACTIVATED;
 	}
@@ -94,6 +105,8 @@ void CButton::SetState(int state)
 	case P_BUTTON_STATE_READY:
 		break;
 	case P_BUTTON_STATE_ACTIVATED:
+		break;
+	case P_BUTTON_STATE_NO_USE:
 		break;
 	}
 }

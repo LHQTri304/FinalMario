@@ -8,6 +8,7 @@ class CButton : public CGameObject
 protected:
 	float iy;	//initial
 	float pixelMovingY;
+	int oneTimeActived;
 
 	virtual void GetBoundingBox(float& left, float& top, float& right, float& bottom);
 

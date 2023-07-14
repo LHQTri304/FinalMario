@@ -9,6 +9,7 @@ protected:
 	BOOLEAN isActivated;
 	CCoin* coin;
 	ULONGLONG activated_start;
+	//int timesActivated;
 public:
 	CGlassBrick(float x, float y);
 	void Render();
@@ -17,4 +18,5 @@ public:
 
 	int IsBlocking() { return !isActivated; }
 	virtual void SetState(int state);
+	void StartActivated() { isActivated = true; activated_start = GetTickCount64(); }
 };

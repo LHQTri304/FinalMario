@@ -4,8 +4,9 @@ CGlassBrick::CGlassBrick(float x, float y) :CGameObject(x, y)
 {
 	this->isActivated = false;
 	this->activated_start = -1;
+	//this->timesActivated = 0;
 	coin = new CCoin(x, y);
-	SetState(QUESTBRICK_STATE_ACTIVATED);	//They have the same function, just different names
+	SetState(QUESTBRICK_STATE_WAIT);	//They have the same function, just different names
 }
 
 void CGlassBrick::Render()
@@ -34,7 +35,7 @@ void CGlassBrick::GetBoundingBox(float& l, float& t, float& r, float& b)
 void CGlassBrick::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	// reset activated timer if activated time has passed
-	if (GetTickCount64() - activated_start > BRICK_ACTIVATED_TIME)
+	if (isActivated && GetTickCount64() - activated_start > BRICK_ACTIVATED_TIME)
 	{
 		activated_start = 0;
 		SetState(QUESTBRICK_STATE_WAIT);
@@ -59,6 +60,7 @@ void CGlassBrick::SetState(int state)
 			coin->SetState(COIN_STATE_ACTIVATED);
 			isActivated = true;
 			activated_start = GetTickCount64();
+			//timesActivated++;
 		}
 		break;
 	}

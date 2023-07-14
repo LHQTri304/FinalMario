@@ -33,26 +33,22 @@ void CDirtBrick::GetBoundingBox(float& l, float& t, float& r, float& b)
 CButtonBrick::CButtonBrick(float x, float y) :CGameObject(x, y)
 {
 	this->isActivated = false;
-	itemsUp = new CItemsLevelUp(x, y);
+	button = new CButton(x, y);
 	SetState(QUESTBRICK_STATE_WAIT);
 }
 
 
 void CButtonBrick::Render()
 {
-	if (itemsUp->GetKind() == ITEMS_LEVELUP_KIND_MUSHROOM)	// Mushroom render behind the Brick
-		itemsUp->Render();
+	// Button render behind the Brick
+	button->Render();
 
 	CAnimations* animations = CAnimations::GetInstance();
 
-	animations->Get(ID_ANI_QUEST_BRICK)->Render(x, y);
+	animations->Get(ID_ANI_GLASS_BRICK)->Render(x, y);
 
 	if (GetState() == QUESTBRICK_STATE_ACTIVATED)
 		animations->Get(ID_ANI_BLANK_BRICK)->Render(x, y);
-
-	if (itemsUp->GetKind() == ITEMS_LEVELUP_KIND_LEAF)	// Leaf render in front of the Brick
-		itemsUp->Render();
-
 	//RenderBoundingBox();
 }
 
@@ -66,7 +62,7 @@ void CButtonBrick::GetBoundingBox(float& l, float& t, float& r, float& b)
 
 void CButtonBrick::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
-	itemsUp->Update(dt, coObjects);
+	button->Update(dt, coObjects);
 	CGameObject::Update(dt, coObjects);
 	CCollision::GetInstance()->Process(this, dt, coObjects);
 }
@@ -82,7 +78,7 @@ void CButtonBrick::SetState(int state)
 	case QUESTBRICK_STATE_ACTIVATED:
 		if (!isActivated)
 		{
-			itemsUp->SetState(COIN_STATE_ACTIVATED);
+			button->SetState(COIN_STATE_ACTIVATED);
 			isActivated = true;
 		}
 		break;
