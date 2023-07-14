@@ -186,6 +186,7 @@ class CMario : public CGameObject
 
 	//Special blocks
 	void OnCollisionWithGlassBrick(LPCOLLISIONEVENT e);
+	void OnCollisionWithButtonBrick(LPCOLLISIONEVENT e);
 
 	//Others
 	void OnCollisionWithPortal(LPCOLLISIONEVENT e);

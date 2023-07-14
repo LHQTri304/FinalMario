@@ -161,6 +161,8 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 		OnCollisionWithBrickCoin(e);
 	else if (dynamic_cast<CGlassBrick*>(e->obj))
 		OnCollisionWithGlassBrick(e);
+	else if (dynamic_cast<CButtonBrick*>(e->obj))
+		OnCollisionWithButtonBrick(e);
 
 	//Others
 	else if (dynamic_cast<CPortal*>(e->obj))
@@ -170,7 +172,7 @@ void CMario::OnCollisionWith(LPCOLLISIONEVENT e)
 }
 
 void CMario::OnCollisionWithGoomba(LPCOLLISIONEVENT e)
-{
+{`
 	CGoomba* goomba = dynamic_cast<CGoomba*>(e->obj);
 
 	// jump on top >> kill Goomba and deflect a bit 
@@ -379,6 +381,15 @@ void CMario::OnCollisionWithGlassBrick(LPCOLLISIONEVENT e)
 		coin++;
 	}
 	
+}
+
+void CMario::OnCollisionWithButtonBrick(LPCOLLISIONEVENT e)
+{
+	CButtonBrick* brickLevelUp = dynamic_cast<CButtonBrick*>(e->obj);
+
+	// jump and hit the bottom >> Activate the QuestBrick 
+	if (e->ny > 0)
+		brickLevelUp->SetState(QUESTBRICK_STATE_ACTIVATED);
 }
 
 void CMario::OnCollisionWithPortal(LPCOLLISIONEVENT e)
