@@ -9,7 +9,7 @@ void CCoin::Render()
 	{
 		animations->Get(ID_ANI_COIN)->Render(x, y);
 	}
-	RenderBoundingBox();	
+	//RenderBoundingBox();	
 }
 
 void CCoin::GetBoundingBox(float& l, float& t, float& r, float& b)

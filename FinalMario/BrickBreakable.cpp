@@ -21,7 +21,7 @@ void CGlassBrick::Render()
 	{
 		coin->Render();
 	}
-	RenderBoundingBox();
+	//RenderBoundingBox();
 }
 
 void CGlassBrick::GetBoundingBox(float& l, float& t, float& r, float& b)
