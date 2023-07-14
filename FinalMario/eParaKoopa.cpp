@@ -43,7 +43,7 @@ void CParaKoopa::OnCollisionWith(LPCOLLISIONEVENT e)
 	if (dynamic_cast<CGoomba*>(e->obj))
 	{
 		CGoomba* goomba = dynamic_cast<CGoomba*>(e->obj);
-		if (goomba->GetState() != GOOMBA_STATE_DIE)
+		if (goomba->GetState() != GOOMBA_STATE_DIE && GetState() == KOOPA_STATE_KICKED)
 		{
 			goomba->SetState(GOOMBA_STATE_DIE);
 		}
@@ -271,6 +271,7 @@ void CParaKoopa::SetState(int state)
 		LevelUp();
 		break;
 	case KOOPA_STATE_KICKED:
+		ay = KOOPA_GRAVITY_KICKED;
 		float mX, mY;
 		mario->GetPosition(mX, mY);
 		if (this->x > mX)

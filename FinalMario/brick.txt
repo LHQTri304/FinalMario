@@ -36,6 +36,9 @@
 #INVISIBLE
 9999999999	0	0	1	1	20
 
+#HIDDEN-BLUE-BRICK
+55555	282	243	297	258	20
+
 
 
 # ani_id	sprite1_id	time1	sprite2_id	time2	...

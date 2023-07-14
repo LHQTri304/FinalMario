@@ -71,14 +71,14 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 
 	isOnPlatform = false;
 
-	
+	/*
 	if (y >= 240)	//Out of the world >> Game Ove Scene
 	{
 		//x = ix;
 		y = 184;
 		state = MARIO_STATE_IDLE;
 		level = MARIO_LEVEL_SMALL;
-	}
+	}*/
 	
 
 	//Only update near Mario;
