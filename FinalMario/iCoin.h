@@ -6,12 +6,16 @@
 #pragma region Coin
 
 class CCoin : public CGameObject {
+protected:
+	virtual int IsCollidable() { return (GetState() == COIN_STATE_ACTIVATED); };
+	virtual int IsBlocking() { return 0; };
 public:
-	CCoin(float x, float y) : CGameObject(x, y) {}
+	CCoin(float x, float y) : CGameObject(x, y) { SetState(COIN_STATE_ACTIVATED); }
 	void Render();
 	void Update(DWORD dt) {}
 	void GetBoundingBox(float& l, float& t, float& r, float& b);
-	int IsBlocking() { return 0; }
+
+	virtual void SetState(int state);
 };
 #pragma endregion
 

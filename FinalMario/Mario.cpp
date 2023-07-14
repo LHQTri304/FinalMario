@@ -323,8 +323,14 @@ void CMario::OnCollisionWithBitePlant(LPCOLLISIONEVENT e)
 
 void CMario::OnCollisionWithCoin(LPCOLLISIONEVENT e)
 {
-	e->obj->Delete();
-	coin++;
+	CCoin* coins = dynamic_cast<CCoin*>(e->obj);
+	if (coins->GetState() == COIN_STATE_ACTIVATED)
+	{
+		coins->Delete();
+		coin++;
+	}
+	else
+		return;
 }
 
 void CMario::OnCollisionWithStar(LPCOLLISIONEVENT e)
@@ -361,9 +367,18 @@ void CMario::OnCollisionWithGlassBrick(LPCOLLISIONEVENT e)
 {
 	CGlassBrick* glassBrick = dynamic_cast<CGlassBrick*>(e->obj);
 
-	// jump and hit the bottom >> Break the GlassBrick
-	if (e->ny > 0)
+	if (glassBrick->GetState() == QUESTBRICK_STATE_WAIT)
+	{
+		// jump and hit the bottom >> Break the GlassBrick
+		if (e->ny > 0)
+			glassBrick->Delete();
+	}
+	else	//Already turn into coin
+	{
 		glassBrick->Delete();
+		coin++;
+	}
+	
 }
 
 void CMario::OnCollisionWithPortal(LPCOLLISIONEVENT e)
